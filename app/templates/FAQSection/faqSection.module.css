@@ -1,0 +1,9 @@
+.question svg {
+  transition: 0.5s;
+}
+
+.answercont {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+}

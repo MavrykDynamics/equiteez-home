@@ -1,0 +1,7 @@
+.nativeTableHeader {
+  grid-template-columns: repeat(4, var(--slot-width)) auto;
+}
+
+.nativeTableRow {
+  grid-template-columns: repeat(4, var(--col-width)) auto;
+}

@@ -1,0 +1,89 @@
+.thumbCardWrapper {
+  container-type: inline-size;
+  container-name: cardWrapper;
+
+  position: relative;
+  height: var(--card-height);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+}
+
+.thumbCardWrapper:hover img {
+  scale: 1.1;
+}
+
+.thumbCardContent {
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(1, 1, 1, 0.1) 31.35%,
+    rgba(1, 1, 1, 0.75) 100%
+  );
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+@container cardWrapper (max-width: 406px) {
+  .title {
+    max-width: 200px;
+  }
+}
+
+@container cardWrapper (min-width: 407px) {
+  .title {
+    max-width: 250px;
+  }
+}
+
+.title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thumbCardImg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  inset: 0;
+  z-index: 1;
+
+  transition: all 500ms ease-in-out;
+}
+
+/* progress bar styles */
+.progressBar {
+  position: relative;
+  height: 5px;
+  border-radius: 8px;
+}
+
+.progressBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  @apply bg-divider-secondary opacity-50;
+  z-index: 0;
+}
+
+.progressPercentage::after {
+  content: "";
+  position: absolute;
+  border-radius: 8px;
+  /* TODO replace with var passed from data */
+  width: var(--percentage);
+  height: 100%;
+  inset: 0;
+  z-index: 1;
+}
+
+.progressBarContainer {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+}
