@@ -1,37 +1,7 @@
-import { TokenPricesFeedsType } from '~/lib/fiat-currency';
-import { getTokenSlugByFeed } from '~/lib/fiat-currency/token-names';
-import { api } from '~/lib/utils/api';
-import { atomsToTokens } from '~/lib/utils/formaters';
-
-// const mavrykApi = new URL('/api', process.env.MAVRYK_WALLET_API_URL).href;
-
-// interface GetExchangeRatesResponseItem {
-//   tokenAddress?: string;
-//   tokenId?: number;
-//   exchangeRate: string;
-// }
-
-// export const fetchUsdToTokenRates = async () => {
-//   try {
-//     const { data } = await api<GetExchangeRatesResponseItem[]>(
-//       mavrykApi.concat('/exchange-rates')
-//     );
-
-//     const prices: StringRecord = {};
-
-//     for (const { tokenAddress, tokenId, exchangeRate } of data) {
-//       if (tokenAddress) {
-//         prices[toTokenSlug(tokenAddress, tokenId)] = exchangeRate;
-//       } else {
-//         prices.mav = exchangeRate;
-//       }
-//     }
-
-//     return prices;
-//   } catch (e) {
-//     throw new Error('Error while fetching usd to token rates');
-//   }
-// };
+import { TokenPricesFeedsType } from "~/lib/fiat-currency";
+import { getTokenSlugByFeed } from "~/lib/fiat-currency/token-names";
+import { api } from "~/lib/utils/api";
+import { atomsToTokens } from "~/lib/utils/formaters";
 
 const feedsQuery = `
     query dataFeedsPrices {
@@ -50,9 +20,9 @@ const feedsQuery = `
 export const fetchUsdToTokenRates = async () => {
   try {
     const { data } = await api<{ data: { aggregator: TokenPricesFeedsType } }>(
-      'https://api.mavenfinance.io/v1/graphql',
+      "https://api.mavenfinance.io/v1/graphql",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ query: feedsQuery }),
       }
     );
@@ -61,7 +31,7 @@ export const fetchUsdToTokenRates = async () => {
 
     return mappedRates;
   } catch (e) {
-    throw new Error('Error while fetching tezos rates');
+    throw new Error("Error while fetching tezos rates");
   }
 };
 
