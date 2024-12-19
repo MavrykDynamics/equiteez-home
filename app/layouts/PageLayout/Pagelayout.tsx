@@ -35,7 +35,7 @@ const PageLayout: FC<PageLayoutProps> = ({
       <div className={clsx("relative")}>
         <Header />
         {includeContainer ? <Container>{children}</Container> : children}
-        {/* {includeFooter && <Footer />} */}
+        {includeFooter && <Footer />}
       </div>
     </div>
   );

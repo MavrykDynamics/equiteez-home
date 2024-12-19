@@ -1,12 +1,25 @@
-@value vars from  "";
-@value tablet from vars;
-
 .headerWrapper {
+  @apply px-11 flex items-center justify-between h-[60px] max-w-container bg-background mx-auto;
+}
+
+.headerInnerWrapper {
   @apply px-11 flex items-center justify-between h-[60px] w-container bg-background;
 }
 
-@media (max-width: tablet) {
+.linksBlock {
+  @apply flex gap-x-9 items-center h-full;
+}
+
+@media (max-width: 600px) {
   .headerWrapper {
     @apply px-4;
+  }
+
+  .headerInnerWrapper {
+    @apply px-0;
+  }
+
+  .linksBlock {
+    display: none;
   }
 }

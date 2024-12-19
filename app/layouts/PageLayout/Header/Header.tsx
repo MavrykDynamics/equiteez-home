@@ -7,7 +7,7 @@ import styles from "./header.module.css";
 export const Header = () => {
   return (
     <section className={styles.headerWrapper}>
-      <div className="px-11 flex items-center justify-between h-[60px] w-container bg-background">
+      <div className={styles.headerInnerWrapper}>
         <Logo />
         <HeaderLinksBlock />
       </div>
@@ -17,7 +17,7 @@ export const Header = () => {
 
 const HeaderLinksBlock = () => {
   return (
-    <header className="flex gap-x-9 items-center h-full">
+    <header className={styles.linksBlock}>
       {/* <Link to="/" className="text-body-xs text-content">
         New Listings
       </Link> */}

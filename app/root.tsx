@@ -11,7 +11,8 @@ import { json, LinksFunction } from "@remix-run/node";
 // providers
 
 // global styles
-import stylesheet from "~/index.css?url";
+import stylesheet from "~/styles/index.css?url";
+import { cssBundleHref } from "@remix-run/css-bundle";
 
 // providers
 import { AppProvider } from "./providers/AppProvider/AppProvider";
@@ -42,6 +43,7 @@ import { DexProvider } from "./providers/Dexprovider/dex.provider";
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
   { rel: "stylesheet", href: stylesheet },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export const loader = async () => {

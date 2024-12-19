@@ -20,8 +20,7 @@
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "npm run build && wrangler pages dev",
-    "cf-typegen": "wrangler types",
-    "postinstall": "patch-package"
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
@@ -32,10 +31,10 @@
     "@microsoft/signalr": "^8.0.0",
     "@remix-run/cloudflare": "^2.8.1",
     "@remix-run/cloudflare-pages": "^2.8.1",
+    "@remix-run/css-bundle": "^2.15.1",
     "@remix-run/node": "^2.9.1",
     "@remix-run/react": "^2.9.1",
     "@remix-run/serve": "^2.9.1",
-   
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.7",
     "bignumber.js": "^9.1.2",
@@ -63,13 +62,13 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240405.0",
     "@remix-run/dev": "^2.9.1",
-    "@types/react": "^18.2.20",
-    "@types/react-dom": "^18.2.7",
-    "@types/uuid": "^10.0.0",
     "@types/lodash": "^4.17.5",
+    "@types/react": "^18.2.20",
     "@types/react-css-transition-replace": "^2.1.7",
+    "@types/react-dom": "^18.2.7",
     "@types/react-modal": "^3.16.3",
     "@types/react-transition-group": "^4.4.11",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "eslint": "^8.38.0",
@@ -83,9 +82,9 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
-    "vite-tsconfig-paths": "^4.2.1",
     "vite-plugin-node-polyfills": "^0.21.0",
     "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.1",
     "wrangler": "^3.78.3"
   },
   "engines": {

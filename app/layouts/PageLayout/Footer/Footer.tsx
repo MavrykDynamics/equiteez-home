@@ -3,12 +3,14 @@ import clsx from "clsx";
 import { Link } from "@remix-run/react";
 // import { SOCIALS } from '~/consts/icons';
 
+import styles from "./footer.module.css";
+
 import LogoIcon from "app/icons/logo.svg?react";
 
 export const Footer = () => {
   return (
-    <footer className={clsx("bg-sand-900 flex flex-col items-center")}>
-      <div className="flex justify-between px-[100px] pt-[54px] pb-[122px] w-container">
+    <footer className={clsx(styles.footer)}>
+      <div className="flex justify-between px-[100px] pt-[54px] pb-[122px] w-full">
         <div className="max-w-[420px] flex flex-col items-start">
           <Link to="/" className="flex items-center gap-x-[10px] w-auto">
             <LogoIcon className="text-white stroke-current" />
