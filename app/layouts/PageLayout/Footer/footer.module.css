@@ -1,3 +1,13 @@
 .footer {
   @apply bg-sand-900 flex flex-col items-center max-w-container w-full mx-auto;
 }
+
+.footerInner {
+  @apply flex justify-between px-[100px] pt-[54px] pb-[122px] w-full;
+}
+
+@media (max-width: 600px) {
+  .footerInner {
+    @apply px-4 pt-8 pb-11;
+  }
+}
