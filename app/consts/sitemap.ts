@@ -1,15 +1,11 @@
 export const { BASE_URL } = process.env;
 
-export const navbar = [
-  { to: '/', text: 'Home' },
-  { to: '/properties', text: 'Estates Page' },
-  { to: '/exchange', text: 'Exchange Page' },
-];
+export const navbar = [{ to: "/", text: "Home" }];
 
 export const toXmlSitemap = (urls: string[]) => {
   const urlsAsXml = urls
     .map((url) => `<url><loc>${url}</loc></url>`)
-    .join('\n');
+    .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
       <urlset
