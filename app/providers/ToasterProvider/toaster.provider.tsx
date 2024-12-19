@@ -23,8 +23,6 @@ import { WalletActionType } from "~/contracts/actions.type";
 import { getErrorPageData } from "./helpers/getErrorPageData";
 import { ERROR_TYPE_FATAL, ERROR_TYPE_ROUTER } from "~/errors/error.const";
 import { MaintancePageTemp } from "~/templates/MaintancePageTemp";
-import { UserProvider } from "../UserProvider/user.provider";
-import { WalletProvider } from "../WalletProvider/wallet.provider";
 import { AppProvider } from "../AppProvider/AppProvider";
 import { TokensProvider } from "../TokensProvider/tokens.provider";
 
@@ -237,19 +235,15 @@ export default class ToasterProvider extends React.Component<Props, State> {
         ) : (
           <AppProvider>
             <TokensProvider initialTokens={[]} initialTokensMetadata={{}}>
-              <WalletProvider>
-                <UserProvider>
-                  {this.state.context.maintance ? (
-                    <MaintancePageTemp />
-                  ) : (
-                    <ErrorPageTemp
-                      headerText={errorPageContent.header}
-                      descText={errorPageContent.desc}
-                      type={type}
-                    />
-                  )}
-                </UserProvider>
-              </WalletProvider>
+              {this.state.context.maintance ? (
+                <MaintancePageTemp />
+              ) : (
+                <ErrorPageTemp
+                  headerText={errorPageContent.header}
+                  descText={errorPageContent.desc}
+                  type={type}
+                />
+              )}
             </TokensProvider>
           </AppProvider>
         )}

@@ -1,6 +1,5 @@
-import { Link } from '@remix-run/react';
-import { Logo } from '../Logo';
-import { ConnectWallet } from './ConnectWallet';
+import { Link } from "@remix-run/react";
+import { Logo } from "../Logo";
 
 export const Header = () => {
   return (
@@ -43,7 +42,7 @@ const HeaderLinksBlock = () => {
         Staking
       </Link>
 
-      <ConnectWallet />
+      {/* <ConnectWallet /> */}
     </header>
   );
 };

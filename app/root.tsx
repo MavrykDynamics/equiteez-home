@@ -12,12 +12,9 @@ import { json, LinksFunction } from "@remix-run/node";
 
 // global styles
 import stylesheet from "~/index.css?url";
-import "react-datepicker/dist/react-datepicker.css";
 
 // providers
 import { AppProvider } from "./providers/AppProvider/AppProvider";
-import { WalletProvider } from "./providers/WalletProvider/wallet.provider";
-import { UserProvider } from "./providers/UserProvider/user.provider";
 import { EstatesProvider } from "./providers/EstatesProvider/estates.provider";
 import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
 import { PopupProvider } from "./providers/PopupProvider/popup.provider";
@@ -75,24 +72,20 @@ const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <AppProvider>
       <ApolloProvider>
-        <WalletProvider>
-          <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
-            <TokensProvider
-              initialTokens={tokens}
-              initialTokensMetadata={tokensMetadata}
-            >
-              <EstatesProvider>
-                <DexProvider>
-                  <UserProvider>
-                    <AppGlobalLoader>
-                      <PopupProvider>{children}</PopupProvider>
-                    </AppGlobalLoader>
-                  </UserProvider>
-                </DexProvider>
-              </EstatesProvider>
-            </TokensProvider>
-          </CurrencyProvider>
-        </WalletProvider>
+        <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
+          <TokensProvider
+            initialTokens={tokens}
+            initialTokensMetadata={tokensMetadata}
+          >
+            <EstatesProvider>
+              <DexProvider>
+                <AppGlobalLoader>
+                  <PopupProvider>{children}</PopupProvider>
+                </AppGlobalLoader>
+              </DexProvider>
+            </EstatesProvider>
+          </TokensProvider>
+        </CurrencyProvider>
       </ApolloProvider>
     </AppProvider>
   );
