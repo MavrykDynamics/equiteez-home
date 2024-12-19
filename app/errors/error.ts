@@ -1,20 +1,16 @@
 import type {
   InputPayload,
   Payload,
-  WalletOperationErrorPayload,
-  WalletOperationErrorPayloadErrorItem,
   InternalErrorType,
 } from './error.type'
-import { walletOparationErrorPayload } from './error.schema'
 import { ERROR_TYPE_FATAL } from './error.const'
-import { AbortedBeaconError } from '@airgap/beacon-sdk'
 
 /**
  * ExtendedErrorClass as base class. Contains all essential information
  * for error. You can create another extened class from it. See examples below (ValidationError, PropertyError etc.)
  */
 class ExtendedErrorClass extends Error {
-  payload: Payload | InputPayload | WalletOperationErrorPayload
+  payload: Payload | InputPayload
 
   constructor(messageOrError: string | Error, payload: Payload = {}) {
     const message = messageOrError instanceof Error ? messageOrError.message : messageOrError
@@ -58,20 +54,12 @@ export class FatalError extends ExtendedErrorClass {
   }
 }
 
-/**
- *
- */
-export class WalletOperationError extends ExtendedErrorClass {
-  id?: string
-  kind?: string
-  errors?: WalletOperationErrorPayloadErrorItem[]
-  errorDetails?: string
-}
+
 
 // this one for all errors
-export type CustomErrors = Error | ApiError | ValidationError | FatalError | WalletOperationError | null
+export type CustomErrors = Error | ApiError | ValidationError | FatalError  | null
 // this one only for extended error, so you know it is NOT null and NOT simple Error
-export type ExtendedError = FatalError | ApiError | ValidationError | WalletOperationError
+export type ExtendedError = FatalError | ApiError | ValidationError 
 
 /**
  * Function checks the error type based on payload similarity
@@ -83,15 +71,11 @@ export function isExtendedError(e: unknown): e is ExtendedError {
   return (
     e instanceof FatalError ||
     e instanceof ApiError ||
-    e instanceof ValidationError ||
-    e instanceof WalletOperationError
+    e instanceof ValidationError 
   )
 }
 
-export function isWalletOperationError(e: unknown) {
-  const result = walletOparationErrorPayload.safeParse(Object.assign({}, e))
-  return result.success
-}
+
 
 /**
  * Convert unknown to Error object or keep if it was error
@@ -112,13 +96,4 @@ export function isAbortError(rawError: unknown): boolean {
   if (typedError.name === 'AbortError') return true
 
   return false
-}
-
-/**
- * Typeguard to check whether error is wallet operation abort error
- * @param rawError any
- * @returns boolean value whether error is user abort error
- */
-export const checkWhetherWalletAbortError = (rawError: any): rawError is AbortedBeaconError => {
-  return rawError?.name === 'UnknownBeaconError' && rawError?.title === 'Aborted'
 }

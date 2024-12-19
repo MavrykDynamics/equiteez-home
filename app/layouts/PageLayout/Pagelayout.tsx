@@ -5,7 +5,7 @@ import clsx from "clsx";
 import DocBg from "app/a11y/DocBg";
 
 // layout components
-import { Header } from "./Header";
+import { Header } from "./Header/Header";
 import { Footer } from "./Footer/Footer";
 import { Container } from "~/lib/atoms/Container";
 
@@ -35,7 +35,7 @@ const PageLayout: FC<PageLayoutProps> = ({
       <div className={clsx("relative")}>
         <Header />
         {includeContainer ? <Container>{children}</Container> : children}
-        {includeFooter && <Footer />}
+        {/* {includeFooter && <Footer />} */}
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import { Link } from "@remix-run/react";
-import { Logo } from "../Logo";
+import { Logo } from "../../Logo";
 import { Button } from "~/lib/atoms/Button";
+
+import styles from "./header.module.css";
 
 export const Header = () => {
   return (
-    <section className="flex justify-center border-b border-divider w-full bg-background">
+    <section className={styles.headerWrapper}>
       <div className="px-11 flex items-center justify-between h-[60px] w-container bg-background">
         <Logo />
         <HeaderLinksBlock />

@@ -32,45 +32,7 @@ export default function Index() {
 
   return (
     <PageLayout includeContainer={false}>
-      <Container>
-        {/* <div className="flex flex-col gap-3">
-          <button
-            onClick={() => info("info", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            info
-          </button>
-          <button
-            onClick={() => warning("warning", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            warning
-          </button>
-          <button
-            onClick={() => loading("loading", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            loading
-          </button>
-          <button
-            onClick={() => success("success", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            success
-          </button>
-          <button
-            onClick={() => bug("bug", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            bug
-          </button>
-          <button
-            onClick={() => bug("fatal", "message")}
-            className="bg-green-500 text-white p-2"
-          >
-            fatal
-          </button>
-        </div> */}
+      {/* <Container>
         <BannerSection />
         <Spacer />
         <FinanceSection />
@@ -79,15 +41,15 @@ export default function Index() {
         <Spacer />
         <PortfolioSection />
         <Spacer />
-      </Container>
-      <RealEstateSection />
-      <Container>
+      </Container> */}
+      {/* <RealEstateSection /> */}
+      {/* <Container>
         <Spacer />
         <IntegrationSection />
         <Spacer />
         <FAQSection data={homeFAQ} />
         <Spacer className="h-[108px]" />
-      </Container>
+      </Container> */}
     </PageLayout>
   );
 }

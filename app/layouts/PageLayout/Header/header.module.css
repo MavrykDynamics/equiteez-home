@@ -1,0 +1,12 @@
+@value vars from  "";
+@value tablet from vars;
+
+.headerWrapper {
+  @apply px-11 flex items-center justify-between h-[60px] w-container bg-background;
+}
+
+@media (max-width: tablet) {
+  .headerWrapper {
+    @apply px-4;
+  }
+}
