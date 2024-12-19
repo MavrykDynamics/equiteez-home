@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import { Logo } from "../Logo";
+import { Button } from "~/lib/atoms/Button";
 
 export const Header = () => {
   return (
@@ -32,7 +33,7 @@ const HeaderLinksBlock = () => {
         className="text-body-xs text-content font-semibold opacity-50"
         aria-disabled
       >
-        Dashboard
+        RWA Loans
       </Link>
       <Link
         to="#"
@@ -43,6 +44,13 @@ const HeaderLinksBlock = () => {
       </Link>
 
       {/* <ConnectWallet /> */}
+      <Link
+        to="https://equiteez.com"
+        target="_black"
+        referrerPolicy="no-referrer"
+      >
+        <Button className="py-[10px]">Launch App</Button>
+      </Link>
     </header>
   );
 };
