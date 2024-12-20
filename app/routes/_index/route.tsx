@@ -42,7 +42,7 @@ export default function Index() {
         <PortfolioSection />
         <Spacer />
       </Container> */}
-      {/* <RealEstateSection /> */}
+      <RealEstateSection />
       <Container>
         <Spacer />
         <IntegrationSection />

@@ -102,12 +102,12 @@ const CurrentEstate = forwardRef<
             "flex flex-col items-start gap-y-6"
           )}
         >
-          <h1 className="text-hero text-white">{estate.title}</h1>
+          <h1 className={styles.estateHeader}>{estate.title}</h1>
           <div className="w-full flex items-end justify-between">
             <p className="text-buttons text-white">{estate.author}</p>
-            <Link to={"/properties"}>
+            <Link to={"/properties"} className={styles.estateLink}>
               <Button
-                className="text-white bg-transparent border-2 border-white py-[8px]"
+                className="text-white bg-transparent border-2 border-white py-[8px] -sm:hidden"
                 variant="outline"
               >
                 View properties
