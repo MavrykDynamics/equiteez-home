@@ -115,6 +115,10 @@
     gap: 44px;
   }
 
+  .bannerImageWrapper {
+    width: 100%;
+    gap: 10px;
+  }
   .bannerHeader {
     @apply text-section-headline;
   }
