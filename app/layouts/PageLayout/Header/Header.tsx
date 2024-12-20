@@ -3,13 +3,18 @@ import { Logo } from "../../Logo";
 import { Button } from "~/lib/atoms/Button";
 
 import styles from "./header.module.css";
+import { Hamburger } from "~/lib/atoms/Hamburger/Hamburger";
+import { useState } from "react";
 
 export const Header = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <section className={styles.headerWrapper}>
       <div className={styles.headerInnerWrapper}>
         <Logo />
         <HeaderLinksBlock />
+        <Hamburger checked={open} setChecked={setOpen} />
       </div>
     </section>
   );
@@ -18,9 +23,6 @@ export const Header = () => {
 const HeaderLinksBlock = () => {
   return (
     <header className={styles.linksBlock}>
-      {/* <Link to="/" className="text-body-xs text-content">
-        New Listings
-      </Link> */}
       <Link
         to="/properties"
         className="text-body-xs text-content font-semibold"
