@@ -1,9 +1,10 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
-import styles from './faqSection.module.css';
-import clsx from 'clsx';
+import { FC, useEffect, useRef, useState } from "react";
+import styles from "./faqSection.module.css";
+import clsx from "clsx";
 
-import ArrowDown from 'app/icons/chevron-down.svg?react';
-import { useAppContext } from '~/providers/AppProvider/AppProvider';
+import ArrowDown from "app/icons/chevron-down.svg?react";
+import { useAppContext } from "~/providers/AppProvider/AppProvider";
+import { PaddingContainer } from "~/lib/atoms/Container";
 // import { isVisibleInViewport } from '~/lib/utils/element-in-view';
 
 export type FaqType = {
@@ -21,10 +22,10 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
 
     if (IS_WEB) {
       const newUrl = window.location.href
-        .split('#')
+        .split("#")
         .shift()
         ?.concat(`#faq-${idx}`);
-      window.history.pushState({}, '', newUrl);
+      window.history.pushState({}, "", newUrl);
     }
 
     if (!isScrollAllowed) setIsScrollAllowed(true);
@@ -42,37 +43,39 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
 
     if (!hash) return;
 
-    const n = hash.split('#faq-').pop();
+    const n = hash.split("#faq-").pop();
 
     const element = document.querySelector(`[data-active-article="faq-${n}"]`);
 
     if (!element) return;
 
     element.scrollIntoView({
-      block: 'start',
-      behavior: 'instant',
+      block: "start",
+      behavior: "instant",
     });
   }, []);
 
   return (
-    <section className="px-11 flex gap-x-[90px]">
-      <div className="max-w-[506px] min-w-[506px]">
-        <h2 className="text-content text-section-headline">
-          Answers to our most frequently asked questions
-        </h2>
-      </div>
-      <div className="flex flex-col flex-1">
-        {data.map((item, idx) => (
-          <Question
-            key={item.title}
-            idx={idx}
-            activeArticleIdx={activeArticleIdx}
-            item={item}
-            handleClick={handleHeaderClick}
-          />
-        ))}
-      </div>
-    </section>
+    <PaddingContainer>
+      <section className={styles.faqWrapper}>
+        <div className="max-w-[506px] w-full">
+          <h2 className="text-content text-section-headline">
+            Answers to our most frequently asked questions
+          </h2>
+        </div>
+        <div className="flex flex-col flex-1">
+          {data.map((item, idx) => (
+            <Question
+              key={item.title}
+              idx={idx}
+              activeArticleIdx={activeArticleIdx}
+              item={item}
+              handleClick={handleHeaderClick}
+            />
+          ))}
+        </div>
+      </section>
+    </PaddingContainer>
   );
 };
 
@@ -80,7 +83,7 @@ type QuestionType = {
   handleClick: (idx: number) => void;
   activeArticleIdx: number;
   idx: number;
-  item: FaqType['data'][0];
+  item: FaqType["data"][0];
 };
 
 const Question: FC<QuestionType> = ({
@@ -105,12 +108,12 @@ const Question: FC<QuestionType> = ({
         )}
         data-active-article={`faq-${idx + 1}`}
       >
-        <button className="flex items-center justify-between w-full capitalize">
+        <button className="flex items-center justify-between w-full capitalize text-left gap-4">
           <div className={styles.faqSubHeader}>{item.title}</div>
           <ArrowDown
             className={clsx(
-              'w-6 h-6 text-content stroke-current',
-              activeArticleIdx === idx + 1 && 'rotate-180'
+              "size-6 min-w-6 text-content stroke-current",
+              activeArticleIdx === idx + 1 && "rotate-180"
             )}
           />
         </button>
@@ -121,9 +124,13 @@ const Question: FC<QuestionType> = ({
           maxHeight:
             activeArticleIdx === idx + 1
               ? `${answerRef.current?.scrollHeight}px`
-              : '0',
+              : "0",
         }}
-        className={clsx('text-content text-body', styles.answercont)}
+        className={clsx(
+          "text-content text-body",
+          styles.answercont,
+          activeArticleIdx === idx + 1 && styles.active
+        )}
       >
         {item.description}
       </div>

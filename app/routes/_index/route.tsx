@@ -15,7 +15,7 @@ import { IntegrationSection } from "./components/IntegrationSection";
 import { FAQSection } from "app/templates/FAQSection";
 
 import { homeFAQ } from "./index.const";
-import { Container } from "~/lib/atoms/Container";
+import { Container } from "~/lib/atoms/Container/Container";
 // import { useToasterContext } from "~/providers/ToasterProvider/toaster.provider";
 
 export const meta: MetaFunction = () => {
@@ -43,13 +43,13 @@ export default function Index() {
         <Spacer />
       </Container> */}
       {/* <RealEstateSection /> */}
-      {/* <Container>
-        <Spacer />
+      <Container>
+        {/* <Spacer />
         <IntegrationSection />
-        <Spacer />
+        <Spacer /> */}
         <FAQSection data={homeFAQ} />
         <Spacer className="h-[108px]" />
-      </Container> */}
+      </Container>
     </PageLayout>
   );
 }

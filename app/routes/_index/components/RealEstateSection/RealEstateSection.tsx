@@ -1,17 +1,17 @@
-import { Link } from '@remix-run/react';
-import styles from './realEstate.module.css';
+import { Link } from "@remix-run/react";
+import styles from "./realEstate.module.css";
 
-import estate1Src from 'app/assets/home/real-estate-1.webp';
-import estate2Src from 'app/assets/home/real-estate-2.webp';
-import estate3Src from 'app/assets/home/real-estate-3.webp';
-import clsx from 'clsx';
-import { forwardRef, useEffect, useMemo, useState } from 'react';
-import { Container } from '~/lib/atoms/Container';
-import ArrowRight from 'app/icons/arrow-right.svg?react';
-import { Button } from '~/lib/atoms/Button';
+import estate1Src from "app/assets/home/real-estate-1.webp";
+import estate2Src from "app/assets/home/real-estate-2.webp";
+import estate3Src from "app/assets/home/real-estate-3.webp";
+import clsx from "clsx";
+import { forwardRef, useEffect, useMemo, useState } from "react";
+import { Container } from "~/lib/atoms/Container/Container";
+import ArrowRight from "app/icons/arrow-right.svg?react";
+import { Button } from "~/lib/atoms/Button";
 
-import ReactCSSTransitionReplace from 'react-css-transition-replace';
-import { useAppContext } from '~/providers/AppProvider/AppProvider';
+import ReactCSSTransitionReplace from "react-css-transition-replace";
+import { useAppContext } from "~/providers/AppProvider/AppProvider";
 
 const ESTATES = [
   {
@@ -24,7 +24,7 @@ const ESTATES = [
         because it got me in the game.”
       </>
     ),
-    author: '- Lana Rose, Real Estate Investor',
+    author: "- Lana Rose, Real Estate Investor",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const ESTATES = [
         because it got me in the game.”
       </>
     ),
-    author: '- Lana Rose, Real Estate Investor',
+    author: "- Lana Rose, Real Estate Investor",
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const ESTATES = [
         because it got me in the game.”
       </>
     ),
-    author: '- Lana Rose, Real Estate Investor',
+    author: "- Lana Rose, Real Estate Investor",
   },
 ];
 
@@ -76,7 +76,7 @@ export const RealEstateSection = () => {
     <Container maxWidth={2304}>
       {IS_WEB ? (
         <ReactCSSTransitionReplace
-          transitionName={'cross-fade'}
+          transitionName={"cross-fade"}
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={1000}
         >
@@ -93,19 +93,19 @@ const CurrentEstate = forwardRef<
 >(({ estate }, ref) => {
   return (
     <section ref={ref} className={clsx(styles.estateContainer)}>
-      <div key={estate.id} className={clsx('w-full h-full relative')}>
+      <div key={estate.id} className={clsx("w-full h-full relative")}>
         <img src={estate.imgSrc} alt="real estate" className={styles.fade} />
         <div
           className={clsx(
             styles.estateTextBlock,
             styles.fade,
-            'flex flex-col items-start gap-y-6'
+            "flex flex-col items-start gap-y-6"
           )}
         >
           <h1 className="text-hero text-white">{estate.title}</h1>
           <div className="w-full flex items-end justify-between">
             <p className="text-buttons text-white">{estate.author}</p>
-            <Link to={'/properties'}>
+            <Link to={"/properties"}>
               <Button
                 className="text-white bg-transparent border-2 border-white py-[8px]"
                 variant="outline"
@@ -121,4 +121,4 @@ const CurrentEstate = forwardRef<
   );
 });
 
-CurrentEstate.displayName = 'CurrentEstate';
+CurrentEstate.displayName = "CurrentEstate";

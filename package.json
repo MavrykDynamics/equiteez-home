@@ -13,6 +13,7 @@
     "build": "remix vite:build",
     "deploy": "npm run build && wrangler pages deploy",
     "dev": "remix vite:dev",
+    "sass": "sass --watch app/:app/",
     "graphql-compile": "graphql-codegen --require dotenv/config --config ./codegen.ts dotenv_config_path=./.env; true",
     "graphql-compile-watch": "graphql-codegen --require dotenv/config --config ./codegen.ts dotenv_config_path=./.env",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",

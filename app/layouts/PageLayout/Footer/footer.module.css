@@ -1,3 +1,6 @@
+/* @value vars: "styles/vars.module.css";
+@value tablet from vars; */
+
 .footer {
   @apply bg-sand-900 flex flex-col items-center max-w-container w-full mx-auto;
 }

@@ -1,0 +1,9 @@
+.paddingContainer {
+  padding-inline: 44px;
+}
+
+@media (max-width: 600px) {
+  .paddingContainer {
+    padding-inline: 16px;
+  }
+}
