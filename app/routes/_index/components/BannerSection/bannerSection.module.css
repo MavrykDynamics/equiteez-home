@@ -18,8 +18,8 @@
   width: auto;
 
   display: grid;
-  grid-template-columns: 53px 83px 202px 202px 156px;
-  grid-template-rows: 34px 124px 119px 124px 20px 14px;
+  grid-template-columns: 6.76% 10.59% 25.77% 25.77% 19.9%; /* Convert px to % based on 784px width */
+  grid-template-rows: 6.13% 22.34% 21.44% 22.34% 3.6% 2.52%; /* Convert px to % based on 555px height */
   gap: 20px;
 }
 
@@ -103,8 +103,8 @@
   content: "";
   opacity: 50%;
   position: absolute;
-  width: 158px;
-  height: 127px;
+  width: 100%; /* 158px / 784px */
+  height: 100%; /* 127px / 555px */
   z-index: 1;
 }
 
