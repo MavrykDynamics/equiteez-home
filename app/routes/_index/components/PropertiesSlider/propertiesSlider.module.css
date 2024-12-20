@@ -1,0 +1,17 @@
+.propertiesSliderWrapper {
+  @apply px-11 py-16 bg-green-main rounded-4xl;
+}
+
+.properiesSliderHeader {
+  @apply text-white text-hero max-w-[1017px] mb-6;
+}
+
+@media (max-width: 600px) {
+  .propertiesSliderWrapper {
+    @apply px-8 py-11;
+  }
+
+  .properiesSliderHeader {
+    @apply text-section-headline;
+  }
+}

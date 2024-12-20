@@ -21,6 +21,7 @@ import {
 import { usePrevNextButtons } from "~/lib/ui/use-embla-buttons";
 import { ThumbCardSecondary } from "~/templates/ThumbCard/ThumbCard";
 import { useDexContext } from "~/providers/Dexprovider/dex.provider";
+import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 
 const SLIDER_VIEW_LIMIT = 3;
 
@@ -34,6 +35,12 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
   const navigate = useNavigate();
   const { dodoMav } = useDexContext();
+  const { width } = useWindowDimensions();
+
+  const isMobile = width <= 600;
+  const showBtns = isMobile
+    ? slides.length > 1
+    : slides.length > SLIDER_VIEW_LIMIT;
 
   const {
     prevBtnDisabled,
@@ -61,7 +68,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             </div>
           </Button>
         </Link>
-        {slides.length > SLIDER_VIEW_LIMIT && (
+        {showBtns && (
           <div className="flex items-center gap-x-3">
             <PrevButton
               onClick={onPrevButtonClick}
@@ -122,7 +129,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   </div>
                 ) : (
                   <ThumbCardSecondary
-                    height={"281px"}
+                    height={isMobile ? "195px" : "281px"}
                     imgSrc={estate.assetDetails.previewImage}
                     title={estate.name}
                     description={

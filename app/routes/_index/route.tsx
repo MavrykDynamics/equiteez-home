@@ -35,9 +35,9 @@ export default function Index() {
       <Container>
         {/* <BannerSection />
         <Spacer />
-        <FinanceSection />
+        <FinanceSection /> */}
         <Spacer />
-        <PropertiesSlider /> */}
+        <PropertiesSlider />
         <Spacer />
         <PortfolioSection />
         <Spacer />

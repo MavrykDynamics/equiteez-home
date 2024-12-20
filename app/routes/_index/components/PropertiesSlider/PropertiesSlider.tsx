@@ -1,6 +1,9 @@
 import { EmblaOptionsType } from "embla-carousel";
 import EmblaCarousel from "./EmblaCarousel";
 import { useEstatesContext } from "~/providers/EstatesProvider/estates.provider";
+import { PaddingContainer } from "~/lib/atoms/Container";
+
+import styles from "./propertiesSlider.module.css";
 
 const OPTIONS: EmblaOptionsType = { align: "start" };
 
@@ -8,13 +11,13 @@ export const PropertiesSlider = () => {
   const { estatesArr } = useEstatesContext();
 
   return (
-    <section className="px-11">
-      <div className="px-11 py-16 bg-green-main rounded-4xl">
-        <h1 className="text-white text-hero max-w-[1017px] mb-6">
+    <PaddingContainer>
+      <div className={styles.propertiesSliderWrapper}>
+        <h1 className={styles.properiesSliderHeader}>
           Explore our diverse portfolio of exceptional properties
         </h1>
         <EmblaCarousel slides={estatesArr.slice(0, 7)} options={OPTIONS} />
       </div>
-    </section>
+    </PaddingContainer>
   );
 };
