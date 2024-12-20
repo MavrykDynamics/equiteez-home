@@ -2,7 +2,7 @@
 @value tablet from vars; */
 
 .footer {
-  @apply bg-sand-900 flex flex-col items-center max-w-container w-full mx-auto;
+  @apply bg-sand-900 flex flex-col items-center max-w-container w-full mx-auto mt-[108px];
 }
 
 .footerInner {
@@ -10,6 +10,10 @@
 }
 
 @media (max-width: 600px) {
+  .footer {
+    @apply mt-[220px];
+  }
+
   .footerInner {
     @apply px-4 pt-8 pb-11;
   }

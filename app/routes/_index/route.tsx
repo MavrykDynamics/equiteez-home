@@ -44,11 +44,10 @@ export default function Index() {
       </Container> */}
       {/* <RealEstateSection /> */}
       <Container>
-        {/* <Spacer />
+        <Spacer />
         <IntegrationSection />
-        <Spacer /> */}
+        <Spacer />
         <FAQSection data={homeFAQ} />
-        <Spacer className="h-[108px]" />
       </Container>
     </PageLayout>
   );
