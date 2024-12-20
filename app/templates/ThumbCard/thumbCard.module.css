@@ -76,7 +76,6 @@
   content: "";
   position: absolute;
   border-radius: 8px;
-  /* TODO replace with var passed from data */
   width: var(--percentage);
   height: 100%;
   inset: 0;

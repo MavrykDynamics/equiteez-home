@@ -33,9 +33,9 @@ export default function Index() {
   return (
     <PageLayout includeContainer={false}>
       <Container>
-        {/* <BannerSection />
+        {/* <BannerSection /> */}
         <Spacer />
-        <FinanceSection /> */}
+        <FinanceSection />
         <Spacer />
         <PropertiesSlider />
         <Spacer />

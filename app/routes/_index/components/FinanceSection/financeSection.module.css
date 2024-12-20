@@ -1,3 +1,7 @@
+.headlineWrapper {
+  @apply flex items-start gap-4 mb-11 justify-between;
+}
+
 .financeBlockWrapper {
   display: grid;
   grid-template-columns: 662px 1fr;
@@ -15,4 +19,32 @@
 .financeBlockImageWrapper > img {
   width: 100%;
   object-position: top;
+}
+
+.headlineBtnMobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .financeBlockWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+  }
+
+  .financeBlockImageWrapper {
+    height: auto;
+  }
+  .headlineBtn {
+    display: none;
+  }
+
+  .headlineBtnMobile {
+    display: block;
+    align-self: center;
+  }
+
+  .headlineWrapper {
+    @apply flex flex-col;
+  }
 }

@@ -1,16 +1,18 @@
-import { useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from "react";
 
 // assets
-import StatsImageSrc from 'app/assets/home/estate.webp';
+import StatsImageSrc from "app/assets/home/estate.webp";
 
-import styles from './financeSection.module.css';
-import type { TabType } from '~/lib/atoms/Tab';
-import { TabSwitcher } from '~/lib/organisms/TabSwitcher';
-import { TabsStepper } from './TabsStepper';
-import { HeadlineBlock } from './HeadlineBlock';
+import styles from "./financeSection.module.css";
+import type { TabType } from "~/lib/atoms/Tab";
+import { TabSwitcher } from "~/lib/organisms/TabSwitcher";
+import { TabsStepper } from "./TabsStepper";
+import { HeadlineBlock } from "./HeadlineBlock";
+import { PaddingContainer } from "~/lib/atoms/Container";
+import { Button } from "~/lib/atoms/Button";
 
 export const FinanceSection = () => {
-  const [activetabId, setAvtiveTabId] = useState('buying');
+  const [activetabId, setAvtiveTabId] = useState("buying");
 
   const handleTabClick = useCallback((id: string) => {
     setAvtiveTabId(id);
@@ -19,18 +21,18 @@ export const FinanceSection = () => {
   const tabs: TabType[] = useMemo(
     () => [
       {
-        id: 'buying',
-        label: 'Buying',
+        id: "buying",
+        label: "Buying",
         handleClick: handleTabClick,
       },
       {
-        id: 'selling',
-        label: 'Selling',
+        id: "selling",
+        label: "Selling",
         handleClick: handleTabClick,
       },
       {
-        id: 'borrowing',
-        label: 'Borrowing',
+        id: "borrowing",
+        label: "Borrowing",
         handleClick: handleTabClick,
       },
     ],
@@ -38,7 +40,7 @@ export const FinanceSection = () => {
   );
 
   return (
-    <section className="px-11">
+    <PaddingContainer>
       <HeadlineBlock />
       <div className={styles.financeBlockWrapper}>
         <div className={styles.financeBlockImageWrapper}>
@@ -50,7 +52,14 @@ export const FinanceSection = () => {
             <TabsStepper tabId={activetabId} />
           </div>
         </div>
+        <FinanceButton className={styles.headlineBtnMobile} />
       </div>
-    </section>
+    </PaddingContainer>
   );
 };
+
+export const FinanceButton: FC<{ className?: string }> = ({ className }) => (
+  <Button className={className} variant="outline" disabled>
+    How Equiteez Works
+  </Button>
+);

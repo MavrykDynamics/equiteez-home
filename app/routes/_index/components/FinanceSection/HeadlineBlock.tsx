@@ -1,8 +1,9 @@
-import { Button } from '~/lib/atoms/Button';
+import styles from "./financeSection.module.css";
+import { FinanceButton } from "./FinanceSection";
 
 export const HeadlineBlock = () => {
   return (
-    <div className="flex items-start gap-x-4 mb-11 justify-between">
+    <div className={styles.headlineWrapper}>
       <div>
         <h1 className="text-content text-section-headline max-w-[850px] mb-3">
           It’s never been easier to invest in asset such as real estate, and
@@ -16,9 +17,7 @@ export const HeadlineBlock = () => {
         </p>
       </div>
 
-      <Button variant="outline" disabled>
-        How Equiteez Works
-      </Button>
+      <FinanceButton className={styles.headlineBtn} />
     </div>
   );
 };
