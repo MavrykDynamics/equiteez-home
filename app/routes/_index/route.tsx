@@ -16,7 +16,6 @@ import { FAQSection } from "app/templates/FAQSection";
 
 import { homeFAQ } from "./index.const";
 import { Container } from "~/lib/atoms/Container/Container";
-// import { useToasterContext } from "~/providers/ToasterProvider/toaster.provider";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,12 +27,10 @@ export const meta: MetaFunction = () => {
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export default function Index() {
-  // const { info, bug, loading, success, warning } = useToasterContext();
-
   return (
     <PageLayout includeContainer={false}>
       <Container>
-        {/* <BannerSection /> */}
+        <BannerSection />
         <Spacer />
         <FinanceSection />
         <Spacer />

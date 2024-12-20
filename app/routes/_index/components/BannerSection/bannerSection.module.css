@@ -4,6 +4,16 @@
   column-gap: 40px;
 }
 
+.bannerHeader {
+  @apply text-hero text-content mb-4;
+}
+
+.bannerBtnsWrapper {
+  @apply flex items-center gap-4;
+}
+
+/* Images styles */
+
 .bannerImageWrapper {
   width: auto;
 
@@ -90,10 +100,26 @@
 
 .img-1::before,
 .img-6::before {
-  content: '';
+  content: "";
   opacity: 50%;
   position: absolute;
   width: 158px;
   height: 127px;
   z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .bannerContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 44px;
+  }
+
+  .bannerHeader {
+    @apply text-section-headline;
+  }
+
+  .bannerBtnsWrapper {
+    @apply flex-wrap;
+  }
 }
