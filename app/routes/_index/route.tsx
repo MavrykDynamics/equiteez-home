@@ -32,16 +32,16 @@ export default function Index() {
 
   return (
     <PageLayout includeContainer={false}>
-      {/* <Container>
-        <BannerSection />
+      <Container>
+        {/* <BannerSection />
         <Spacer />
         <FinanceSection />
         <Spacer />
-        <PropertiesSlider />
+        <PropertiesSlider /> */}
         <Spacer />
         <PortfolioSection />
         <Spacer />
-      </Container> */}
+      </Container>
       <RealEstateSection />
       <Container>
         <Spacer />

@@ -1,0 +1,33 @@
+.portfolioWrapper {
+  @apply flex justify-between items-center gap-[116px];
+}
+
+.cardsWrapper {
+  @apply grid grid-cols-2 gap-x-6;
+}
+
+.pt6 {
+  @apply pt-6;
+}
+
+.cardHeight {
+  @apply min-h-[339px];
+}
+
+@media (max-width: 600px) {
+  .portfolioWrapper {
+    @apply flex-col gap-11;
+  }
+
+  .cardsWrapper {
+    @apply flex flex-col gap-4;
+  }
+
+  .pt6 {
+    @apply pt-0;
+  }
+
+  .cardHeight {
+    @apply min-h-[335px];
+  }
+}
