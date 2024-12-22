@@ -1,0 +1,14 @@
+.glider {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 120px;
+  background-color: aqua;
+  z-index: 1;
+  border-radius: 99px;
+  transition: 0.25s ease-out;
+}
+
+.glider.active {
+  transform: translateX(var(--tx));
+}

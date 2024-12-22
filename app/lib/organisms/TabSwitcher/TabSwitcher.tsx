@@ -1,8 +1,11 @@
-import type { FC } from 'react';
-import clsx from 'clsx';
+import { useMemo, type FC } from "react";
+import clsx from "clsx";
 
 // components
-import { Tab, TabType, TabVariant } from '~/lib/atoms/Tab';
+import { Tab, TabType, TabVariant } from "~/lib/atoms/Tab";
+
+import styles from "./tabSwitcher.module.css";
+import { getGliderDistance } from "./utils";
 
 type TabSwitcherProps = {
   tabs: TabType[];
@@ -13,9 +16,15 @@ type TabSwitcherProps = {
 };
 
 const variants = {
-  primary: 'gap-x-3',
-  secondary: 'gap-x-2',
-  tertiary: 'gap-x-4',
+  primary: "gap-x-3",
+  secondary: "gap-x-2",
+  tertiary: "gap-x-4",
+};
+
+const gliderDistances = {
+  primary: (idx: number) => `${getGliderDistance(idx, 12)}%`,
+  secondary: (idx: number) => `${getGliderDistance(idx, 8)}%`,
+  tertiary: (idx: number) => `${getGliderDistance(idx, 16)}%`,
 };
 
 export const TabSwitcher: FC<TabSwitcherProps> = ({
@@ -23,10 +32,22 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
   activeTabId,
   grow,
   className,
-  variant = 'primary',
+  variant = "primary",
 }) => {
+  const activeIdx = useMemo(
+    () => tabs.findIndex((tab) => tab.id === activeTabId) ?? 0,
+    [activeTabId, tabs]
+  );
+
   return (
-    <div className={clsx('flex items-center', variants[variant], className)}>
+    // bg-sand-800
+    <div
+      className={clsx(
+        "flex items-center relative",
+        variants[variant],
+        className
+      )}
+    >
       {tabs.map((tab) => (
         <Tab
           key={tab.id}
@@ -36,6 +57,12 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
           variant={variant}
         />
       ))}
+      <span
+        style={
+          { "--tx": gliderDistances[variant](activeIdx) } as React.CSSProperties
+        }
+        className={clsx(styles.glider, styles.active)}
+      />
     </div>
   );
 };
