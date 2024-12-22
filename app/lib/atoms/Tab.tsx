@@ -19,13 +19,11 @@ type TabProps = {
 const variants = {
   primary: {
     className: clsx(
-      "px-4 py-[10px]  text-buttons cursor-pointer rounded-lg outline-none",
+      "px-4 py-[10px] text-buttons cursor-pointer rounded-lg outline-none",
       "flex justify-center items-center min-w-[115px]"
     ),
     active: (active: boolean | undefined) =>
-      active
-        ? "bg-sand-800 text-white hover:bg-sand-700"
-        : "bg-inactive-tab text-sand-700",
+      active ? "text-white" : "text-sand-700 bg-inactive-tab",
     disabled: "opacity-50 pointer-events-none",
   },
   secondary: {
@@ -62,6 +60,7 @@ export const Tab: FC<TabProps> = ({
     <button
       onClick={handleInternalClick}
       className={clsx(
+        "z-10 relative transition duration-200 ease-in",
         variants[variant].className,
         variants[variant].active(active),
         grow && "flex-1",

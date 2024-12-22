@@ -40,7 +40,6 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
   );
 
   return (
-    // bg-sand-800
     <div
       className={clsx(
         "flex items-center relative",
