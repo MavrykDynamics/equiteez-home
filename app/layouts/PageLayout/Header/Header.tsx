@@ -34,6 +34,13 @@ export const Header = () => {
 
       <div className={clsx(styles.popupWrapper, open && styles.active)}>
         <MobileList links={links} />
+        <Link
+          to="https://equiteez.com"
+          target="_black"
+          referrerPolicy="no-referrer"
+        >
+          <Button className="mb-6 mx-auto min-w-[247px]">Launch App</Button>
+        </Link>
       </div>
     </section>
   );
