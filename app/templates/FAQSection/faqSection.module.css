@@ -12,12 +12,12 @@
   transition: 0.5s;
 }
 
+.answercont.active {
+  @apply mt-7;
+}
+
 @media (max-width: 600px) {
   .faqWrapper {
     @apply flex-col gap-11;
-  }
-
-  .answercont.active {
-    @apply mt-7;
   }
 }
