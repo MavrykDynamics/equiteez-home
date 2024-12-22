@@ -1,20 +1,39 @@
+import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
 import { Logo } from "../../Logo";
 import { Button } from "~/lib/atoms/Button";
 
-import styles from "./header.module.css";
 import { Hamburger } from "~/lib/atoms/Hamburger/Hamburger";
-import { useState } from "react";
+import clsx from "clsx";
+
+// styles
+import styles from "./header.module.css";
+import { MobileList } from "./components/MobileList";
+import { links } from "./header.consts";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("no-scroll");
+    } else if (!open) {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [open]);
 
   return (
     <section className={styles.headerWrapper}>
       <div className={styles.headerInnerWrapper}>
         <Logo />
         <HeaderLinksBlock />
-        <Hamburger checked={open} setChecked={setOpen} />
+        <div className={styles.hamburger}>
+          <Hamburger checked={open} setChecked={setOpen} />
+        </div>
+      </div>
+
+      <div className={clsx(styles.popupWrapper, open && styles.active)}>
+        <MobileList links={links} />
       </div>
     </section>
   );
@@ -23,31 +42,17 @@ export const Header = () => {
 const HeaderLinksBlock = () => {
   return (
     <header className={styles.linksBlock}>
-      <Link
-        to="/properties"
-        className="text-body-xs text-content font-semibold"
-      >
-        Marketplace
-      </Link>
-      <Link to="/exchange" className="text-body-xs text-content font-semibold">
-        Exchange
-      </Link>
-      <Link
-        to="#"
-        className="text-body-xs text-content font-semibold opacity-50"
-        aria-disabled
-      >
-        RWA Loans
-      </Link>
-      <Link
-        to="#"
-        className="text-body-xs text-content font-semibold opacity-50"
-        aria-disabled
-      >
-        Staking
-      </Link>
+      {links.map(({ to, text }) => (
+        <Link
+          key={text}
+          to={to}
+          className="text-body-xs text-content font-semibold opacity-50"
+          aria-disabled="true"
+        >
+          {text}
+        </Link>
+      ))}
 
-      {/* <ConnectWallet /> */}
       <Link
         to="https://equiteez.com"
         target="_black"
