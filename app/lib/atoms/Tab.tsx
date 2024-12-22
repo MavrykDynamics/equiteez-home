@@ -58,7 +58,8 @@ export const Tab: FC<TabProps> = ({
     <button
       onClick={handleInternalClick}
       className={clsx(
-        "z-10 relative transition duration-200 ease-in",
+        "relative transition duration-200 ease-in",
+        active && "z-10",
         variants[variant].className,
         variants[variant].active(active),
         grow && "flex-1",

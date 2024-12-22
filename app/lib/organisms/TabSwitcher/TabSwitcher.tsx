@@ -13,7 +13,6 @@ type TabSwitcherProps = {
   grow?: boolean;
   variant?: TabVariant;
   className?: string;
-  showGlider?: boolean;
 };
 
 const variants = {
@@ -34,7 +33,6 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
   grow,
   className,
   variant = "primary",
-  showGlider = true,
 }) => {
   const activeIdx = useMemo(
     () => tabs.findIndex((tab) => tab.id === activeTabId) ?? 0,
@@ -59,7 +57,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
         />
       ))}
 
-      {showGlider && variant !== "tertiary" && (
+      {variant !== "tertiary" && (
         <span
           style={
             {
