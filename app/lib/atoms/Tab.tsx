@@ -32,9 +32,7 @@ const variants = {
       "flex justify-center items-center min-w-[115px]"
     ),
     active: (active: boolean | undefined) =>
-      active
-        ? "bg-sand-800 text-white hover:bg-sand-700"
-        : "bg-inactive-tab text-sand-700",
+      active ? "text-white" : "bg-inactive-tab text-sand-700",
     disabled: "opacity-50 pointer-events-none bg-gray-50",
   },
   tertiary: {
