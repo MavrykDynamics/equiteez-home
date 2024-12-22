@@ -1,7 +1,9 @@
 import { FC, useCallback, useMemo, useState } from "react";
 
 // assets
-import StatsImageSrc from "app/assets/home/estate.webp";
+import BuyingImg from "app/assets/home/buying.webp";
+import SellingImg from "app/assets/home/selling.webp";
+import BorrowingImg from "app/assets/home/borrowing.webp";
 
 import styles from "./financeSection.module.css";
 import type { TabType } from "~/lib/atoms/Tab";
@@ -13,9 +15,9 @@ import { Button } from "~/lib/atoms/Button";
 import clsx from "clsx";
 
 const images: Record<string, string> = {
-  buying: StatsImageSrc,
-  selling: StatsImageSrc,
-  borrowing: StatsImageSrc,
+  buying: BuyingImg,
+  selling: SellingImg,
+  borrowing: BorrowingImg,
 };
 
 export const FinanceSection = () => {
