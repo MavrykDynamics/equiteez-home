@@ -32,7 +32,7 @@ const PageLayout: FC<PageLayoutProps> = ({
     <div className={clsx("min-h-screen")}>
       <DocBg bgClassName={clsx(bg)} />
 
-      <div className={clsx("relative")}>
+      <div className={clsx("relative overflow-x-hidden")}>
         <Header />
         {includeContainer ? <Container>{children}</Container> : children}
         {includeFooter && <Footer />}

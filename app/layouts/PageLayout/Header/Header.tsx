@@ -23,8 +23,8 @@ export const Header = () => {
   }, [open]);
 
   return (
-    <section className={styles.headerWrapper}>
-      <div className={styles.headerInnerWrapper}>
+    <section className={clsx(styles.headerWrapper)}>
+      <div className={clsx(styles.headerInnerWrapper)}>
         <Logo />
         <HeaderLinksBlock />
         <div className={styles.hamburger}>
