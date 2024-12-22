@@ -8,14 +8,34 @@
   column-gap: 44px;
 }
 
-.financeBlockImageWrapper {
+.imageContainer {
+  position: relative;
   height: 498px;
   width: auto;
   overflow: hidden;
+}
+.financeBlockImageWrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   border-radius: 32px;
   @apply border border-gray-200 shadow-card;
+
+  opacity: 0;
+  z-index: -1;
+  transform: translateY(30px);
+
+  transition: all 200ms ease-in-out;
 }
 
+.financeBlockImageWrapper.active {
+  z-index: 1;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 200ms;
+}
 .financeBlockImageWrapper > img {
   width: 100%;
   object-position: top;
@@ -32,8 +52,9 @@
     gap: 44px;
   }
 
-  .financeBlockImageWrapper {
+  .imageContainer {
     height: auto;
+    aspect-ratio: 4 / 3;
   }
   .headlineBtn {
     display: none;

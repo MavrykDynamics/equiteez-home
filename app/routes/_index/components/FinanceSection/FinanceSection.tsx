@@ -10,6 +10,13 @@ import { TabsStepper } from "./TabsStepper";
 import { HeadlineBlock } from "./HeadlineBlock";
 import { PaddingContainer } from "~/lib/atoms/Container";
 import { Button } from "~/lib/atoms/Button";
+import clsx from "clsx";
+
+const images: Record<string, string> = {
+  buying: StatsImageSrc,
+  selling: StatsImageSrc,
+  borrowing: StatsImageSrc,
+};
 
 export const FinanceSection = () => {
   const [activetabId, setAvtiveTabId] = useState("buying");
@@ -43,8 +50,18 @@ export const FinanceSection = () => {
     <PaddingContainer>
       <HeadlineBlock />
       <div className={styles.financeBlockWrapper}>
-        <div className={styles.financeBlockImageWrapper}>
-          <img src={StatsImageSrc} alt="finance stats" />
+        <div className={styles.imageContainer}>
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              className={clsx(
+                styles.financeBlockImageWrapper,
+                tab.id === activetabId && styles.active
+              )}
+            >
+              <img src={images[tab.id]} alt={tab.label} />
+            </div>
+          ))}
         </div>
         <div>
           <TabSwitcher tabs={tabs} activeTabId={activetabId} />
