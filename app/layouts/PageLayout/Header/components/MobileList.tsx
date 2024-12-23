@@ -1,6 +1,7 @@
 import { FC } from "react";
 import ArrowIcon from "app/icons/chevron-right.svg?react";
-import { Link } from "@remix-run/react";
+import { CustomLink } from "~/a11y/CustomLink";
+import clsx from "clsx";
 
 type MobileList = {
   links: { to: string; text: string }[];
@@ -23,13 +24,17 @@ type MobileListItemProps = {
 
 const MobileListItem: FC<MobileListItemProps> = ({ to, text }) => {
   return (
-    <Link
+    <CustomLink
       to={to}
-      className="px-4 py-5 flex items-center justify-between gap-4 text-content border-b border-gray-100"
+      external={Boolean(to)}
+      className={clsx(
+        "px-4 py-5 flex items-center justify-between gap-4 text-content border-b border-gray-100",
+        !to && "opacity-50 pointer-events-none"
+      )}
     >
       <h4 className="text-card-headline ">{text}</h4>
 
       <ArrowIcon className="size-6 min-w-6 stroke-current" />
-    </Link>
+    </CustomLink>
   );
 };
