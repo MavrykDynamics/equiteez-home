@@ -11,6 +11,7 @@ import {
 import Error404Img from "app/assets/error/404.png";
 
 import styles from "./errorPageTemp.module.css";
+import { Socials } from "~/a11y/Socials/Socials";
 
 type ErrorPageProps = {
   headerText?: string;
@@ -42,6 +43,10 @@ export const ErrorPageTemp = ({
               <Button> Go To Main Page</Button>
             </a>
           )}
+
+          <div className={styles.socials}>
+            <Socials />
+          </div>
         </div>
 
         <div className={styles.footerWrapper}>

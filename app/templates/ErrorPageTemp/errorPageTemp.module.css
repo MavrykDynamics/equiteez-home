@@ -19,6 +19,10 @@
   width: 100%;
 }
 
+.socials {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .foourOfour {
     @apply w-[300px] mb-[10px];
@@ -39,5 +43,10 @@
 
   .contentWrapper {
     @apply mt-[55px];
+  }
+
+  .socials {
+    display: block;
+    margin-top: 11px;
   }
 }

@@ -23,15 +23,7 @@ export const Footer = () => {
             to invest in fractionalized, fully compliant, income producing
             assets worldwide.
           </p>
-          {/* <div className="flex items-center gap-x-[21px]">
-            {SOCIALS.map(({ Icon, id, url }) => (
-              <Link key={id} to={url}>
-                <div className="w-9 h-9 flex justify-center items-center">
-                  <Icon className="fill-white" />
-                </div>
-              </Link>
-            ))}
-          </div> */}
+          {/* <Socials /> */}
         </div>
         <div className="flex gap-x-[88px] pr-[63px]">
           {/* {FOOTER_LINKS.map(({ id, links, title }) => (
