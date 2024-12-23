@@ -6,6 +6,7 @@ import { Tab, TabType, TabVariant } from "~/lib/atoms/Tab";
 
 import styles from "./tabSwitcher.module.css";
 import { getGliderDistance } from "./utils";
+import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 
 type TabSwitcherProps = {
   tabs: TabType[];

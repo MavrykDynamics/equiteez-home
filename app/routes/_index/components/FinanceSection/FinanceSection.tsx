@@ -13,6 +13,7 @@ import { HeadlineBlock } from "./HeadlineBlock";
 import { PaddingContainer } from "~/lib/atoms/Container";
 import { Button } from "~/lib/atoms/Button";
 import clsx from "clsx";
+import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 
 const images: Record<string, string> = {
   buying: BuyingImg,
@@ -22,6 +23,8 @@ const images: Record<string, string> = {
 
 export const FinanceSection = () => {
   const [activetabId, setAvtiveTabId] = useState("buying");
+  const { width } = useWindowDimensions();
+  const isMobile = width < 600;
 
   const handleTabClick = useCallback((id: string) => {
     setAvtiveTabId(id);
@@ -67,7 +70,11 @@ export const FinanceSection = () => {
           ))}
         </div>
         <div>
-          <TabSwitcher tabs={tabs} activeTabId={activetabId} minWidth={115} />
+          <TabSwitcher
+            tabs={tabs}
+            activeTabId={activetabId}
+            minWidth={isMobile ? 106 : 115}
+          />
           <div className="mt-[42px]">
             <TabsStepper tabId={activetabId} />
           </div>
