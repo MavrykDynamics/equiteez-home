@@ -1,7 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./progressBlocks.module.css";
 import clsx from "clsx";
 import useEmblaCarousel from "embla-carousel-react";
+import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 
 const ITEMS = [
   {
@@ -25,21 +26,42 @@ const ITEMS = [
 ];
 
 export const ProgressBlocks = () => {
-  const [emblaRef] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const isFirstRun = useRef(true);
   const [activeBlockIdx, setActiveBlockIdx] = useState(0);
+  const { width } = useWindowDimensions();
+
+  // derived state
+  const isMobile = width <= 600;
+  const intervalTime = isMobile ? 14000 : 7000;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveBlockIdx((prev) => (prev === ITEMS.length - 1 ? 0 : prev + 1));
-    }, 7000);
+    }, intervalTime);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [intervalTime]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (isMobile) {
+      emblaApi?.scrollNext();
+    }
+  }, [activeBlockIdx, emblaApi, isMobile]);
 
   return (
-    <div className={styles.progressBarWrapper}>
+    <div
+      style={{ "--timing": `${intervalTime / 1000}s` } as React.CSSProperties}
+      className={styles.progressBarWrapper}
+    >
       <div className={styles.embla__viewport} ref={emblaRef}>
         <div className={styles.embla__container}>
           {ITEMS.map((item, idx) => (
