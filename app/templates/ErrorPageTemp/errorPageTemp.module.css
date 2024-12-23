@@ -23,7 +23,15 @@
   display: none;
 }
 
+.errorBgMobile {
+  display: none;
+}
+
 @media (max-width: 600px) {
+  .errorTempContainer {
+    /* @apply justify-center; */
+  }
+
   .foourOfour {
     @apply w-[300px] mb-[10px];
   }
@@ -42,11 +50,23 @@
   }
 
   .contentWrapper {
-    @apply mt-[55px];
+    @apply mt-[55px] flex-1 flex justify-center items-center;
   }
 
   .socials {
     display: block;
     margin-top: 11px;
+  }
+
+  .errorBgMobile {
+    display: block;
+    width: 100%;
+  }
+
+  .errorBgMobile img {
+    width: 200%;
+    max-width: 200%;
+    height: auto;
+    object-position: -140px;
   }
 }
