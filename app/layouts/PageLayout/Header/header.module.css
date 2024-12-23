@@ -1,6 +1,6 @@
 .headerWrapper {
   position: relative;
-  @apply px-11 flex items-center justify-between h-[60px] max-w-[2304px] bg-background mx-auto;
+  @apply px-11 flex items-center justify-between h-[60px] max-w-[2304px] bg-background mx-auto w-full;
 }
 
 .headerInnerWrapper {

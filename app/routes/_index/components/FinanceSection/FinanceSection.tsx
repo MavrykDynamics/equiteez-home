@@ -52,6 +52,7 @@ export const FinanceSection = () => {
     <PaddingContainer>
       <HeadlineBlock />
       <div className={styles.financeBlockWrapper}>
+        <FinanceButton className={styles.headlineBtnMobile} />
         <div className={styles.imageContainer}>
           {tabs.map((tab) => (
             <div
@@ -71,7 +72,6 @@ export const FinanceSection = () => {
             <TabsStepper tabId={activetabId} />
           </div>
         </div>
-        <FinanceButton className={styles.headlineBtnMobile} />
       </div>
     </PaddingContainer>
   );
