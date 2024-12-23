@@ -1,6 +1,5 @@
-import { WALLTET_ERROR_FIELD } from '~/errors/consts/error.const';
-import type { CustomErrors } from '../../errors/error';
-import type ToasterProvider from './toaster.provider';
+import type { CustomErrors } from "../../errors/error";
+import type ToasterProvider from "./toaster.provider";
 import {
   TOASTER_ERROR,
   TOASTER_HIDE,
@@ -9,9 +8,7 @@ import {
   TOASTER_REVEAL,
   TOASTER_SUCCESS,
   TOASTER_WARNING,
-} from './toaster.provider.const';
-import { WalletErrorPayload } from '~/errors/error.type';
-import { WalletActionType } from '~/contracts/actions.type';
+} from "./toaster.provider.const";
 
 export type ToasterTypes =
   | typeof TOASTER_SUCCESS
@@ -41,27 +38,22 @@ export interface ErrorTransfer {
 }
 
 export type ToasterContextType = {
-  bug: InstanceType<typeof ToasterProvider>['bug'];
-  info: InstanceType<typeof ToasterProvider>['info'];
-  warning: InstanceType<typeof ToasterProvider>['warning'];
-  fatal: InstanceType<typeof ToasterProvider>['fatal'];
-  success: InstanceType<typeof ToasterProvider>['success'];
-  loading: InstanceType<typeof ToasterProvider>['loading'];
+  bug: InstanceType<typeof ToasterProvider>["bug"];
+  info: InstanceType<typeof ToasterProvider>["info"];
+  warning: InstanceType<typeof ToasterProvider>["warning"];
+  fatal: InstanceType<typeof ToasterProvider>["fatal"];
+  success: InstanceType<typeof ToasterProvider>["success"];
+  loading: InstanceType<typeof ToasterProvider>["loading"];
   error: CustomErrors | null;
-  sharedErrors: {
-    [WALLTET_ERROR_FIELD]:
-      | (WalletErrorPayload & { actionId: WalletActionType })
-      | null;
-  };
+
   hideToasterMessage: InstanceType<
     typeof ToasterProvider
-  >['hideToasterMessage'];
+  >["hideToasterMessage"];
   deleteToasterFromArray: InstanceType<
     typeof ToasterProvider
-  >['deleteToasterFromArray'];
-  addToasterMessage?: InstanceType<typeof ToasterProvider>['addToasterMessage'];
-  setError: InstanceType<typeof ToasterProvider>['setError'];
-  setSharedError: InstanceType<typeof ToasterProvider>['setSharedError'];
+  >["deleteToasterFromArray"];
+  addToasterMessage?: InstanceType<typeof ToasterProvider>["addToasterMessage"];
+  setError: InstanceType<typeof ToasterProvider>["setError"];
   messages: ToasterMessage[];
   maintance: boolean;
 };

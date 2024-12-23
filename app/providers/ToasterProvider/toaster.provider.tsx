@@ -14,12 +14,7 @@ import {
   TOASTER_WARNING,
 } from "./toaster.provider.const";
 import { v4 as uuid } from "uuid";
-import {
-  InternalErrorType,
-  SharedErrorFileds,
-  SharedErrors,
-} from "~/errors/error.type";
-import { WalletActionType } from "~/contracts/actions.type";
+import { InternalErrorType } from "~/errors/error.type";
 import { getErrorPageData } from "./helpers/getErrorPageData";
 import { ERROR_TYPE_FATAL, ERROR_TYPE_ROUTER } from "~/errors/error.const";
 import { MaintancePageTemp } from "~/templates/MaintancePageTemp";
@@ -59,14 +54,11 @@ export default class ToasterProvider extends React.Component<Props, State> {
         // fatal error to show 404 page
         error: props.error || null, //fatal error
         // custom errors, like error from Wallet, api, validation etc.
-        sharedErrors: {
-          walletError: null,
-        },
+
         hideToasterMessage: this.hideToasterMessage,
         deleteToasterFromArray: this.deleteToasterFromArray,
         messages: [],
         setError: this.setError,
-        setSharedError: this.setSharedError,
         maintance: props.maintance ?? false,
       },
     };
@@ -150,21 +142,6 @@ export default class ToasterProvider extends React.Component<Props, State> {
         error,
       },
     }));
-  };
-
-  setSharedError = (
-    fieldName: SharedErrorFileds,
-    error: (SharedErrors & { actionId: WalletActionType }) | null
-  ) => {
-    this.setState({
-      context: {
-        ...this.state.context,
-        sharedErrors: {
-          ...this.state.context.sharedErrors,
-          [fieldName]: error,
-        },
-      },
-    });
   };
 
   /**
