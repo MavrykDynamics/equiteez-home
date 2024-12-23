@@ -26,7 +26,10 @@ const ITEMS = [
 ];
 
 export const ProgressBlocks = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    watchDrag: false,
+  });
   const isFirstRun = useRef(true);
   const [activeBlockIdx, setActiveBlockIdx] = useState(0);
   const { width } = useWindowDimensions();
