@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 528px 1fr;
   column-gap: 40px;
+
+  animation: reveal 1s ease-in-out;
 }
 
 .bannerHeader {
@@ -125,5 +127,14 @@
 
   .bannerBtnsWrapper {
     @apply flex-wrap;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
