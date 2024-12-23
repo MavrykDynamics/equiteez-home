@@ -14,13 +14,14 @@ export type TabVariant = "primary" | "secondary" | "tertiary";
 type TabProps = {
   active?: boolean;
   variant?: TabVariant;
+  minWidth?: number;
 } & TabType;
 
 const variants = {
   primary: {
     className: clsx(
       "px-4 py-[10px] text-buttons cursor-pointer rounded-lg outline-none",
-      "flex justify-center items-center min-w-[115px]"
+      "flex justify-center items-center"
     ),
     active: (active: boolean | undefined) =>
       active ? "text-white" : "text-sand-700 bg-inactive-tab",
@@ -29,7 +30,7 @@ const variants = {
   secondary: {
     className: clsx(
       "px-4 py-2  text-caption cursor-pointer rounded-lg outline-none",
-      "flex justify-center items-center min-w-[115px]"
+      "flex justify-center items-center"
     ),
     active: (active: boolean | undefined) =>
       active ? "text-white" : "bg-inactive-tab text-sand-700",
@@ -50,12 +51,14 @@ export const Tab: FC<TabProps> = ({
   grow,
   id,
   handleClick,
+  minWidth,
   variant = "primary",
 }) => {
   const handleInternalClick = () => handleClick(id);
 
   return (
     <button
+      style={{ minWidth }}
       onClick={handleInternalClick}
       className={clsx(
         "relative transition duration-200 ease-in",

@@ -13,18 +13,19 @@ type TabSwitcherProps = {
   grow?: boolean;
   variant?: TabVariant;
   className?: string;
+  minWidth: number; // used for glider width & for Tabs to ne the same width
 };
 
 const variants = {
-  primary: "gap-x-3",
-  secondary: "gap-x-2",
-  tertiary: "gap-x-4",
+  primary: "gap-3",
+  secondary: "gap-2",
+  tertiary: "gap-4",
 };
 
 const gliderDistances = {
-  primary: (idx: number) => `${getGliderDistance(idx, 12)}%`,
-  secondary: (idx: number) => `${getGliderDistance(idx, 8)}%`,
-  tertiary: (idx: number) => `${getGliderDistance(idx, 16)}%`,
+  primary: (idx: number) => `${getGliderDistance(idx, 12)}`,
+  secondary: (idx: number) => `${getGliderDistance(idx, 8)}`,
+  tertiary: (idx: number) => `${getGliderDistance(idx, 16)}`,
 };
 
 export const TabSwitcher: FC<TabSwitcherProps> = ({
@@ -32,6 +33,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
   activeTabId,
   grow,
   className,
+  minWidth,
   variant = "primary",
 }) => {
   const activeIdx = useMemo(
@@ -54,6 +56,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
           active={tab.id === activeTabId}
           grow={grow}
           variant={variant}
+          minWidth={minWidth}
         />
       ))}
 
@@ -62,6 +65,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
           style={
             {
               "--tx": gliderDistances[variant](activeIdx),
+              "--glider-width": `${minWidth}px`,
             } as React.CSSProperties
           }
           className={clsx(styles.glider, styles.active)}

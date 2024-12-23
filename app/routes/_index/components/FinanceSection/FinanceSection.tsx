@@ -67,7 +67,7 @@ export const FinanceSection = () => {
           ))}
         </div>
         <div>
-          <TabSwitcher tabs={tabs} activeTabId={activetabId} />
+          <TabSwitcher tabs={tabs} activeTabId={activetabId} minWidth={115} />
           <div className="mt-[42px]">
             <TabsStepper tabId={activetabId} />
           </div>
