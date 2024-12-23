@@ -136,6 +136,13 @@
   .bannerBtnsWrapper {
     @apply flex-wrap;
   }
+
+  .bannerBtnPadding {
+    @apply px-6;
+    /* hardcoded style to be at the same line */
+    max-width: 168px;
+    text-wrap: nowrap;
+  }
 }
 
 @keyframes reveal {

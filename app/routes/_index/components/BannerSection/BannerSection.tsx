@@ -34,7 +34,9 @@ export const BannerSection = () => {
           </p>
           <div className={styles.bannerBtnsWrapper}>
             <Link to="/properties">
-              <Button>View Properties</Button>
+              <Button className={styles.bannerBtnPadding}>
+                View Properties
+              </Button>
             </Link>
 
             <ButtonWithIcon
@@ -42,7 +44,10 @@ export const BannerSection = () => {
               position="left"
               size="outline"
               disabled
-              icon={<PlayIcon className="w-6 h-6 stroke-none fill-current" />}
+              className={styles.bannerBtnPadding}
+              icon={
+                <PlayIcon className="w-6 h-6 min-w-6 stroke-none fill-current" />
+              }
             >
               How it works
             </ButtonWithIcon>
