@@ -2,6 +2,10 @@
   @apply flex justify-between items-center gap-[116px];
 }
 
+.portfolioTextContent {
+  @apply min-w-[488px] flex flex-col items-start gap-y-3;
+}
+
 .cardsWrapper {
   @apply grid grid-cols-2 gap-x-6;
 }
@@ -17,6 +21,11 @@
 @media (max-width: 600px) {
   .portfolioWrapper {
     @apply flex-col gap-11;
+  }
+
+  .portfolioTextContent {
+    width: 100%;
+    min-width: auto;
   }
 
   .cardsWrapper {

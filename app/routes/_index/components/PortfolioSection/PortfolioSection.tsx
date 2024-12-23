@@ -58,7 +58,7 @@ export const PortfolioSection = () => {
   return (
     <PaddingContainer>
       <section className={styles.portfolioWrapper}>
-        <div className="w-full max-w-[488px] flex flex-col items-start gap-y-3">
+        <div className={styles.portfolioTextContent}>
           <h2 className="text-content text-section-headline">
             Jumpstart your portfolio. Invest like the pros
           </h2>
