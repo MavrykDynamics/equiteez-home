@@ -12,7 +12,7 @@ import ArrowRight from "app/icons/arrow-right.svg?react";
 import styles from "./embla.module.css";
 import clsx from "clsx";
 import { Button } from "~/lib/atoms/Button";
-import { Link, useNavigate } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import {
   PrimaryEstate,
   SECONDARY_MARKET,
@@ -22,6 +22,7 @@ import { usePrevNextButtons } from "~/lib/ui/use-embla-buttons";
 import { ThumbCardSecondary } from "~/templates/ThumbCard/ThumbCard";
 import { useDexContext } from "~/providers/Dexprovider/dex.provider";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
+import { linker, openInNewTab } from "~/a11y/linker";
 
 const SLIDER_VIEW_LIMIT = 3;
 
@@ -33,7 +34,6 @@ type PropType = {
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
-  const navigate = useNavigate();
   const { dodoMav } = useDexContext();
   const { width } = useWindowDimensions();
 
@@ -51,13 +51,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   const handleSlideClick = (id: string, isLastSlide: boolean) => {
     if (isLastSlide) return;
-    navigate(`/properties/${id}`);
+    openInNewTab(linker(`/properties/${id}`));
   };
 
   return (
     <section className={styles.embla}>
       <div className={"w-full flex justify-between items-center mb-11"}>
-        <Link to={"/properties"}>
+        <Link to={linker("/properties")} target="_blank" rel="noreferrer">
           <Button
             variant="custom"
             className="text-white bg-transparent border-2 border-white py-[8px]"

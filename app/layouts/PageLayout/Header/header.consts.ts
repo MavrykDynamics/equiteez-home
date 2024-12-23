@@ -1,18 +1,20 @@
+import { linker } from "~/a11y/linker";
+
 export const links = [
   {
-    to: "#",
+    to: linker("/exchange"),
     text: "Exchange",
   },
   {
-    to: "#",
+    to: linker("/properties"),
     text: "Marketplace",
   },
   {
-    to: "#",
+    to: "",
     text: "RWA Loans",
   },
   {
-    to: "#",
+    to: "",
     text: "Staking",
   },
 ];

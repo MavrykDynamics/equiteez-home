@@ -12,6 +12,7 @@ import { Button } from "~/lib/atoms/Button";
 
 import ReactCSSTransitionReplace from "react-css-transition-replace";
 import { useAppContext } from "~/providers/AppProvider/AppProvider";
+import { linker } from "~/a11y/linker";
 
 const ESTATES = [
   {
@@ -105,7 +106,12 @@ const CurrentEstate = forwardRef<
           <h1 className={styles.estateHeader}>{estate.title}</h1>
           <div className="w-full flex items-end justify-between">
             <p className="text-buttons text-white">{estate.author}</p>
-            <Link to={"/properties"} className={styles.estateLink}>
+            <Link
+              to={linker("/properties")}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.estateLink}
+            >
               <Button
                 className="text-white bg-transparent border-2 border-white py-[8px] -sm:hidden"
                 variant="outline"

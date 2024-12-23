@@ -16,6 +16,7 @@ import Img5 from "app/assets/home/banner/img-5.webp";
 import Img6 from "app/assets/home/banner/img-6.webp";
 import { ButtonWithIcon } from "~/lib/atoms/Button/Button";
 import { PaddingContainer } from "~/lib/atoms/Container";
+import { linker } from "~/a11y/linker";
 
 const assets = [Img1, Img2, Img3, Img4, Img5, Img6];
 
@@ -33,7 +34,7 @@ export const BannerSection = () => {
             worldwide.
           </p>
           <div className={styles.bannerBtnsWrapper}>
-            <Link to="/properties">
+            <Link to={linker("/properties")} target="_blank" rel="noreferrer">
               <Button className={styles.bannerBtnPadding}>
                 View Properties
               </Button>
