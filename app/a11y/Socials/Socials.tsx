@@ -5,7 +5,7 @@ export const Socials = () => {
   return (
     <div className="flex items-center gap-x-[21px]">
       {SOCIALS.map(({ Icon, id, url }) => (
-        <Link key={id} to={url}>
+        <Link key={id} to={url} target="_blank" rel="noreferrer">
           <div className="w-9 h-9 flex justify-center items-center">
             <Icon className="fill-current" />
           </div>

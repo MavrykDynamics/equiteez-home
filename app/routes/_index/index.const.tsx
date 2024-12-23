@@ -96,8 +96,21 @@ export const homeFAQ = [
   },
   {
     title: "What is the Maven Finance lending platform?",
-    description:
-      "Maven Finance is a decentralized finance (DeFi) platform integrated with Equiteez that allows investors to borrow against their tokenized real estate portfolio.",
+    description: (
+      <div>
+        Maven Finance is a decentralized finance (DeFi) platform integrated with
+        Equiteez that allows investors to borrow against their tokenized real
+        estate portfolio.{" "}
+        <a
+          href="https://mavenfinance.io/"
+          target="_blank"
+          rel="noreferrer"
+          className="decoration-none text-green-main font-semibold"
+        >
+          Check it out here.
+        </a>
+      </div>
+    ),
   },
   {
     title: "What control do I have over my investments?",

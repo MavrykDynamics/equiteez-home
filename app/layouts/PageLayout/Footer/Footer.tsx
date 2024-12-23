@@ -1,11 +1,10 @@
 import clsx from "clsx";
-// import { FOOTER_LINKS } from './pagelayout.consts';
 import { Link } from "@remix-run/react";
-// import { SOCIALS } from '~/consts/icons';
 
 import styles from "./footer.module.css";
 
 import LogoIcon from "app/icons/logo.svg?react";
+import { Socials } from "~/a11y/Socials/Socials";
 
 export const Footer = () => {
   return (
@@ -23,7 +22,9 @@ export const Footer = () => {
             to invest in fractionalized, fully compliant, income producing
             assets worldwide.
           </p>
-          {/* <Socials /> */}
+          <div className="text-white">
+            <Socials />
+          </div>
         </div>
         <div className="flex gap-x-[88px] pr-[63px]">
           {/* {FOOTER_LINKS.map(({ id, links, title }) => (

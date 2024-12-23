@@ -24,7 +24,7 @@ export const FooterSecondary: FC<FooterSecondaryProps> = ({
 
       <div className="flex items-center gap-6">
         {SECONDARY_SOCIALS.map(({ id, url, Icon }) => (
-          <Link key={id} to={url}>
+          <Link key={id} to={url} target="_blank" rel="noreferrer">
             <div className="size-6 flex justify-center items-center">
               <Icon className={`fill-${color}`} />
             </div>
