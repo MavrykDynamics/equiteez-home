@@ -24,7 +24,7 @@ export const BannerSection = () => {
     <PaddingContainer>
       <section className={clsx("pt-[100px]", styles.bannerContainer)}>
         <div className="flex flex-col items-start self-center">
-          <h1 className="text-hero text-content mb-4">
+          <h1 className={styles.bannerTextContent}>
             Build your portfolio with every asset on the block
           </h1>
           <p className="text-content-secondary text-body mb-8">

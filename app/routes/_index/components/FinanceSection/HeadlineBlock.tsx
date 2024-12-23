@@ -5,7 +5,7 @@ export const HeadlineBlock = () => {
   return (
     <div className={styles.headlineWrapper}>
       <div>
-        <h1 className="text-content text-section-headline max-w-[850px] mb-3">
+        <h1 className={styles.headlineHeader}>
           It’s never been easier to invest in asset such as real estate, and
           earn passive income.
         </h1>

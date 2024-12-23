@@ -10,6 +10,10 @@
   @apply text-hero text-content mb-4;
 }
 
+.bannerTextContent {
+  @apply text-content text-hero mb-4;
+}
+
 .bannerBtnsWrapper {
   @apply flex items-center gap-4;
 }
@@ -122,6 +126,10 @@
     gap: 10px;
   }
   .bannerHeader {
+    @apply text-section-headline;
+  }
+
+  .bannerTextContent {
     @apply text-section-headline;
   }
 

@@ -2,6 +2,10 @@
   @apply flex items-start gap-4 mb-11 justify-between;
 }
 
+.headlineHeader {
+  @apply text-content text-section-headline max-w-[850px] mb-3;
+}
+
 .financeBlockWrapper {
   display: grid;
   grid-template-columns: 662px 1fr;
@@ -74,6 +78,10 @@
   .imageContainer {
     height: auto;
     aspect-ratio: 4 / 3;
+  }
+
+  .headlineHeader {
+    @apply text-card-headline;
   }
   .headlineBtn {
     display: none;
