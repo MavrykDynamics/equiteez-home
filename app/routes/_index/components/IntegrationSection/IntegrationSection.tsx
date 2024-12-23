@@ -1,5 +1,5 @@
 import { PaddingContainer } from "~/lib/atoms/Container";
-import { ProgressBlocks } from "./ProgressBlocks";
+import { ProgressBlocks } from "./components/ProgressBlocks/ProgressBlocks";
 
 import styles from "./integrationSection.module.css";
 

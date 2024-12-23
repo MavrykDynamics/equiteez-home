@@ -1,0 +1,72 @@
+.progressBarWrapper .embla__viewport .embla__container {
+  @apply grid grid-cols-3 gap-x-6 cursor-pointer;
+}
+
+.progressBar {
+  position: relative;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.progressBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  @apply bg-green-main opacity-50;
+  z-index: 0;
+}
+
+.progressAnimation::after {
+  content: "";
+  position: absolute;
+  border-radius: 8px;
+  width: 0%;
+  height: 100%;
+  inset: 0;
+  @apply bg-green-main;
+  z-index: 1;
+
+  animation: progress 7s linear forwards;
+}
+
+@keyframes progress {
+  from {
+    width: 0%;
+    opacity: 1;
+  }
+  to {
+    width: 100%;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 600px) {
+  .progressBlockHeader {
+    @apply text-section-headline;
+  }
+
+  .progressBarWrapper {
+    @apply flex overflow-hidden;
+  }
+
+  /* Embla mobile styles */
+  .embla__viewport {
+    overflow: hidden;
+
+    --slide-height: auto;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+  }
+  .embla__container {
+    display: flex !important;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+  }
+  .embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+  }
+}
