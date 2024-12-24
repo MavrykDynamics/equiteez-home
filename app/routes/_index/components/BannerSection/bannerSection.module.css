@@ -1,7 +1,6 @@
 .bannerContainer {
   display: grid;
   grid-template-columns: 528px 1fr;
-  column-gap: 40px;
 
   animation: reveal 1s ease-in-out;
 }
@@ -114,7 +113,7 @@
   z-index: 1;
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .bannerContainer {
     display: flex;
     flex-direction: column-reverse;

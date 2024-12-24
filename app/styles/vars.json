@@ -1,0 +1,13 @@
+{
+  "environment-variables": {
+    "--container": "1440px",
+    "--tablet-max": "1200px",
+    "--tablet": "990px",
+    "--tablet-min": "760px",
+    "--phone-middle": "600px",
+    "--phone": "480px",
+    "--phone-min": "420px",
+    "--phone-medium-min": "380px",
+    "--phone-extra-min": "350px"
+  }
+}
