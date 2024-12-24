@@ -7,11 +7,17 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import path from "path";
 // import { visualizer } from 'rollup-plugin-visualizer';
 
 installGlobals();
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      styles: path.resolve(__dirname, "app/styles"),
+    },
+  },
   plugins: [
     remixCloudflareDevProxy(),
     remix({ ssr: true }),

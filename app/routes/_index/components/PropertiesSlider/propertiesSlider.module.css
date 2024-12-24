@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .propertiesSliderWrapper {
   @apply px-11 py-16 bg-green-main rounded-4xl;
 }
@@ -6,7 +8,7 @@
   @apply text-white text-hero max-w-[1017px] mb-6;
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .propertiesSliderWrapper {
     @apply px-8 py-11;
   }

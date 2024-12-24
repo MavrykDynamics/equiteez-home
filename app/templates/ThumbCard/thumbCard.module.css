@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .thumbCardWrapper {
   container-type: inline-size;
   container-name: cardWrapper;
@@ -87,7 +89,7 @@
   grid-template-columns: 1fr min-content;
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .title {
     -webkit-line-clamp: 1;
     max-width: 150px;

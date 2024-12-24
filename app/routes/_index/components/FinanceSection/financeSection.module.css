@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .headlineWrapper {
   @apply flex items-start gap-4 mb-11 justify-between;
 }
@@ -68,7 +70,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .financeBlockWrapper {
     display: flex;
     flex-direction: column-reverse;

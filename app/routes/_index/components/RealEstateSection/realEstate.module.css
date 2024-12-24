@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .estateContainer {
   width: 100%;
   height: 937px;
@@ -36,7 +38,7 @@
   z-index: 2;
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .estateContainer {
     height: 577px;
   }

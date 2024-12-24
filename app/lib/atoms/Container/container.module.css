@@ -1,8 +1,10 @@
+@import "styles/vars.css";
+
 .paddingContainer {
   padding-inline: 44px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .paddingContainer {
     padding-inline: 16px;
   }

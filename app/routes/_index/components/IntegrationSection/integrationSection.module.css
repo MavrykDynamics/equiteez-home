@@ -1,8 +1,10 @@
+@import "styles/vars.css";
+
 .progressBlockHeader {
   @apply text-content text-hero;
 }
 
-@media (max-width: 600px) {
+@media (max-width: phone-middle) {
   .progressBlockHeader {
     @apply text-section-headline;
   }
