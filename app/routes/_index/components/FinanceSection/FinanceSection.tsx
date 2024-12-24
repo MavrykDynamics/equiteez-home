@@ -14,6 +14,8 @@ import { PaddingContainer } from "~/lib/atoms/Container";
 import { Button } from "~/lib/atoms/Button";
 import clsx from "clsx";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
+import { motion } from "framer-motion";
+import { slideFromLeftVariant, slideFromRightVariant } from "~/framer/variants";
 
 const images: Record<string, string> = {
   buying: BuyingImg,
@@ -56,7 +58,13 @@ export const FinanceSection = () => {
       <HeadlineBlock />
       <div className={styles.financeBlockWrapper}>
         <FinanceButton className={styles.headlineBtnMobile} />
-        <div className={styles.imageContainer}>
+        <motion.div
+          initial="initial"
+          variants={slideFromLeftVariant}
+          whileInView="animate"
+          viewport={{ once: true }}
+          className={styles.imageContainer}
+        >
           {tabs.map((tab) => (
             <div
               key={tab.id}
@@ -68,8 +76,13 @@ export const FinanceSection = () => {
               <img src={images[tab.id]} alt={tab.label} />
             </div>
           ))}
-        </div>
-        <div>
+        </motion.div>
+        <motion.div
+          initial="initial"
+          variants={slideFromRightVariant}
+          whileInView="animate"
+          viewport={{ once: true }}
+        >
           <TabSwitcher
             tabs={tabs}
             activeTabId={activetabId}
@@ -78,7 +91,7 @@ export const FinanceSection = () => {
           <div className="mt-[42px]">
             <TabsStepper tabId={activetabId} />
           </div>
-        </div>
+        </motion.div>
       </div>
     </PaddingContainer>
   );

@@ -9,6 +9,7 @@ import { PaddingContainer } from "~/lib/atoms/Container";
 import { motion } from "framer-motion";
 
 import styles from "./portfolio.module.css";
+import { slideFromLeftVariant } from "~/framer/variants";
 
 const CARDS = [
   {
@@ -70,24 +71,13 @@ const fadeInCardsVariants = {
   }),
 };
 
-const textAnimationVariants = {
-  initial: {
-    opacity: 0.3,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-  },
-};
-
 export const PortfolioSection = () => {
   return (
     <PaddingContainer>
       <section className={styles.portfolioWrapper}>
         <motion.div
           initial="initial"
-          variants={textAnimationVariants}
+          variants={slideFromLeftVariant}
           whileInView="animate"
           viewport={{ once: true }}
           className={styles.portfolioTextContent}
