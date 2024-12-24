@@ -1,0 +1,9 @@
+@value container:                 1440px;
+@value tablet-max:                1200px;
+@value tablet:                    990px;
+@value tablet-min:                760px;
+@value phone-middle:              620px;
+@value phone:                     480px;
+@value phone-min:                 420px;
+@value phone-medium-min:          380px;
+@value phone-extra-min:           350px;

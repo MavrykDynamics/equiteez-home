@@ -1,7 +1,8 @@
+@import "styles/vars.css";
+
 .bannerContainer {
   display: grid;
   grid-template-columns: 528px 1fr;
-
   animation: reveal 1s ease-in-out;
 }
 
@@ -113,7 +114,7 @@
   z-index: 1;
 }
 
-@media (max-width: env(--phone-middle)) {
+@media (max-width: phone-middle) {
   .bannerContainer {
     display: flex;
     flex-direction: column-reverse;

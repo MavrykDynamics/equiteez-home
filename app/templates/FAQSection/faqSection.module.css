@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .faqWrapper {
   @apply flex gap-[90px];
 }
@@ -16,7 +18,7 @@
   @apply mt-7;
 }
 
-@media (max-width: env(--phone-middle)) {
+@media (max-width: phone-middle) {
   .faqWrapper {
     @apply flex-col gap-11;
   }

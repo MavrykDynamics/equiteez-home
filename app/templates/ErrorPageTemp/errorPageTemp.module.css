@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .foourOfour {
   @apply w-[689px] h-auto object-cover mb-[72px];
 }
@@ -27,11 +29,7 @@
   display: none;
 }
 
-@media (max-width: env(--phone-middle)) {
-  .errorTempContainer {
-    /* @apply justify-center; */
-  }
-
+@media (max-width: phone-middle) {
   .foourOfour {
     @apply w-[300px] mb-[10px];
   }

@@ -1,3 +1,5 @@
+@import "styles/vars.css";
+
 .headerWrapper {
   position: relative;
   @apply px-11 flex items-center justify-between h-[60px] max-w-[2304px] bg-background mx-auto w-full border-b border-gray-200;
@@ -20,7 +22,7 @@
   display: none;
 }
 
-@media (max-width: env(--phone-middle)) {
+@media (max-width: phone-middle) {
   .hamburger {
     display: block;
   }
