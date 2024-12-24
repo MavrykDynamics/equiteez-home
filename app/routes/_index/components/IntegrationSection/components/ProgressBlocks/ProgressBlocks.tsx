@@ -3,6 +3,7 @@ import styles from "./progressBlocks.module.css";
 import clsx from "clsx";
 import useEmblaCarousel from "embla-carousel-react";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
+import { motion } from "framer-motion";
 
 const ITEMS = [
   {
@@ -24,6 +25,20 @@ const ITEMS = [
       "Stake your assets in Equiteez's Automated Market Maker exchange and earn compounded returns through trading fees, maximizing your earnings effortlessly over time.",
   },
 ];
+
+const fadeInCardsVariants = {
+  initial: {
+    opacity: 0,
+    y: 70,
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.07,
+    },
+  }),
+};
 
 export const ProgressBlocks = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -68,7 +83,11 @@ export const ProgressBlocks = () => {
       <div className={styles.embla__viewport} ref={emblaRef}>
         <div className={styles.embla__container}>
           {ITEMS.map((item, idx) => (
-            <div
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              variants={fadeInCardsVariants}
+              custom={idx}
               key={item.id}
               className={clsx(
                 styles.embla__slide,
@@ -93,7 +112,7 @@ export const ProgressBlocks = () => {
                 </h3>
                 <p className="text-content text-body">{item.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
