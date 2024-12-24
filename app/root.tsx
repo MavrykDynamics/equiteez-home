@@ -39,9 +39,7 @@ import {
 } from "./providers/ToasterProvider/toaster.provider.const";
 import { FC } from "react";
 import { DexProvider } from "./providers/Dexprovider/dex.provider";
-import { MotionConfig } from "framer-motion";
-import { useWindowDimensions } from "./hooks/useWindowDimensions";
-import { MOBILE_WIDTH } from "./styles/media";
+import { CustomMotionConfig } from "./providers/CustomMotionConfig";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
@@ -76,30 +74,29 @@ const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AppProvider>
-      <ApolloProvider>
-        <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
-          <TokensProvider
-            initialTokens={tokens}
-            initialTokensMetadata={tokensMetadata}
-          >
-            <EstatesProvider>
-              <DexProvider>
-                <AppGlobalLoader>
-                  <PopupProvider>{children}</PopupProvider>
-                </AppGlobalLoader>
-              </DexProvider>
-            </EstatesProvider>
-          </TokensProvider>
-        </CurrencyProvider>
-      </ApolloProvider>
+      <CustomMotionConfig>
+        <ApolloProvider>
+          <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
+            <TokensProvider
+              initialTokens={tokens}
+              initialTokensMetadata={tokensMetadata}
+            >
+              <EstatesProvider>
+                <DexProvider>
+                  <AppGlobalLoader>
+                    <PopupProvider>{children}</PopupProvider>
+                  </AppGlobalLoader>
+                </DexProvider>
+              </EstatesProvider>
+            </TokensProvider>
+          </CurrencyProvider>
+        </ApolloProvider>
+      </CustomMotionConfig>
     </AppProvider>
   );
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { width } = useWindowDimensions();
-  const isMobile = width < MOBILE_WIDTH;
-
   return (
     <html lang="en">
       <head>
@@ -114,10 +111,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <ToasterProvider
             maintance={process.env.REACT_APP_MAINTANCE_MODE === "on"}
           >
-            <MotionConfig reducedMotion={isMobile ? "user" : "always"}>
-              <AppWrapper>{children}</AppWrapper>
-              <ToasterMessages />
-            </MotionConfig>
+            <AppWrapper>{children}</AppWrapper>
+            <ToasterMessages />
           </ToasterProvider>
           <ScrollRestoration />
           <Scripts />
