@@ -89,6 +89,7 @@ export const PortfolioSection = () => {
           initial="initial"
           variants={textAnimationVariants}
           whileInView="animate"
+          viewport={{ once: true }}
           className={styles.portfolioTextContent}
         >
           <h2 className="text-content text-section-headline">
