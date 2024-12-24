@@ -6,7 +6,10 @@ import { CardWithShadow } from "~/lib/atoms/CardWithShadow";
 import clsx from "clsx";
 import { PaddingContainer } from "~/lib/atoms/Container";
 
+import { motion } from "framer-motion";
+
 import styles from "./portfolio.module.css";
+import { slideFromLeftVariant } from "~/framer/variants";
 
 const CARDS = [
   {
@@ -54,11 +57,31 @@ const CARDS = [
   },
 ];
 
+const fadeInCardsVariants = {
+  initial: {
+    opacity: 0,
+    y: 70,
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.05,
+    },
+  }),
+};
+
 export const PortfolioSection = () => {
   return (
     <PaddingContainer>
       <section className={styles.portfolioWrapper}>
-        <div className={styles.portfolioTextContent}>
+        <motion.div
+          initial="initial"
+          variants={slideFromLeftVariant}
+          whileInView="animate"
+          viewport={{ once: true }}
+          className={styles.portfolioTextContent}
+        >
           <h2 className="text-content text-section-headline">
             Jumpstart your portfolio. Invest like the pros
           </h2>
@@ -66,21 +89,30 @@ export const PortfolioSection = () => {
             Get instant access to amazing income producing deals and join a
             community of wealth builders from around the world.
           </p>
-        </div>
+        </motion.div>
 
         <div className={styles.cardsWrapper}>
           {CARDS.map(({ Icon, id, title, description }, idx) => (
-            <div key={id} className={clsx((idx + 1) % 2 === 0 && styles.pt6)}>
-              <CardWithShadow className={styles.cardHeight}>
-                <div className="flex flex-col items-start">
-                  <Icon className="mb-6" />
-                  <h3 className="text-card-headline text-content mb-3">
-                    {title}
-                  </h3>
-                  <p className="text-content text-body">{description}</p>
-                </div>
-              </CardWithShadow>
-            </div>
+            <motion.div
+              key={id}
+              initial="initial"
+              variants={fadeInCardsVariants}
+              whileInView="animate"
+              custom={idx}
+              viewport={{ once: true }}
+            >
+              <div className={clsx((idx + 1) % 2 === 0 && styles.pt6)}>
+                <CardWithShadow className={styles.cardHeight}>
+                  <div className="flex flex-col items-start">
+                    <Icon className="mb-6" />
+                    <h3 className="text-card-headline text-content mb-3">
+                      {title}
+                    </h3>
+                    <p className="text-content text-body">{description}</p>
+                  </div>
+                </CardWithShadow>
+              </div>
+            </motion.div>
           ))}
         </div>
       </section>

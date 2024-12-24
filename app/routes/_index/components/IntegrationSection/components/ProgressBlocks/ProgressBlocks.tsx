@@ -3,6 +3,8 @@ import styles from "./progressBlocks.module.css";
 import clsx from "clsx";
 import useEmblaCarousel from "embla-carousel-react";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
+import { motion } from "framer-motion";
+import { MOBILE_WIDTH } from "~/styles/media";
 
 const ITEMS = [
   {
@@ -25,6 +27,20 @@ const ITEMS = [
   },
 ];
 
+const fadeInCardsVariants = {
+  initial: {
+    opacity: 0,
+    y: 70,
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.07,
+    },
+  }),
+};
+
 export const ProgressBlocks = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -35,7 +51,7 @@ export const ProgressBlocks = () => {
   const { width } = useWindowDimensions();
 
   // derived state
-  const isMobile = width <= 600;
+  const isMobile = width <= MOBILE_WIDTH;
   const intervalTime = isMobile ? 14000 : 7000;
 
   useEffect(() => {
@@ -68,7 +84,12 @@ export const ProgressBlocks = () => {
       <div className={styles.embla__viewport} ref={emblaRef}>
         <div className={styles.embla__container}>
           {ITEMS.map((item, idx) => (
-            <div
+            <motion.div
+              initial={isMobile ? false : "initial"}
+              whileInView="animate"
+              variants={fadeInCardsVariants}
+              viewport={{ once: true }}
+              custom={idx}
               key={item.id}
               className={clsx(
                 styles.embla__slide,
@@ -93,7 +114,7 @@ export const ProgressBlocks = () => {
                 </h3>
                 <p className="text-content text-body">{item.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

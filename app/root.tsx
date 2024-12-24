@@ -39,6 +39,7 @@ import {
 } from "./providers/ToasterProvider/toaster.provider.const";
 import { FC } from "react";
 import { DexProvider } from "./providers/Dexprovider/dex.provider";
+import { CustomMotionConfig } from "./providers/CustomMotionConfig";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
@@ -73,22 +74,24 @@ const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AppProvider>
-      <ApolloProvider>
-        <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
-          <TokensProvider
-            initialTokens={tokens}
-            initialTokensMetadata={tokensMetadata}
-          >
-            <EstatesProvider>
-              <DexProvider>
-                <AppGlobalLoader>
-                  <PopupProvider>{children}</PopupProvider>
-                </AppGlobalLoader>
-              </DexProvider>
-            </EstatesProvider>
-          </TokensProvider>
-        </CurrencyProvider>
-      </ApolloProvider>
+      <CustomMotionConfig>
+        <ApolloProvider>
+          <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
+            <TokensProvider
+              initialTokens={tokens}
+              initialTokensMetadata={tokensMetadata}
+            >
+              <EstatesProvider>
+                <DexProvider>
+                  <AppGlobalLoader>
+                    <PopupProvider>{children}</PopupProvider>
+                  </AppGlobalLoader>
+                </DexProvider>
+              </EstatesProvider>
+            </TokensProvider>
+          </CurrencyProvider>
+        </ApolloProvider>
+      </CustomMotionConfig>
     </AppProvider>
   );
 };
