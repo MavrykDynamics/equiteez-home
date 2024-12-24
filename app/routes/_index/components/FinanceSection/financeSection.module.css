@@ -68,7 +68,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .financeBlockWrapper {
     display: flex;
     flex-direction: column-reverse;

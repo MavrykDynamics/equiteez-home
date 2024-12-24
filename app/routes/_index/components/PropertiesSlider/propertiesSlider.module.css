@@ -6,7 +6,7 @@
   @apply text-white text-hero max-w-[1017px] mb-6;
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .propertiesSliderWrapper {
     @apply px-8 py-11;
   }

@@ -2,7 +2,7 @@
   @apply text-content text-hero;
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .progressBlockHeader {
     @apply text-section-headline;
   }

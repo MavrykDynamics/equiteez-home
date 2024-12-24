@@ -9,7 +9,7 @@
   @apply flex justify-between px-[100px] pt-[54px] pb-[122px] w-full;
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .footer {
     @apply mt-[220px];
   }

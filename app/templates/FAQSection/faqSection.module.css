@@ -16,7 +16,7 @@
   @apply mt-7;
 }
 
-@media (max-width: 600px) {
+@media (max-width: env(--phone-middle)) {
   .faqWrapper {
     @apply flex-col gap-11;
   }
