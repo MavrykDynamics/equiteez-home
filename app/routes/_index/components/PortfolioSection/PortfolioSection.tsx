@@ -56,10 +56,10 @@ const CARDS = [
   },
 ];
 
-const fadeInAnimationVariants = {
+const fadeInCardsVariants = {
   initial: {
     opacity: 0,
-    y: "70%",
+    y: 70,
   },
   animate: (index: number) => ({
     opacity: 1,
@@ -70,11 +70,27 @@ const fadeInAnimationVariants = {
   }),
 };
 
+const textAnimationVariants = {
+  initial: {
+    opacity: 0.3,
+    x: -100,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+  },
+};
+
 export const PortfolioSection = () => {
   return (
     <PaddingContainer>
       <section className={styles.portfolioWrapper}>
-        <div className={styles.portfolioTextContent}>
+        <motion.div
+          initial="initial"
+          variants={textAnimationVariants}
+          whileInView="animate"
+          className={styles.portfolioTextContent}
+        >
           <h2 className="text-content text-section-headline">
             Jumpstart your portfolio. Invest like the pros
           </h2>
@@ -82,17 +98,17 @@ export const PortfolioSection = () => {
             Get instant access to amazing income producing deals and join a
             community of wealth builders from around the world.
           </p>
-        </div>
+        </motion.div>
 
         <div className={styles.cardsWrapper}>
           {CARDS.map(({ Icon, id, title, description }, idx) => (
             <motion.div
               key={id}
               initial="initial"
-              variants={fadeInAnimationVariants}
+              variants={fadeInCardsVariants}
               whileInView="animate"
               custom={idx}
-              // viewport={{ once: true }}
+              viewport={{ once: true }}
             >
               <div className={clsx((idx + 1) % 2 === 0 && styles.pt6)}>
                 <CardWithShadow className={styles.cardHeight}>
