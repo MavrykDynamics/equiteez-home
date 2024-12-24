@@ -84,9 +84,10 @@ export const ProgressBlocks = () => {
         <div className={styles.embla__container}>
           {ITEMS.map((item, idx) => (
             <motion.div
-              initial="initial"
+              initial={isMobile ? false : "initial"}
               whileInView="animate"
               variants={fadeInCardsVariants}
+              viewport={{ once: true }}
               custom={idx}
               key={item.id}
               className={clsx(
