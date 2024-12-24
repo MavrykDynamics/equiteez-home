@@ -4,6 +4,7 @@ import clsx from "clsx";
 import useEmblaCarousel from "embla-carousel-react";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 import { motion } from "framer-motion";
+import { MOBILE_WIDTH } from "~/styles/media";
 
 const ITEMS = [
   {
@@ -50,7 +51,7 @@ export const ProgressBlocks = () => {
   const { width } = useWindowDimensions();
 
   // derived state
-  const isMobile = width <= 600;
+  const isMobile = width <= MOBILE_WIDTH;
   const intervalTime = isMobile ? 14000 : 7000;
 
   useEffect(() => {

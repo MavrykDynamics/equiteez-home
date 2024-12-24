@@ -23,6 +23,7 @@ import { ThumbCardSecondary } from "~/templates/ThumbCard/ThumbCard";
 import { useDexContext } from "~/providers/Dexprovider/dex.provider";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 import { linker, openInNewTab } from "~/a11y/linker";
+import { MOBILE_WIDTH } from "~/styles/media";
 
 const SLIDER_VIEW_LIMIT = 3;
 
@@ -37,7 +38,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const { dodoMav } = useDexContext();
   const { width } = useWindowDimensions();
 
-  const isMobile = width <= 600;
+  const isMobile = width <= MOBILE_WIDTH;
   const showBtns = isMobile
     ? slides.length > 1
     : slides.length > SLIDER_VIEW_LIMIT;

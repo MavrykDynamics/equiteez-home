@@ -16,6 +16,7 @@ import clsx from "clsx";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 import { motion } from "framer-motion";
 import { slideFromLeftVariant, slideFromRightVariant } from "~/framer/variants";
+import { MOBILE_WIDTH } from "~/styles/media";
 
 const images: Record<string, string> = {
   buying: BuyingImg,
@@ -26,7 +27,7 @@ const images: Record<string, string> = {
 export const FinanceSection = () => {
   const [activetabId, setAvtiveTabId] = useState("buying");
   const { width } = useWindowDimensions();
-  const isMobile = width < 600;
+  const isMobile = width < MOBILE_WIDTH;
 
   const handleTabClick = useCallback((id: string) => {
     setAvtiveTabId(id);

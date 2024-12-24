@@ -39,6 +39,9 @@ import {
 } from "./providers/ToasterProvider/toaster.provider.const";
 import { FC } from "react";
 import { DexProvider } from "./providers/Dexprovider/dex.provider";
+import { MotionConfig } from "framer-motion";
+import { useWindowDimensions } from "./hooks/useWindowDimensions";
+import { MOBILE_WIDTH } from "./styles/media";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
@@ -94,6 +97,9 @@ const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { width } = useWindowDimensions();
+  const isMobile = width < MOBILE_WIDTH;
+
   return (
     <html lang="en">
       <head>
@@ -108,8 +114,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <ToasterProvider
             maintance={process.env.REACT_APP_MAINTANCE_MODE === "on"}
           >
-            <AppWrapper>{children}</AppWrapper>
-            <ToasterMessages />
+            <MotionConfig reducedMotion={isMobile ? "user" : "always"}>
+              <AppWrapper>{children}</AppWrapper>
+              <ToasterMessages />
+            </MotionConfig>
           </ToasterProvider>
           <ScrollRestoration />
           <Scripts />
