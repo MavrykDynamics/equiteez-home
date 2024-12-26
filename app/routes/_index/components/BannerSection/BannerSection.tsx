@@ -50,7 +50,7 @@ export const BannerSection = () => {
                 <PlayIcon className="w-6 h-6 min-w-6 stroke-none fill-current" />
               }
             >
-              How it works
+              How It works
             </ButtonWithIcon>
           </div>
         </div>
