@@ -36,7 +36,8 @@ const CARDS = [
     Icon: Card3Icon,
     title: (
       <>
-        Own multiple properties <br />
+        Own multiple properties
+        <br />
         without managment issues
       </>
     ),
