@@ -53,6 +53,9 @@
   object-position: right;
   height: 100%;
 }
+.financeBlockImageWrapper:nth-child(3) > img {
+  transform: translateY(-30px);
+}
 
 .headlineBtnMobile {
   display: none;

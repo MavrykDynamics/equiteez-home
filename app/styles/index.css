@@ -227,7 +227,6 @@ html {
   font-family: Poppins;
   scrollbar-width: thin;
   scrollbar-color: #cccccc transparent;
-  scrollbar-gutter: stable both-edges;
 }
 
 body {
