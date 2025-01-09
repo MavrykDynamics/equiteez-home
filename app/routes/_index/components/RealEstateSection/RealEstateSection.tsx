@@ -107,7 +107,7 @@ const CurrentEstate = forwardRef<
           <div className="w-full flex items-end justify-between">
             <p className="text-buttons text-white">{estate.author}</p>
             <Link
-              to={linker("/properties")}
+              to={linker("/marketplace")}
               target="_blank"
               rel="noreferrer"
               className={styles.estateLink}

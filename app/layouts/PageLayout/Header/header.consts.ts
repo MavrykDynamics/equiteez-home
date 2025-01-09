@@ -6,7 +6,7 @@ export const links = [
     text: "Exchange",
   },
   {
-    to: linker("/properties"),
+    to: linker("/marketplace"),
     text: "Marketplace",
   },
   {
