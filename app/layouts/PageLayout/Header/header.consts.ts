@@ -1,10 +1,10 @@
-import { linker } from "~/a11y/linker";
+// import { linker } from "~/a11y/linker";
 
 export const links = [
-  {
-    to: linker("/exchange"),
-    text: "Exchange",
-  },
+  // {
+  //   to: linker("/exchange"),
+  //   text: "Exchange",
+  // },
   // {
   //   to: linker("/marketplace"),
   //   text: "Marketplace",
