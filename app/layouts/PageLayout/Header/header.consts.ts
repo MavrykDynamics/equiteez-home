@@ -10,11 +10,7 @@ export const links = [
     text: "Marketplace",
   },
   {
-    to: "",
-    text: "RWA Loans",
-  },
-  {
-    to: "",
-    text: "Staking",
+    to: "https://docs.equiteez.com/",
+    text: "Docs",
   },
 ];

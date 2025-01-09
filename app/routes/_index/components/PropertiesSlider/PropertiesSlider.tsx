@@ -33,7 +33,7 @@ export const PropertiesSlider = () => {
       >
         <div className={styles.propertiesSliderWrapper}>
           <h1 className={styles.properiesSliderHeader}>
-            Explore our diverse portfolio of exceptional properties
+            Explore our diverse portfolio of exceptional assets
           </h1>
           <EmblaCarousel slides={estatesArr.slice(0, 7)} options={OPTIONS} />
         </div>

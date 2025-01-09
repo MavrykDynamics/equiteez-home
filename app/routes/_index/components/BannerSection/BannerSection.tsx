@@ -35,9 +35,7 @@ export const BannerSection = () => {
           </p>
           <div className={styles.bannerBtnsWrapper}>
             <Link to={linker("/marketplace")} target="_blank" rel="noreferrer">
-              <Button className={styles.bannerBtnPadding}>
-                View Properties
-              </Button>
+              <Button className={styles.bannerBtnPadding}>View Assets</Button>
             </Link>
 
             <ButtonWithIcon

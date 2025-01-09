@@ -116,7 +116,7 @@ const CurrentEstate = forwardRef<
                 className="text-white bg-transparent border-2 border-white py-[8px] -sm:hidden"
                 variant="outline"
               >
-                View properties
+                View Assets
                 <ArrowRight className="w-6 h-6 stroke-current ml-1" />
               </Button>
             </Link>
