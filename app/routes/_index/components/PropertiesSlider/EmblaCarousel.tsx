@@ -52,13 +52,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   const handleSlideClick = (id: string, isLastSlide: boolean) => {
     if (isLastSlide) return;
-    openInNewTab(linker(`/properties/${id}`));
+    openInNewTab(linker(`/marketplace/${id}`));
   };
 
   return (
     <section className={styles.embla}>
       <div className={"w-full flex justify-between items-center mb-11"}>
-        <Link to={linker("/properties")} target="_blank" rel="noreferrer">
+        <Link to={linker("/marketplace")} target="_blank" rel="noreferrer">
           <Button
             variant="custom"
             className="text-white bg-transparent border-2 border-white py-[8px]"
@@ -122,7 +122,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                           Want to see more? <br />
                           Check out our marketplace
                         </h4>
-                        <Link to="/properties">
+                        <Link to={linker("/marketplace")}>
                           <Button variant="white">Explore</Button>
                         </Link>
                       </div>
