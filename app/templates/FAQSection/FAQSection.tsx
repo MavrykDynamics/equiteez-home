@@ -83,7 +83,7 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
         <img
           alt="gradient"
           src={orangeGradientBg}
-          className="absolute sm:right-[-900px] sm:max-w-[2000px] sm:top-[-400px] max-w-[1000px] right-[-400px] top-[-1300px] z-[-1]"
+          className="absolute sm:opacity-[0.5] sm:right-[-900px] sm:max-w-[2000px] sm:top-[-400px] max-w-[1000px] right-[-400px] top-[-1300px] z-[-1]"
         />
       </section>
     </PaddingContainer>
