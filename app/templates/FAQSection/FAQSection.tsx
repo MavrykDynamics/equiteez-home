@@ -5,7 +5,8 @@ import clsx from "clsx";
 import ArrowDown from "app/icons/chevron-down.svg?react";
 import { useAppContext } from "~/providers/AppProvider/AppProvider";
 import { PaddingContainer } from "~/lib/atoms/Container";
-// import { isVisibleInViewport } from '~/lib/utils/element-in-view';
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
+import orangeGradientBg from "app/assets/home/orange-gradient-bg.png";
 
 export type FaqType = {
   data: { title: string; description: string | JSX.Element }[];
@@ -76,12 +77,12 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
         </div>
         <img
           alt="gradient"
-          src="app/assets/home/green-gradient-bg.png"
+          src={greenGradientBg}
           className="absolute sm:left-[-700px] sm:w-[1000px] sm:bottom-[-400px] sm:h-[1000px] z-[-1] bottom-[-500px] left-[-500px] max-w-[1000px]"
         />
         <img
           alt="gradient"
-          src="app/assets/home/orange-gradient-bg.png"
+          src={orangeGradientBg}
           className="absolute sm:right-[-900px] sm:max-w-[2000px] sm:top-[-400px] max-w-[1000px] right-[-400px] top-[-1300px] z-[-1]"
         />
       </section>

@@ -1,6 +1,6 @@
 import { PaddingContainer } from "~/lib/atoms/Container";
 import { ProgressBlocks } from "./components/ProgressBlocks/ProgressBlocks";
-
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
 import styles from "./integrationSection.module.css";
 
 export const IntegrationSection = () => {
@@ -15,7 +15,7 @@ export const IntegrationSection = () => {
         </p>
         <img
           alt="gradient"
-          src="app/assets/home/green-gradient-bg.png"
+          src={greenGradientBg}
           className="absolute left-[-900px] top-[-900px] z-[-1]"
         />
       </div>
