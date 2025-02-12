@@ -75,7 +75,7 @@ const fadeInCardsVariants = {
 export const PortfolioSection = () => {
   return (
     <PaddingContainer>
-      <section className={styles.portfolioWrapper}>
+      <section className={clsx(styles.portfolioWrapper, "relative")}>
         <motion.div
           initial="initial"
           variants={slideFromLeftVariant}
@@ -116,6 +116,16 @@ export const PortfolioSection = () => {
             </motion.div>
           ))}
         </div>
+        <img
+          alt="gradient"
+          src="app/assets/home/green-gradient-bg.png"
+          className="absolute left-[-800px] top-[-1400px] z-[-1]"
+        />
+        <img
+            alt="gradient"
+            src="app/assets/home/orange-gradient-bg.png"
+            className="absolute right-[-700px] bottom-[-1000px] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );

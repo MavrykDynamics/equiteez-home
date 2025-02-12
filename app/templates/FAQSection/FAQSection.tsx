@@ -57,7 +57,7 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
 
   return (
     <PaddingContainer>
-      <section className={styles.faqWrapper}>
+      <section className={clsx(styles.faqWrapper, "relative")}>
         <div className="max-w-[506px] w-full">
           <h2 className="text-content text-section-headline">
             Answers to our most frequently asked questions
@@ -74,6 +74,16 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
             />
           ))}
         </div>
+        <img
+          alt="gradient"
+          src="app/assets/home/green-gradient-bg.png"
+          className="absolute left-[-500px] w-[1000px] bottom-[-400px] h-[1000px] z-[-1]"
+        />
+        <img
+          alt="gradient"
+          src="app/assets/home/orange-gradient-bg.png"
+          className="absolute right-[-900px] top-[-400px] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );

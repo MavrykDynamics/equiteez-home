@@ -23,7 +23,9 @@ const assets = [Img1, Img2, Img3, Img4, Img5, Img6];
 export const BannerSection = () => {
   return (
     <PaddingContainer>
-      <section className={clsx("pt-[100px]", styles.bannerContainer)}>
+      <section
+        className={clsx("pt-[100px]", styles.bannerContainer, "relative")}
+      >
         <div className="flex flex-col items-start self-center">
           <h1 className={styles.bannerTextContent}>
             Build your portfolio with every asset on the block
@@ -61,6 +63,16 @@ export const BannerSection = () => {
             </div>
           ))}
         </div>
+        <img
+          alt="gradient"
+          src="app/assets/home/green-gradient-bg.png"
+          className="absolute left-[-800px] top-[-300px] z-[-1]"
+        />
+        <img
+          alt="gradient"
+          src="app/assets/home/orange-gradient-bg.png"
+          className="absolute right-[-800px] top-[0] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );

@@ -58,7 +58,7 @@ export const FinanceSection = () => {
     <PaddingContainer>
       <HeadlineBlock />
       <div className={styles.financeBlockWrapper}>
-        <FinanceButton className={styles.headlineBtnMobile} />
+        {/*<FinanceButton className={styles.headlineBtnMobile} />*/}
         <motion.div
           initial="initial"
           variants={slideFromLeftVariant}
