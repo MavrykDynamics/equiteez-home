@@ -14,6 +14,8 @@ import Img3 from "app/assets/home/banner/img-3.webp";
 import Img4 from "app/assets/home/banner/img-4.webp";
 import Img5 from "app/assets/home/banner/img-5.webp";
 import Img6 from "app/assets/home/banner/img-6.webp";
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
+import orangeGradientBg from "app/assets/home/orange-gradient-bg.png";
 import { ButtonWithIcon } from "~/lib/atoms/Button/Button";
 import { PaddingContainer } from "~/lib/atoms/Container";
 import { linker } from "~/a11y/linker";
@@ -65,12 +67,12 @@ export const BannerSection = () => {
         </div>
         <img
           alt="gradient"
-          src="app/assets/home/green-gradient-bg.png"
+          src={greenGradientBg}
           className="absolute sm:left-[-800px] sm:top-[-300px] sm:max-w-[2000px] z-[-1] left-[-600px] top-[-400px] max-w-[1000px]"
         />
         <img
           alt="gradient"
-          src="app/assets/home/orange-gradient-bg.png"
+          src={orangeGradientBg}
           className="absolute sm:right-[-900px] sm:top-[0] max-w-[2000px] top-[0] right-[-1000px] z-[-1]"
         />
       </section>
