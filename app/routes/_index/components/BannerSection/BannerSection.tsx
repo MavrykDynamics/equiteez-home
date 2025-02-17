@@ -73,7 +73,7 @@ export const BannerSection = () => {
         <img
           alt="gradient"
           src={orangeGradientBg}
-          className="absolute sm:right-[-900px] sm:opacity-[0.5] sm:top-[0] max-w-[2000px] top-[0] right-[-1000px] z-[-1]"
+          className="absolute sm:right-[-900px] sm:opacity-[0.8] sm:top-[0] max-w-[2000px] top-[0] right-[-1000px] z-[-1]"
         />
       </section>
     </PaddingContainer>
