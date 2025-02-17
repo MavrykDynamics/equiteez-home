@@ -5,7 +5,8 @@ import clsx from "clsx";
 import ArrowDown from "app/icons/chevron-down.svg?react";
 import { useAppContext } from "~/providers/AppProvider/AppProvider";
 import { PaddingContainer } from "~/lib/atoms/Container";
-// import { isVisibleInViewport } from '~/lib/utils/element-in-view';
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
+import orangeGradientBg from "app/assets/home/orange-gradient-bg.png";
 
 export type FaqType = {
   data: { title: string; description: string | JSX.Element }[];
@@ -57,7 +58,7 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
 
   return (
     <PaddingContainer>
-      <section className={styles.faqWrapper}>
+      <section className={clsx(styles.faqWrapper, "relative")}>
         <div className="max-w-[506px] w-full">
           <h2 className="text-content text-section-headline">
             Answers to our most frequently asked questions
@@ -74,6 +75,16 @@ export const FAQSection: FC<FaqType> = ({ data }) => {
             />
           ))}
         </div>
+        <img
+          alt="gradient"
+          src={greenGradientBg}
+          className="absolute sm:left-[-700px] sm:w-[1000px] sm:bottom-[-400px] sm:h-[1000px] z-[-1] bottom-[-500px] left-[-500px] max-w-[1000px]"
+        />
+        <img
+          alt="gradient"
+          src={orangeGradientBg}
+          className="absolute sm:opacity-[0.8] sm:right-[-900px] sm:max-w-[2000px] sm:top-[-400px] max-w-[1000px] right-[-400px] top-[-1300px] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );

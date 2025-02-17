@@ -5,6 +5,8 @@ import Card4Icon from "app/assets/home/icons/send-triangle.svg?react";
 import { CardWithShadow } from "~/lib/atoms/CardWithShadow";
 import clsx from "clsx";
 import { PaddingContainer } from "~/lib/atoms/Container";
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
+import orangeGradientBg from "app/assets/home/orange-gradient-bg.png";
 
 import { motion } from "framer-motion";
 
@@ -75,7 +77,7 @@ const fadeInCardsVariants = {
 export const PortfolioSection = () => {
   return (
     <PaddingContainer>
-      <section className={styles.portfolioWrapper}>
+      <section className={clsx(styles.portfolioWrapper, "relative")}>
         <motion.div
           initial="initial"
           variants={slideFromLeftVariant}
@@ -116,6 +118,21 @@ export const PortfolioSection = () => {
             </motion.div>
           ))}
         </div>
+        <img
+          alt="gradient"
+          src={greenGradientBg}
+          className="absolute sm:left-[-800px] sm:max-w-[2000px] sm:top-[-1400px] z-[-1] max-w-[1000px] left-[-500px] top-[-1600px]"
+        />
+        <img
+          alt="gradient"
+          src={orangeGradientBg}
+          className="absolute sm:right-[-700px] sm:bottom-[-1000px] sm:max-w-[2000px] sm:top-[auto] max-w-[1000px] bottom-[auto] top-[200px] right-[-600px] z-[-1]"
+        />
+        <img
+          alt="gradient"
+          src={greenGradientBg}
+          className="sm:hidden block absolute max-w-[1000px] left-[-600px] bottom-[-600px] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );

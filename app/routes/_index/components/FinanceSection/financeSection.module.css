@@ -57,7 +57,7 @@
   transform: translateY(-30px);
 }
 
-.headlineBtnMobile {
+.financeBlockWrapper .headlineBtnMobile {
   display: none;
 }
 
@@ -93,11 +93,11 @@
   .headlineHeader {
     @apply text-card-headline;
   }
-  .headlineBtn {
+  .headlineWrapper .headlineBtn {
     display: none;
   }
 
-  .headlineBtnMobile {
+  .financeBlockWrapper .headlineBtnMobile {
     display: block;
     align-self: center;
   }

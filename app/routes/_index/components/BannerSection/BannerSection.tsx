@@ -14,6 +14,8 @@ import Img3 from "app/assets/home/banner/img-3.webp";
 import Img4 from "app/assets/home/banner/img-4.webp";
 import Img5 from "app/assets/home/banner/img-5.webp";
 import Img6 from "app/assets/home/banner/img-6.webp";
+import greenGradientBg from "app/assets/home/green-gradient-bg.png";
+import orangeGradientBg from "app/assets/home/orange-gradient-bg.png";
 import { ButtonWithIcon } from "~/lib/atoms/Button/Button";
 import { PaddingContainer } from "~/lib/atoms/Container";
 import { linker } from "~/a11y/linker";
@@ -23,7 +25,9 @@ const assets = [Img1, Img2, Img3, Img4, Img5, Img6];
 export const BannerSection = () => {
   return (
     <PaddingContainer>
-      <section className={clsx("pt-[100px]", styles.bannerContainer)}>
+      <section
+        className={clsx("pt-[100px]", styles.bannerContainer, "relative")}
+      >
         <div className="flex flex-col items-start self-center">
           <h1 className={styles.bannerTextContent}>
             Build your portfolio with every asset on the block
@@ -61,6 +65,16 @@ export const BannerSection = () => {
             </div>
           ))}
         </div>
+        <img
+          alt="gradient"
+          src={greenGradientBg}
+          className="absolute sm:left-[-800px] sm:top-[-300px] sm:max-w-[2000px] z-[-1] left-[-600px] top-[-400px] max-w-[1000px]"
+        />
+        <img
+          alt="gradient"
+          src={orangeGradientBg}
+          className="absolute sm:right-[-900px] sm:opacity-[0.8] sm:top-[0] max-w-[2000px] top-[0] right-[-1000px] z-[-1]"
+        />
       </section>
     </PaddingContainer>
   );
