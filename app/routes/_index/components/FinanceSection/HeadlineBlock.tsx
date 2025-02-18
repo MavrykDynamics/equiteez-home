@@ -14,7 +14,7 @@ export const HeadlineBlock = () => {
       >
         <div>
           <h1 className={styles.headlineHeader}>
-            It’s never been easier to invest in asset such as real estate, and
+            It’s never been easier to invest in assets such as real estate, and
             earn passive income.
           </h1>
 
