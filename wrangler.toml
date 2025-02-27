@@ -26,4 +26,4 @@ EXPLORE_APP_URL="https://app.equiteez.com"
 GRAPHQL_API="https://api.equiteez.com/v1/graphql"
 GRAPHQL_WSS_API="wss://api.equiteez.com/v1/graphql"
 NODE_VERSION="22.11.0"
-REACT_APP_MAINTANCE_MODE='on'
+REACT_APP_MAINTANCE_MODE='off'
