@@ -15,6 +15,7 @@ EXPLORE_APP_URL="https://stage.equiteez-app.pages.dev"
 NODE_VERSION="22.11.0"
 GRAPHQL_API="https://api.equiteez.com/v1/graphql"
 GRAPHQL_WSS_API="wss://api.equiteez.com/v1/graphql"
+REACT_APP_MAINTANCE_MODE='off'
 
 [env.production.vars]
 API_URL="https://atlasnet.api.mavryk.network/v1"
@@ -25,3 +26,4 @@ EXPLORE_APP_URL="https://app.equiteez.com"
 GRAPHQL_API="https://api.equiteez.com/v1/graphql"
 GRAPHQL_WSS_API="wss://api.equiteez.com/v1/graphql"
 NODE_VERSION="22.11.0"
+REACT_APP_MAINTANCE_MODE='on'
