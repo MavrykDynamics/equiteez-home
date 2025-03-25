@@ -24,6 +24,7 @@ import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 import { linker, openInNewTab } from "~/a11y/linker";
 import { MOBILE_WIDTH } from "~/styles/media";
 import { SECONDARY_MARKET } from "~/providers/MarketsProvider/market.const";
+import { atomsToTokens } from "~/lib/utils/formaters";
 
 const SLIDER_VIEW_LIMIT = 3;
 
@@ -88,7 +89,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             const isSecondaryMarket =
               estate.assetDetails.type === SECONDARY_MARKET;
 
-            const pricePerToken = dodoMav[estate.slug];
+            const pricePerToken = atomsToTokens(
+              dodoMav[estate.slug],
+              estate.decimals
+            );
             return (
               <div
                 role="presentation"

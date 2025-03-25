@@ -10,7 +10,7 @@ import {
 import { useQuery } from "@apollo/client/index";
 
 // mocked assets === markets
-import estatesMocked from "app/mocks/rwas.json";
+import estatesMocked from "app/mocks/rwas copy.json";
 import fakeAssetsMocked from "app/mocks/assets.mock.json";
 
 import {
