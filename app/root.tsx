@@ -12,20 +12,17 @@ import { json, LinksFunction } from "@remix-run/node";
 
 // global styles
 import stylesheet from "~/styles/index.css?url";
-import { cssBundleHref } from "@remix-run/css-bundle";
 
 // providers
 import { AppProvider } from "./providers/AppProvider/AppProvider";
-import { EstatesProvider } from "./providers/EstatesProvider/estates.provider";
+import { MarketsProvider } from "./providers/MarketsProvider/markets.provider";
 import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
-import { PopupProvider } from "./providers/PopupProvider/popup.provider";
 import { AppGlobalLoader } from "./providers/AppGlobalLoader";
 import { CurrencyProvider } from "./providers/CurrencyProvider/currency.provider";
 import {
   fetchTokensData,
   fetchTokensMetadata,
 } from "./providers/TokensProvider/utils/fetchTokensdata";
-import { fetchUsdToTokenRates } from "./lib/mavryk/endpoints/get-exchange-rates";
 import { useDataFromLoader } from "./hooks/useDataFromLoader";
 import ToasterProvider from "./providers/ToasterProvider/toaster.provider";
 import { ApolloProvider } from "./providers/ApolloProvider/apollo.provider";
@@ -37,34 +34,31 @@ import {
   errorHeaderDefaultText,
   errorHeaderDefaultTextWhenError,
 } from "./providers/ToasterProvider/toaster.provider.const";
-import { FC } from "react";
 import { DexProvider } from "./providers/Dexprovider/dex.provider";
-import { CustomMotionConfig } from "./providers/CustomMotionConfig";
+import { DipdupProvider } from "./providers/DipdupProvider/DipDup.provider";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
   { rel: "stylesheet", href: stylesheet },
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export const loader = async () => {
   const tokens = await fetchTokensData();
 
-  const [tokensMetadata, usdToToken] = await Promise.all([
+  const [tokensMetadata] = await Promise.all([
     fetchTokensMetadata(tokens),
-    fetchUsdToTokenRates(),
+    // fetchUsdToTokenRates(),
   ]);
 
   return json({
     tokens,
     tokensMetadata,
+    usdToToken: {},
     fiatToTezos: {},
-    usdToToken,
   });
 };
 
-const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
-  // TODO handle laoder data elsewhere
+export function Layout({ children }: { children: React.ReactNode }) {
   const {
     tokens = [],
     tokensMetadata = {},
@@ -72,31 +66,6 @@ const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
     usdToToken = {},
   } = useDataFromLoader<typeof loader>() ?? {};
 
-  return (
-    <AppProvider>
-      <CustomMotionConfig>
-        <ApolloProvider>
-          <CurrencyProvider fiatToTezos={fiatToTezos} usdToToken={usdToToken}>
-            <TokensProvider
-              initialTokens={tokens}
-              initialTokensMetadata={tokensMetadata}
-            >
-              <EstatesProvider>
-                <DexProvider>
-                  <AppGlobalLoader>
-                    <PopupProvider>{children}</PopupProvider>
-                  </AppGlobalLoader>
-                </DexProvider>
-              </EstatesProvider>
-            </TokensProvider>
-          </CurrencyProvider>
-        </ApolloProvider>
-      </CustomMotionConfig>
-    </AppProvider>
-  );
-};
-
-export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -111,7 +80,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <ToasterProvider
             maintance={process.env.REACT_APP_MAINTANCE_MODE === "on"}
           >
-            <AppWrapper>{children}</AppWrapper>
+            <AppProvider>
+              <ApolloProvider>
+                <DipdupProvider>
+                  <CurrencyProvider
+                    fiatToTezos={fiatToTezos}
+                    usdToToken={usdToToken}
+                  >
+                    <TokensProvider
+                      initialTokens={tokens}
+                      initialTokensMetadata={tokensMetadata}
+                    >
+                      <MarketsProvider>
+                        <DexProvider>
+                          <AppGlobalLoader>{children}</AppGlobalLoader>
+                        </DexProvider>
+                      </MarketsProvider>
+                    </TokensProvider>
+                  </CurrencyProvider>
+                </DipdupProvider>
+              </ApolloProvider>
+            </AppProvider>
             <ToasterMessages />
           </ToasterProvider>
           <ScrollRestoration />
@@ -130,6 +119,7 @@ export default function App() {
   );
 }
 
+/** catch server errors ************************** */
 export function ErrorBoundary() {
   const error = useRouteError();
 

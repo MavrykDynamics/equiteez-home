@@ -1,7 +1,12 @@
 import BigNumber from "bignumber.js";
 import { DodoStorageType } from "../dex.provider.types";
+import { ZERO } from "~/lib/utils/numbers";
 
-export const calculateTotalLiquidity = (storage: DodoStorageType) => {
+export const calculateTotalLiquidity = (
+  storage: DodoStorageType | undefined
+) => {
+  if (!storage)
+    return { totalLiquidity: ZERO, baseBalance: ZERO, quoteBalance: ZERO };
   const feeDecimals = new BigNumber(10).pow(storage.config.feeDecimals);
 
   const baseBalance = new BigNumber(storage.baseBalance).div(feeDecimals);
@@ -14,17 +19,29 @@ export const calculateTotalLiquidity = (storage: DodoStorageType) => {
 };
 
 export const calculateTotalLiquidityInUSD = (
-  storage: DodoStorageType,
+  storage: DodoStorageType | undefined,
   baseTokenPriceInUSDT: BigNumber
 ) => {
-  const feeDecimals = new BigNumber(10).pow(storage.config.feeDecimals);
-  const baseBalanceInUSD = new BigNumber(storage.baseBalance).times(
-    baseTokenPriceInUSDT.div(feeDecimals)
-  );
+  if (!storage)
+    return {
+      totalLiquidityInUSD: "0",
+      baseBalanceInUSD: "0",
+      quoteBalanceInUSD: "0",
+    };
 
-  const quoteBalanceInUSD = new BigNumber(storage.quoteBalance).times(
-    baseTokenPriceInUSDT.div(feeDecimals)
-  );
+  const feeDecimals = new BigNumber(10).pow(storage.config.feeDecimals);
+
+  // Convert baseBalance to human-readable format
+  const baseBalance = new BigNumber(storage.baseBalance).div(feeDecimals);
+
+  // Convert quoteBalance to human-readable format (already in USD)
+  const quoteBalance = new BigNumber(storage.quoteBalance).div(feeDecimals);
+
+  // Calculate USD value of base token in the pool
+  const baseBalanceInUSD = baseBalance.times(baseTokenPriceInUSDT);
+
+  // Since quote token is USDT, its balance is already in USD
+  const quoteBalanceInUSD = quoteBalance;
 
   // Calculate total liquidity in USD
   const totalLiquidityInUSD = baseBalanceInUSD.plus(quoteBalanceInUSD);
@@ -36,10 +53,19 @@ export const calculateTotalLiquidityInUSD = (
   };
 };
 
-export const calculateLiquidityPercentages = (storage: DodoStorageType) => {
+const DEFAULT_PERCENTAGES_DATA = {
+  basePercentage: "0",
+  quotePercentage: "0",
+};
+
+export const calculateLiquidityPercentages = (
+  storage: DodoStorageType | undefined
+) => {
+  if (!storage) return DEFAULT_PERCENTAGES_DATA;
   const { baseBalance, quoteBalance, totalLiquidity } =
     calculateTotalLiquidity(storage);
 
+  if (totalLiquidity.isZero()) return DEFAULT_PERCENTAGES_DATA;
   // Calculate percentages
   const basePercentage = baseBalance.div(totalLiquidity).times(100); // Base token percentage
   const quotePercentage = quoteBalance.div(totalLiquidity).times(100); // Quote token percentage
@@ -50,32 +76,53 @@ export const calculateLiquidityPercentages = (storage: DodoStorageType) => {
   };
 };
 
-export const getDodoMavLpFee = (storage: DodoStorageType) => {
+export const getTokenAmountFromLiquidity = (
+  storage: DodoStorageType | undefined,
+  baseTokenPriceInUSDT: BigNumber
+) => {
+  if (!storage || baseTokenPriceInUSDT.isZero()) return new BigNumber(0);
+
   const feeDecimals = new BigNumber(10).pow(storage.config.feeDecimals);
-  return new BigNumber(storage.config.lpFee).div(feeDecimals);
+
+  // Convert baseBalance to human-readable format
+  const baseBalance = new BigNumber(storage.baseBalance).div(feeDecimals);
+
+  return baseBalance; // This already represents the token amount in the pool
 };
 
 export const calculateEstFee = (
   tokensAmount: BigNumber | undefined,
   tokenPriceInUSDT: BigNumber.Value,
   lpFee: BigNumber.Value,
-  decimals: number,
+  maintainerFee: BigNumber.Value,
+  feeDecimals: number,
+  slippageFactor: BigNumber.Value,
   isBuying: boolean
 ) => {
   if (!tokensAmount) return "0";
-  const feeRate = lpFee;
+
+  // Convert fees and slippage factor to proper decimal scale
+  const totalFeeRate = new BigNumber(lpFee)
+    .plus(maintainerFee)
+    .div(new BigNumber(10).pow(feeDecimals));
+
+  const slippageMultiplier = new BigNumber(1).plus(
+    new BigNumber(slippageFactor).div(new BigNumber(10).pow(18))
+  );
 
   if (isBuying) {
-    // Fee in token X
-    const estFee = tokensAmount.times(feeRate);
-    return estFee.toFixed(decimals);
+    // Fee in base token
+    const estFee = tokensAmount.times(totalFeeRate).times(slippageMultiplier);
+    return estFee.toFixed(feeDecimals);
   } else {
     // Fee in USDT
     const tokenValueInUSDT = new BigNumber(tokensAmount).times(
       tokenPriceInUSDT
     );
-    const estFee = tokenValueInUSDT.times(feeRate);
-    return estFee.toFixed(decimals);
+    const estFee = tokenValueInUSDT
+      .times(totalFeeRate)
+      .times(slippageMultiplier);
+    return estFee.toFixed(feeDecimals);
   }
 };
 
@@ -90,9 +137,6 @@ export const calculateMinReceived = (
   const slippageFactor = new BigNumber(1).minus(
     new BigNumber(slippagePercentage).dividedBy(100)
   );
-
-  // const minMaxQuote = new BigNumber(tokensAmount).times(slippageFactor);
-  // console.log(tokensToAtoms(minMaxQuote, 3).toNumber(), "------");
 
   // For buying, calculate how much you receive in tokens
   const totalValueInUSDT = new BigNumber(tokensAmount).times(tokenPriceInUSDT);

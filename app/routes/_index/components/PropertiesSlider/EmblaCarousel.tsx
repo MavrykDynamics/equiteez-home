@@ -15,15 +15,15 @@ import { Button } from "~/lib/atoms/Button";
 import { Link } from "@remix-run/react";
 import {
   PrimaryEstate,
-  SECONDARY_MARKET,
   SecondaryEstate,
-} from "~/providers/EstatesProvider/estates.types";
+} from "~/providers/MarketsProvider/market.types";
 import { usePrevNextButtons } from "~/lib/ui/use-embla-buttons";
 import { ThumbCardSecondary } from "~/templates/ThumbCard/ThumbCard";
 import { useDexContext } from "~/providers/Dexprovider/dex.provider";
 import { useWindowDimensions } from "~/hooks/useWindowDimensions";
 import { linker, openInNewTab } from "~/a11y/linker";
 import { MOBILE_WIDTH } from "~/styles/media";
+import { SECONDARY_MARKET } from "~/providers/MarketsProvider/market.const";
 
 const SLIDER_VIEW_LIMIT = 3;
 
