@@ -1,5 +1,5 @@
 import { extractNumber } from "~/lib/utils/numbers";
-import { EstateType } from "~/providers/EstatesProvider/estates.types";
+import { EstateType } from "~/providers/MarketsProvider/market.types";
 import {
   MarketTokenAddressesQuery,
   MarketTokensQuery,
@@ -28,7 +28,7 @@ export const marketTokenNormalizer = (
   data: MarketTokensQuery["token"],
   estates: EstateType[]
 ) => {
-  const normalizedTokens = data.reduce<StringRecord<EstateType>>(
+  const normalizedTokens = data.reduce<Map<string, EstateType>>(
     (acc, token) => {
       const mockedPart = estates.find(
         (es) => es.token_address === token.address
@@ -67,7 +67,7 @@ export const marketTokenNormalizer = (
       // Asset slug used accross entire app to get specific data
       const slug = token.address.concat(`_${token.token_id}`);
 
-      acc[slug] = {
+      acc.set(slug, {
         slug,
         token_address: token.address,
         name: token.token_metadata.name,
@@ -85,10 +85,9 @@ export const marketTokenNormalizer = (
           basicInfo: {
             // empty
             // TODO
-            beds: 1,
-            baths: 3,
-            sqft: 313,
-            buildDate: "1973-06-08T09:20:37-03:00",
+            beds: "1 bed",
+            baths: "3 bath",
+            sqft: "313 sqft",
           },
           propertyDetails: {
             description:
@@ -96,6 +95,7 @@ export const marketTokenNormalizer = (
               (mockedPart?.assetDetails.propertyDetails.description || ""),
             propertyType: details.propertyType,
             fullAddress: details.fullAddress,
+            shortAddress: details.fullAddress,
             zipCode: details.zipcode,
             state: details.state,
             country: details.country,
@@ -113,8 +113,8 @@ export const marketTokenNormalizer = (
             foundation: buildingInfo.foundation,
             exteriorWalls: buildingInfo.exteriorWalls,
             roofType: buildingInfo.roofType,
-            heating: buildingInfo.heating,
-            cooling: buildingInfo.cooling,
+            heating: buildingInfo.heating ?? "-",
+            cooling: buildingInfo.cooling ?? "-",
             renovated: buildingInfo.renovated,
           },
           neighborhood: {
@@ -195,14 +195,15 @@ export const marketTokenNormalizer = (
             },
           },
           priceDetails: {
+            ...mockedPart?.assetDetails?.priceDetails,
             price: extractNumber(latestValuation.tokenPrice),
-            annualReturn: 4.03,
-            projectedAnnualReturn: 4.03,
-            rentalYield: 28.43,
-            projectedRentalYield: 28.43,
-            totalLiquidity: 40.03,
-            tokensAvailable: 548,
-            tokensUsed: 500,
+            // annualReturn: 4.03,
+            // projectedAnnualReturn: 4.03,
+            // rentalYield: 28.43,
+            // projectedRentalYield: 28.43,
+            // totalLiquidity: 40.03,
+            // tokensAvailable: 548,
+            // tokensUsed: 500,
           },
           tradingHistory: [
             {
@@ -353,11 +354,11 @@ export const marketTokenNormalizer = (
             ],
           },
         },
-      };
+      });
 
       return acc;
     },
-    {}
+    new Map()
   );
 
   return normalizedTokens;

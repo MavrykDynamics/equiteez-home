@@ -1,10 +1,10 @@
 import { EmblaOptionsType } from "embla-carousel";
 import EmblaCarousel from "./EmblaCarousel";
-import { useEstatesContext } from "~/providers/EstatesProvider/estates.provider";
 import { PaddingContainer } from "~/lib/atoms/Container";
 
 import styles from "./propertiesSlider.module.css";
 import { motion } from "framer-motion";
+import { useMarketsContext } from "~/providers/MarketsProvider/markets.provider";
 
 const OPTIONS: EmblaOptionsType = { align: "start" };
 
@@ -21,7 +21,7 @@ const sliderAnimationVariants = {
 };
 
 export const PropertiesSlider = () => {
-  const { estatesArr } = useEstatesContext();
+  const { marketsArr } = useMarketsContext();
 
   return (
     <PaddingContainer>
@@ -35,7 +35,7 @@ export const PropertiesSlider = () => {
           <h1 className={styles.properiesSliderHeader}>
             Explore our diverse portfolio of exceptional assets
           </h1>
-          <EmblaCarousel slides={estatesArr.slice(0, 7)} options={OPTIONS} />
+          <EmblaCarousel slides={marketsArr} options={OPTIONS} />
         </div>
       </motion.div>
     </PaddingContainer>
