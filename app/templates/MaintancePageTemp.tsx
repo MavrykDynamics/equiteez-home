@@ -20,7 +20,7 @@ export const MaintancePageTemp = () => {
           </div>
         </div>
 
-        <div className="z-10 w-full">
+        <div className="z-10 w-full mt-auto">
           <FooterSecondary theme="light" />
         </div>
         <img
