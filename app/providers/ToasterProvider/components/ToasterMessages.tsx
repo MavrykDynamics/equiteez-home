@@ -47,7 +47,8 @@ const Toast = ({ toast }: { toast: ToasterMessage }) => {
       className={classNames(
         styles.toaster,
         styles[toastAnimation],
-        styles[type]
+        styles[type],
+        !title ? "items-center" : "items-start"
       )}
     >
       <Icon className={"size-6 min-w-6"} icon={TOAST_ICON_MAPPER[type]} />

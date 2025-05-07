@@ -37,7 +37,6 @@
   border-radius: 12px;
 
   display: flex;
-  align-items: flex-start;
   column-gap: 16px;
 
   transition: all 1s ease-in-out;
