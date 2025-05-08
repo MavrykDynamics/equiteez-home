@@ -45,7 +45,6 @@ type Props = {
 export const ApolloProvider = ({ children }: Props) => {
   const { IS_WEB } = useAppContext();
   const { bug } = useToasterContext();
-  const [hasNetworkError, setHasNetworkError] = useState(false);
 
   const errorLink = useMemo(
     () =>
@@ -66,13 +65,11 @@ export const ApolloProvider = ({ children }: Props) => {
           if (typeof window !== "undefined" && !window.navigator.onLine) {
             bug("Sorry, your browser is offline.");
           } else {
-            if (hasNetworkError) bug(new ApiError("Server is disabled."));
-
-            setHasNetworkError(true);
+            if (networkError) bug(new ApiError("Server is disabled."));
           }
         }
       }),
-    [hasNetworkError]
+    []
   );
 
   const apolloClient = useMemo(
