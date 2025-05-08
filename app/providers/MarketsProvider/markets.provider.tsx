@@ -35,7 +35,6 @@ import {
   // MARKETS_PAGINATION_LIMIT,
 } from "./market.const";
 import { toTokenSlug } from "~/lib/assets";
-import { useApolloContext } from "../ApolloProvider/apollo.provider";
 import { useToasterContext } from "../ToasterProvider/toaster.provider";
 import { ApiError, unknownToError } from "~/errors/error";
 
@@ -44,7 +43,6 @@ export const marketsContext = createContext<MarketContext>(undefined!);
 // assets to show without actual API data
 
 export const MarketsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { handleApolloError } = useApolloContext();
   const { bug } = useToasterContext();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [marketsState, setMarketsState] = useState<MarketInternalStateType>(
@@ -99,7 +97,6 @@ export const MarketsProvider: FC<PropsWithChildren> = ({ children }) => {
       },
       onError: (error) => {
         setMarketApiError(new ApiError(error));
-        handleApolloError(error, "MARKETS_ADDRESSES_QUERY");
       },
     }
   );
@@ -185,7 +182,6 @@ export const MarketsProvider: FC<PropsWithChildren> = ({ children }) => {
     },
     onError: (error) => {
       setMarketApiError(new ApiError(error));
-      handleApolloError(error, "MARKET_TOKENS__DATA_QUERY");
     },
   });
 
