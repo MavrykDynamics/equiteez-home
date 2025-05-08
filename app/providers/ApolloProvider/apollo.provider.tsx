@@ -16,7 +16,7 @@ import { ApolloContext } from "./apollo.provider.types";
 
 // consts
 import { httpLink, retryLink, splitLink } from "./apollo.config";
-import { ApiError, isAbortError } from "~/errors/error";
+import { isAbortError } from "~/errors/error";
 
 // hooks
 import { useToasterContext } from "../ToasterProvider/toaster.provider";
@@ -59,7 +59,7 @@ export const ApolloProvider = ({ children }: Props) => {
           if (typeof window !== "undefined" && !window.navigator.onLine) {
             bug("Sorry, your browser is offline.");
           } else {
-            if (networkError) bug(new ApiError("Server is disabled."));
+            if (networkError) console.error("Server is disabled.");
           }
         }
       }),
