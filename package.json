@@ -28,7 +28,6 @@
     "@dicebear/avatars": "^4.2.5",
     "@dicebear/avatars-bottts-sprites": "^4.2.5",
     "@graphql-codegen/cli": "^5.0.3",
-    "@mavrykdynamics/taquito": "^20.0.2",
     "@microsoft/signalr": "^8.0.0",
     "@remix-run/cloudflare": "^2.8.1",
     "@remix-run/cloudflare-pages": "^2.8.1",
