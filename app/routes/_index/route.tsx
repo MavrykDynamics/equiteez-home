@@ -1,51 +1,18 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 
-import PageLayout from "app/layouts/PageLayout/Pagelayout";
-
-import styles from "./components/RealEstateSection/index.css?url";
-
-// components
-import { BannerSection } from "./components/BannerSection/BannerSection";
-import { Spacer } from "~/lib/atoms/Spacer";
-import { FinanceSection } from "./components/FinanceSection/FinanceSection";
-import { PropertiesSlider } from "./components/PropertiesSlider";
-import { PortfolioSection } from "./components/PortfolioSection";
-import { RealEstateSection } from "./components/RealEstateSection";
-import { IntegrationSection } from "./components/IntegrationSection";
-import { FAQSection } from "app/templates/FAQSection";
-
-import { homeFAQ } from "./index.const";
-import { Container } from "~/lib/atoms/Container/Container";
+import { RLandingPage } from "./components/RLandingPage";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Equiteez" },
-    { name: "description", content: "Equiteez Home" },
+    { title: "Equiteez | Institutional Tokenized Asset Infrastructure" },
+    {
+      name: "description",
+      content:
+        "Equiteez delivers end-to-end real-world asset tokenization, trading, lending, and settlement infrastructure on the Mavryk Network.",
+    },
   ];
 };
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
-
 export default function Index() {
-  return (
-    <PageLayout includeContainer={false}>
-      <Container>
-        <BannerSection />
-        <Spacer />
-        <FinanceSection />
-        <Spacer />
-        <PropertiesSlider />
-        <Spacer />
-        <PortfolioSection />
-        <Spacer />
-      </Container>
-      <RealEstateSection />
-      <Container>
-        <Spacer />
-        <IntegrationSection />
-        <Spacer />
-        <FAQSection data={homeFAQ} />
-      </Container>
-    </PageLayout>
-  );
+  return <RLandingPage />;
 }
