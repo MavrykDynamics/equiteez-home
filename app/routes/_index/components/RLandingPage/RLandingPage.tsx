@@ -1,3 +1,6 @@
+import clsx from "clsx";
+
+import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { MarqueeCarousel } from "~/lib/organisms/MarqueeCarousel/MarqueeCarousel";
@@ -5,7 +8,12 @@ import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader } from "~/layouts/RHeader";
 
-import heroCityImage from "app/assets/redesign/landing/hero-city.webp";
+import heroDubaiImage from "app/assets/redesign/landing/banner/hero-dubai.webp";
+import heroHongkongImage from "app/assets/redesign/landing/banner/hero-hongkong.webp";
+import heroLondonImage from "app/assets/redesign/landing/banner/hero-london.webp";
+import heroNewyorkImage from "app/assets/redesign/landing/banner/hero-newyork.webp";
+import heroShanghaiImage from "app/assets/redesign/landing/banner/hero-shanghai.webp";
+import heroTokyoImage from "app/assets/redesign/landing/banner/hero-tokyo.webp";
 import partnerAtlasLogo from "app/assets/redesign/landing/partners/atlas.svg";
 import partnerBigBrainLogo from "app/assets/redesign/landing/partners/big-brain.svg";
 import partnerBlockchainAlphaLogo from "app/assets/redesign/landing/partners/blockchain-alpha.svg";
@@ -71,6 +79,24 @@ type Review = {
   quote: string;
   title: string;
 };
+
+type HeroSlide = {
+  label: string;
+  src: string;
+};
+
+const HERO_SLIDE_INTERVAL_MS = 6200;
+
+const heroSlides: HeroSlide[] = [
+  { label: "Dubai", src: heroDubaiImage },
+  { label: "Hong Kong", src: heroHongkongImage },
+  { label: "London", src: heroLondonImage },
+  { label: "Shanghai", src: heroShanghaiImage },
+  { label: "Tokyo", src: heroTokyoImage },
+  { label: "New York", src: heroNewyorkImage },
+];
+
+const heroSlideSources = heroSlides.map((slide) => slide.src);
 
 const partnerLogos: PartnerLogo[] = [
   {
@@ -282,15 +308,36 @@ function RPartnerLogoItems({ itemClassName }: { itemClassName: string }) {
 }
 
 function RLandingHero() {
+  const { activeIndex, containerRef, isVisible, shouldReduceMotion } =
+    useVisibleSlideshow<HTMLElement>({
+      imageSources: heroSlideSources,
+      intervalMs: HERO_SLIDE_INTERVAL_MS,
+    });
+
   return (
-    <section className={styles.hero}>
-      <img
-        alt=""
+    <section className={styles.hero} ref={containerRef}>
+      <div
         aria-hidden
-        className={styles.heroImage}
-        draggable={false}
-        src={heroCityImage}
-      />
+        className={styles.heroSlides}
+        data-is-visible={isVisible ? "true" : "false"}
+        data-reduced-motion={shouldReduceMotion ? "true" : "false"}
+      >
+        {heroSlides.map((slide, index) => (
+          <img
+            alt=""
+            aria-hidden
+            className={clsx(
+              styles.heroSlideImage,
+              index === activeIndex && styles.heroSlideImageActive
+            )}
+            decoding="async"
+            draggable={false}
+            key={slide.label}
+            loading={index === 0 ? "eager" : "lazy"}
+            src={slide.src}
+          />
+        ))}
+      </div>
       <div className={styles.heroOverlay} />
       <div className={styles.heroContent}>
         <div className={styles.heroBadge}>
