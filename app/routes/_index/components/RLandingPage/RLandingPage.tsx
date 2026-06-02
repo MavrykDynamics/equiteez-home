@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useEffect, useMemo, useState } from "react";
 
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import { RButton } from "~/lib/atoms/RButton";
@@ -8,12 +9,24 @@ import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader } from "~/layouts/RHeader";
 
-import heroDubaiImage from "app/assets/redesign/landing/banner/hero-dubai.webp";
-import heroHongkongImage from "app/assets/redesign/landing/banner/hero-hongkong.webp";
-import heroLondonImage from "app/assets/redesign/landing/banner/hero-london.webp";
-import heroNewyorkImage from "app/assets/redesign/landing/banner/hero-newyork.webp";
-import heroShanghaiImage from "app/assets/redesign/landing/banner/hero-shanghai.webp";
-import heroTokyoImage from "app/assets/redesign/landing/banner/hero-tokyo.webp";
+import heroDubaiDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-dubai.webp";
+import heroDubaiMobileImage from "app/assets/redesign/landing/banner/mobile/hero-dubai.webp";
+import heroDubaiTabletImage from "app/assets/redesign/landing/banner/tablet/hero-dubai.webp";
+import heroHongkongDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-hongkong.webp";
+import heroHongkongMobileImage from "app/assets/redesign/landing/banner/mobile/hero-hongkong.webp";
+import heroHongkongTabletImage from "app/assets/redesign/landing/banner/tablet/hero-hongkong.webp";
+import heroLondonDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-london.webp";
+import heroLondonMobileImage from "app/assets/redesign/landing/banner/mobile/hero-london.webp";
+import heroLondonTabletImage from "app/assets/redesign/landing/banner/tablet/hero-london.webp";
+import heroNewyorkDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-newyork.webp";
+import heroNewyorkMobileImage from "app/assets/redesign/landing/banner/mobile/hero-newyork.webp";
+import heroNewyorkTabletImage from "app/assets/redesign/landing/banner/tablet/hero-newyork.webp";
+import heroShanghaiDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-shanghai.webp";
+import heroShanghaiMobileImage from "app/assets/redesign/landing/banner/mobile/hero-shanghai.webp";
+import heroShanghaiTabletImage from "app/assets/redesign/landing/banner/tablet/hero-shanghai.webp";
+import heroTokyoDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-tokyo.webp";
+import heroTokyoMobileImage from "app/assets/redesign/landing/banner/mobile/hero-tokyo.webp";
+import heroTokyoTabletImage from "app/assets/redesign/landing/banner/tablet/hero-tokyo.webp";
 import partnerAtlasLogo from "app/assets/redesign/landing/partners/atlas.svg";
 import partnerBigBrainLogo from "app/assets/redesign/landing/partners/big-brain.svg";
 import partnerBlockchainAlphaLogo from "app/assets/redesign/landing/partners/blockchain-alpha.svg";
@@ -81,22 +94,112 @@ type Review = {
 };
 
 type HeroSlide = {
+  desktopSrc: string;
   label: string;
-  src: string;
+  mobileSrc: string;
+  tabletSrc: string;
 };
 
 const HERO_SLIDE_INTERVAL_MS = 6200;
+const HERO_MOBILE_MEDIA = "(max-width: 810px)";
+const HERO_TABLET_MEDIA = "(max-width: 1200px)";
+
+type HeroImageVariant = "desktop" | "tablet" | "mobile";
 
 const heroSlides: HeroSlide[] = [
-  { label: "Dubai", src: heroDubaiImage },
-  { label: "Hong Kong", src: heroHongkongImage },
-  { label: "London", src: heroLondonImage },
-  { label: "Shanghai", src: heroShanghaiImage },
-  { label: "Tokyo", src: heroTokyoImage },
-  { label: "New York", src: heroNewyorkImage },
+  {
+    desktopSrc: heroDubaiDesktopImage,
+    label: "Dubai",
+    mobileSrc: heroDubaiMobileImage,
+    tabletSrc: heroDubaiTabletImage,
+  },
+  {
+    desktopSrc: heroHongkongDesktopImage,
+    label: "Hong Kong",
+    mobileSrc: heroHongkongMobileImage,
+    tabletSrc: heroHongkongTabletImage,
+  },
+  {
+    desktopSrc: heroLondonDesktopImage,
+    label: "London",
+    mobileSrc: heroLondonMobileImage,
+    tabletSrc: heroLondonTabletImage,
+  },
+  {
+    desktopSrc: heroShanghaiDesktopImage,
+    label: "Shanghai",
+    mobileSrc: heroShanghaiMobileImage,
+    tabletSrc: heroShanghaiTabletImage,
+  },
+  {
+    desktopSrc: heroTokyoDesktopImage,
+    label: "Tokyo",
+    mobileSrc: heroTokyoMobileImage,
+    tabletSrc: heroTokyoTabletImage,
+  },
+  {
+    desktopSrc: heroNewyorkDesktopImage,
+    label: "New York",
+    mobileSrc: heroNewyorkMobileImage,
+    tabletSrc: heroNewyorkTabletImage,
+  },
 ];
 
-const heroSlideSources = heroSlides.map((slide) => slide.src);
+function getHeroSlideSources(variant: HeroImageVariant | null): string[] {
+  if (variant === null) {
+    return [];
+  }
+
+  return heroSlides.map((slide) => {
+    switch (variant) {
+      case "mobile":
+        return slide.mobileSrc;
+      case "tablet":
+        return slide.tabletSrc;
+      case "desktop":
+        return slide.desktopSrc;
+    }
+  });
+}
+
+function useHeroImageVariant(): HeroImageVariant | null {
+  const [variant, setVariant] = useState<HeroImageVariant | null>(null);
+
+  useEffect(() => {
+    if (!("matchMedia" in window)) {
+      setVariant("desktop");
+      return undefined;
+    }
+
+    const mobileMediaQuery = window.matchMedia(HERO_MOBILE_MEDIA);
+    const tabletMediaQuery = window.matchMedia(HERO_TABLET_MEDIA);
+
+    const handleMediaChange = () => {
+      if (mobileMediaQuery.matches) {
+        setVariant("mobile");
+        return;
+      }
+
+      if (tabletMediaQuery.matches) {
+        setVariant("tablet");
+        return;
+      }
+
+      setVariant("desktop");
+    };
+
+    handleMediaChange();
+    mobileMediaQuery.addEventListener("change", handleMediaChange);
+    tabletMediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mobileMediaQuery.removeEventListener("change", handleMediaChange);
+      tabletMediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
+  return variant;
+}
 
 const partnerLogos: PartnerLogo[] = [
   {
@@ -308,6 +411,11 @@ function RPartnerLogoItems({ itemClassName }: { itemClassName: string }) {
 }
 
 function RLandingHero() {
+  const heroImageVariant = useHeroImageVariant();
+  const heroSlideSources = useMemo(
+    () => getHeroSlideSources(heroImageVariant),
+    [heroImageVariant]
+  );
   const { activeIndex, containerRef, isVisible, shouldReduceMotion } =
     useVisibleSlideshow<HTMLElement>({
       imageSources: heroSlideSources,
@@ -323,19 +431,26 @@ function RLandingHero() {
         data-reduced-motion={shouldReduceMotion ? "true" : "false"}
       >
         {heroSlides.map((slide, index) => (
-          <img
-            alt=""
+          <picture
             aria-hidden
             className={clsx(
               styles.heroSlideImage,
               index === activeIndex && styles.heroSlideImageActive
             )}
-            decoding="async"
-            draggable={false}
             key={slide.label}
-            loading={index === 0 ? "eager" : "lazy"}
-            src={slide.src}
-          />
+          >
+            <source media={HERO_MOBILE_MEDIA} srcSet={slide.mobileSrc} />
+            <source media={HERO_TABLET_MEDIA} srcSet={slide.tabletSrc} />
+            <img
+              alt=""
+              aria-hidden
+              className={styles.heroSlideImageAsset}
+              decoding="async"
+              draggable={false}
+              loading={index === 0 ? "eager" : "lazy"}
+              src={slide.desktopSrc}
+            />
+          </picture>
         ))}
       </div>
       <div className={styles.heroOverlay} />
