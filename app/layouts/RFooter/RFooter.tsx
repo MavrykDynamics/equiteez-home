@@ -81,10 +81,10 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
       <div className={styles.inner}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <RLogo size="small" tone="black" />
+            <RLogo tone="black" />
             <p className={styles.description}>
               Institutional-grade real-world asset tokenization infrastructure,
-              powered by Mavryk Network.
+              powered by Mavryk.
             </p>
           </div>
 

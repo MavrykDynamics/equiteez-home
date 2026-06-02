@@ -6,7 +6,7 @@ import MavrykWordmark from "app/assets/redesign/logo/mavryk-wordmark.svg?react";
 
 import styles from "./RLogo.module.css";
 
-export type RLogoSize = "medium" | "small";
+export type RLogoSize = "medium" | "small" | "compact";
 export type RLogoTone = "black" | "white";
 
 export type RLogoProps = {

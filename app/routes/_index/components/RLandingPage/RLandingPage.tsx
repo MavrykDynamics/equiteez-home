@@ -200,17 +200,17 @@ const assetClasses: AssetClass[] = [
   {
     description: "U.S. Treasury bonds",
     title: "Treasuries",
-    total: "-",
+    total: "—",
   },
   {
     description: "Insurance-linked securities",
     title: "Insurance",
-    total: "-",
+    total: "—",
   },
   {
     description: "Bitcoin miners, digital infrastructure",
     title: "Digital Assets",
-    total: "-",
+    total: "—",
   },
 ];
 
@@ -266,6 +266,18 @@ function RPartnerLogo({ logo }: { logo: PartnerLogo }) {
       className={styles[logo.variant]}
       src={logo.src}
     />
+  );
+}
+
+function RPartnerLogoItems({ itemClassName }: { itemClassName: string }) {
+  return (
+    <>
+      {partnerLogos.map((logo) => (
+        <span className={itemClassName} key={logo.alt}>
+          <RPartnerLogo logo={logo} />
+        </span>
+      ))}
+    </>
   );
 }
 
@@ -325,12 +337,11 @@ function RPartnersSection() {
             pauseOnHover
             speed={24}
           >
-            {partnerLogos.map((logo) => (
-              <span className={styles.partnerLogoItem} key={logo.alt}>
-                <RPartnerLogo logo={logo} />
-              </span>
-            ))}
+            <RPartnerLogoItems itemClassName={styles.partnerLogoItem} />
           </MarqueeCarousel>
+          <div className={styles.partnerLogoGrid}>
+            <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
+          </div>
         </div>
 
         <div className={styles.metricsGrid}>
@@ -399,7 +410,7 @@ function REnterpriseSection() {
         </div>
         <RSectionHeader
           className={styles.enterpriseHeader}
-          description="We offer everything needed to launch, manage, and invest in onchain securities with the trust and transparency of a regulated platform."
+          description="We offer everything needed to launch, manage, and invest in onchain securities — all with the trust and transparency of a regulated platform."
           eyebrow="Infrastructure"
           heading={["Built For", "Enterprise"]}
         />
@@ -458,7 +469,7 @@ function RAnalogSystemsSection() {
           className={styles.problemHeader}
           description="Institutional capital is rushing toward tokenized real-world assets, but the infrastructure to make it scalable, compliant, and interoperable simply doesn't exist yet."
           eyebrow="The Problem"
-          heading={["$280T+ In Real World", "Assets Trapped In", "Analog Systems"]}
+          heading={["$280T+ In Real World", "Assets Trapped In Analog", "Systems"]}
         />
         <div className={styles.problemList}>
           {problemCards.map((problem) => (
@@ -506,6 +517,7 @@ function RGetInTouchSection() {
       <div className={styles.contactInner}>
         <RSectionHeader
           align="center"
+          className={styles.contactHeader}
           description="Join leading institutional asset owners leveraging Equiteez infrastructure to access global capital markets."
           heading={["Ready To Bring Your", "Assets Onchain?"]}
         />

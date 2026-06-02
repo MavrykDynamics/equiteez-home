@@ -70,21 +70,20 @@
   color: var(--r-color-neutral-200);
 }
 
-@media (--media-tablet-min) {
-  .heading {
-    font-size: var(--r-font-size-heading-h3);
-    line-height: var(--r-line-height-heading-h3);
-  }
-}
-
-@media (--media-phone-max) {
+@media (max-width: 820px) {
   .heading {
     font-size: var(--r-font-size-heading-h4);
     line-height: var(--r-line-height-heading-h4);
   }
 
   .description {
-    font-size: var(--r-font-size-body-sm);
-    line-height: var(--r-line-height-body-sm);
+    margin-top: var(--r-space-1);
+  }
+}
+
+@media (max-width: 670px) {
+  .heading {
+    font-size: var(--r-font-size-heading-h4);
+    line-height: var(--r-line-height-heading-h4);
   }
 }

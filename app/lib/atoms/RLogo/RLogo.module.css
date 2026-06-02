@@ -98,3 +98,27 @@
   width: 53px;
   height: 13.81px;
 }
+
+.compact .primaryLine {
+  gap: 7.386px;
+}
+
+.compact .mark {
+  width: 11.415px;
+  height: 12.086px;
+}
+
+.compact .wordmark {
+  font-size: 17.46px;
+}
+
+.compact .byline {
+  font-size: 5.09px;
+  gap: 2.266px;
+  margin-top: 2px;
+}
+
+.compact .mavrykWordmark {
+  width: 44.937px;
+  height: 11.709px;
+}

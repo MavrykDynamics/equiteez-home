@@ -37,7 +37,8 @@ export function RHeader({
   const [isHidden, setIsHidden] = useState(false);
   const previousScrollYRef = useRef(0);
   const frameRef = useRef<number | null>(null);
-  const hasDarkSurface = variant === "transparent" && !isScrolled;
+  const hasDarkSurface =
+    variant === "transparent" && !isScrolled && !isMenuOpen;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,7 +91,15 @@ export function RHeader({
       )}
     >
       <div className={styles.inner}>
-        <RLogo tone={hasDarkSurface ? "white" : "black"} />
+        <RLogo
+          className={styles.desktopLogo}
+          tone={hasDarkSurface ? "white" : "black"}
+        />
+        <RLogo
+          className={styles.compactLogo}
+          size="compact"
+          tone={hasDarkSurface ? "white" : "black"}
+        />
 
         <nav aria-label="Primary navigation" className={styles.nav}>
           {navItems.map((item) => (
@@ -120,16 +129,27 @@ export function RHeader({
           </RButton>
         </div>
 
-        <button
-          aria-controls="r-header-mobile-menu"
-          aria-expanded={isMenuOpen}
-          aria-label="Toggle navigation"
-          className={styles.menuButton}
-          onClick={() => setIsMenuOpen((current) => !current)}
-          type="button"
-        >
-          <RIcon aria-hidden name="burger-menu" size="medium" />
-        </button>
+        <div className={styles.mobileActions}>
+          <RButton
+            as="link"
+            size="small"
+            to={launchAppTo}
+            tone={hasDarkSurface ? "white" : "black"}
+            variant="secondary"
+          >
+            Launch App
+          </RButton>
+          <button
+            aria-controls="r-header-mobile-menu"
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation"
+            className={styles.menuButton}
+            onClick={() => setIsMenuOpen((current) => !current)}
+            type="button"
+          >
+            <RIcon aria-hidden name="burger-menu" size="medium" />
+          </button>
+        </div>
       </div>
 
       <div
