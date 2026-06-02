@@ -1,7 +1,8 @@
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
+import { useIsScrolledPastElement } from "~/hooks/useIsScrolledPastElement";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { RLogo } from "~/lib/atoms/RLogo";
@@ -33,48 +34,14 @@ export function RHeader({
   variant = "transparent",
 }: RHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(variant === "light");
-  const [isHidden, setIsHidden] = useState(false);
-  const previousScrollYRef = useRef(0);
-  const frameRef = useRef<number | null>(null);
-  const hasDarkSurface =
-    variant === "transparent" && !isScrolled && !isMenuOpen;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (frameRef.current !== null) {
-        return;
-      }
-
-      frameRef.current = window.requestAnimationFrame(() => {
-        const currentScrollY = Math.max(window.scrollY, 0);
-        const scrollDelta = currentScrollY - previousScrollYRef.current;
-
-        setIsScrolled(variant === "light" || currentScrollY > 16);
-
-        if (isMenuOpen || currentScrollY <= 16 || scrollDelta < -4) {
-          setIsHidden(false);
-        } else if (scrollDelta > 4 && currentScrollY > 96) {
-          setIsHidden(true);
-        }
-
-        previousScrollYRef.current = currentScrollY;
-        frameRef.current = null;
-      });
-    };
-
-    previousScrollYRef.current = Math.max(window.scrollY, 0);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
-    };
-  }, [isMenuOpen, variant]);
+  const { elementRef: headerRef, isScrolledPastElement } =
+    useIsScrolledPastElement<HTMLElement>({
+      isEnabled: variant === "transparent",
+    });
+  const hasDarkSurface = variant === "transparent";
+  const hasScrolledSurface =
+    variant === "transparent" && isScrolledPastElement;
+  const hasMenuSurface = variant === "transparent" && isMenuOpen;
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -85,10 +52,12 @@ export function RHeader({
       className={clsx(
         styles.header,
         hasDarkSurface ? styles.dark : styles.light,
-        isScrolled && styles.scrolled,
-        isMenuOpen && styles.menuOpen,
-        isHidden && styles.hidden
+        hasScrolledSurface && styles.scrolled,
+        hasScrolledSurface && "r-header--scrolled",
+        hasMenuSurface && styles.menuOpen
       )}
+      data-scrolled={hasScrolledSurface ? "true" : "false"}
+      ref={headerRef}
     >
       <div className={styles.inner}>
         <RLogo

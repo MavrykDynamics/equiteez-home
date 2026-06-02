@@ -1,9 +1,8 @@
 @import "../../../../styles/breakpoints.css";
 
 .page {
-  width: min(100%, 1440px);
+  width: 100%;
   min-height: 100vh;
-  margin: 0 auto;
   color: var(--r-color-neutral-black);
   background: var(--r-color-neutral-white);
   font-family: var(--r-font-body);
@@ -24,7 +23,8 @@
 .hero {
   position: relative;
   display: flex;
-  min-height: min(900px, calc(100svh - 40px));
+  width: 100%;
+  min-height: 100svh;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -608,7 +608,7 @@
   }
 
   .hero {
-    min-height: 1180px;
+    min-height: 100svh;
     justify-content: flex-start;
     padding: 342px var(--r-space-8) var(--r-space-16);
   }
@@ -933,7 +933,7 @@
   }
 
   .hero {
-    min-height: 844px;
+    min-height: 100svh;
     justify-content: flex-start;
     padding-top: 182px;
     padding-bottom: var(--r-space-14);
