@@ -76,8 +76,9 @@ const rIconPaths: Record<RIconName, ReactNode> = {
   ),
   "burger-menu": (
     <>
-      <path d="M5 8h14" />
-      <path d="M5 16h14" />
+      <path d="M4 7h16" />
+      <path d="M4 12h16" />
+      <path d="M4 17h16" />
     </>
   ),
   loading: <path d="M12 3a9 9 0 1 0 9 9" />,

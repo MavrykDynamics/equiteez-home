@@ -40,6 +40,8 @@
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,8 +86,11 @@
 }
 
 .launchButton {
-  background-color: var(--r-surface-neutral-glass-subtle);
-  border-color: transparent;
+  --r-header-launch-button-background: var(--r-surface-neutral-glass-subtle);
+  --r-header-launch-button-border: var(--r-border-secondary-button-default);
+
+  background-color: var(--r-header-launch-button-background);
+  border-color: var(--r-header-launch-button-border);
   transition:
     background-color var(--r-transition-duration-base) ease,
     border-color var(--r-transition-duration-base) ease,
@@ -93,12 +98,18 @@
     box-shadow var(--r-transition-duration-base) ease;
 }
 
+.header .launchButton:hover:not(:disabled) {
+  background-color: var(--r-header-launch-button-background);
+  border-color: var(--r-header-launch-button-border);
+}
+
 .header[data-scrolled="true"] .launchButton,
 .scrolled .launchButton,
 .menuOpen .launchButton {
+  --r-header-launch-button-background: var(--r-color-neutral-black);
+  --r-header-launch-button-border: var(--r-color-neutral-black);
+
   color: var(--r-color-neutral-white);
-  background-color: var(--r-color-neutral-black);
-  border-color: var(--r-color-neutral-black);
 }
 
 .navLink:hover,
@@ -111,12 +122,19 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   color: currentColor;
-  background: transparent;
-  border: var(--r-border-width-sm) solid currentColor;
-  border-radius: var(--r-radius-pill);
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  color: currentColor;
+  background-color: transparent;
 }
 
 .mobileMenu {
@@ -151,17 +169,23 @@
 
   .menuButton {
     display: inline-flex;
-    width: var(--r-size-icon-medium);
-    height: var(--r-size-icon-medium);
-    border: 0;
-    border-radius: 0;
+    flex: 0 0 38px;
   }
 
   .mobileMenu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
     display: flex;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
     flex-direction: column;
     gap: var(--r-space-2);
-    padding: 0 var(--r-space-8) var(--r-space-5);
+    padding: calc(62px + var(--r-space-4)) var(--r-space-8) var(--r-space-8);
+    overflow-y: auto;
+    background-color: var(--r-color-neutral-white);
   }
 
   .mobileMenu[hidden] {
