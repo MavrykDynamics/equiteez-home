@@ -311,11 +311,13 @@
 }
 
 .metric span {
-  min-width: 160px;
-  max-width: 188px;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
   color: var(--r-color-neutral-600);
   font-size: var(--r-font-size-body-sm);
   line-height: var(--r-line-height-body-sm);
+  white-space: nowrap;
 }
 
 .analogSection .splitSectionInner {
@@ -329,7 +331,7 @@
 }
 
 .analogSection .problemHeader > p:last-child {
-  max-width: 450px;
+  max-width: 441px;
 }
 
 .solutionGrid {
@@ -839,6 +841,7 @@
     max-width: none;
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
+    white-space: normal;
   }
 
   .solutionGrid {
