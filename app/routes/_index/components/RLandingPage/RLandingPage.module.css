@@ -493,7 +493,7 @@
 }
 
 .enterpriseHeader {
-  align-self: center;
+  align-self: start;
   max-width: 516px;
 }
 
@@ -817,6 +817,7 @@
   .metricsGrid {
     width: 100%;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-top: 40px;
   }
 
   .metric {
@@ -851,7 +852,7 @@
 
   .solutionCard {
     min-height: auto;
-    gap: var(--r-space-12);
+    gap: 14px;
     justify-content: flex-start;
     padding: var(--r-space-6);
   }

@@ -101,7 +101,7 @@ type HeroSlide = {
 };
 
 const HERO_SLIDE_INTERVAL_MS = 6200;
-const HERO_MOBILE_MEDIA = "(max-width: 810px)";
+const HERO_MOBILE_MEDIA = "(max-width: 820px)";
 const HERO_TABLET_MEDIA = "(max-width: 1200px)";
 
 type HeroImageVariant = "desktop" | "tablet" | "mobile";
