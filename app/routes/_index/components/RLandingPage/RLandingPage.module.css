@@ -40,6 +40,7 @@
 }
 
 .heroSlides {
+  z-index: 0;
   overflow: hidden;
   background: var(--r-color-neutral-black);
 }
@@ -96,7 +97,8 @@
 }
 
 .heroSlideImageActive {
-  animation: heroSlideKenBurns 7600ms ease-out forwards;
+  animation: heroSlideKenBurns var(--hero-slide-duration, 20000ms) ease-out
+    forwards;
   opacity: 1;
 }
 
@@ -110,18 +112,31 @@
   }
 
   to {
-    transform: scale(1.06)
+    transform: scale(1.15)
       translate3d(var(--hero-slide-pan-x, 0), var(--hero-slide-pan-y, 0), 0);
   }
 }
 
 .heroOverlay {
+  z-index: 1;
+  background: radial-gradient(
+      circle at center,
+      rgba(1, 1, 1, 0.26) 0%,
+      rgba(1, 1, 1, 0.16) 42%,
+      rgba(1, 1, 1, 0.08) 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(1, 1, 1, 0.1) 0%,
+      rgba(1, 1, 1, 0.18) 52%,
+      rgba(1, 1, 1, 0.16) 100%
+    );
   pointer-events: none;
 }
 
 .heroContent {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;

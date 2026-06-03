@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import { RButton } from "~/lib/atoms/RButton";
@@ -100,11 +101,18 @@ type HeroSlide = {
   tabletSrc: string;
 };
 
-const HERO_SLIDE_INTERVAL_MS = 6200;
+const HERO_SLIDE_INTERVAL_MS = 20_000;
 const HERO_MOBILE_MEDIA = "(max-width: 820px)";
 const HERO_TABLET_MEDIA = "(max-width: 1200px)";
 
 type HeroImageVariant = "desktop" | "tablet" | "mobile";
+type HeroSlidesStyle = CSSProperties & {
+  "--hero-slide-duration": string;
+};
+
+const heroSlidesStyle: HeroSlidesStyle = {
+  "--hero-slide-duration": `${HERO_SLIDE_INTERVAL_MS}ms`,
+};
 
 const heroSlides: HeroSlide[] = [
   {
@@ -423,10 +431,10 @@ function RLandingHero() {
         className={styles.heroSlides}
         data-is-visible={isVisible ? "true" : "false"}
         data-reduced-motion={shouldReduceMotion ? "true" : "false"}
+        style={heroSlidesStyle}
       >
         {heroSlides.map((slide, index) => (
           <picture
-            aria-hidden
             className={clsx(
               styles.heroSlideImage,
               index === activeIndex && styles.heroSlideImageActive
