@@ -319,12 +319,17 @@
 }
 
 .analogSection .splitSectionInner {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 564px) minmax(0, 516px);
   gap: var(--r-space-10);
+  justify-content: space-between;
 }
 
 .analogSection .problemHeader {
-  max-width: none;
+  max-width: 564px;
+}
+
+.analogSection .problemHeader > p:last-child {
+  max-width: 450px;
 }
 
 .solutionGrid {
@@ -344,6 +349,7 @@
   padding: var(--r-space-6);
   border-right: var(--r-border-width-sm) solid var(--r-color-neutral-100);
   border-bottom: var(--r-border-width-sm) solid var(--r-color-neutral-100);
+  cursor: pointer;
 }
 
 .solutionCard:nth-child(3n) {
@@ -397,6 +403,11 @@
 
 .solutionIcon {
   color: var(--r-color-neutral-300);
+  transition: color var(--r-transition-duration-base) ease;
+}
+
+.solutionCard:hover .solutionIcon {
+  color: var(--r-color-accent-green-500);
 }
 
 .enterpriseInner,
@@ -436,6 +447,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--r-transition-duration-base) ease;
 }
 
 .enterpriseCardOverlay {
@@ -455,6 +467,15 @@
 
 .enterpriseCard p {
   color: var(--r-color-neutral-white);
+  transition: color var(--r-transition-duration-base) ease;
+}
+
+.enterpriseCard:hover img {
+  transform: scale(1.04);
+}
+
+.enterpriseCard:hover p {
+  color: var(--r-color-neutral-200);
 }
 
 .learnMoreLink {
@@ -477,6 +498,16 @@
 .assetsHeader,
 .problemHeader {
   max-width: 564px;
+}
+
+.assetsHeader > p:last-child {
+  max-width: 440px;
+}
+
+.analogSection .problemList {
+  justify-self: end;
+  width: 100%;
+  max-width: 516px;
 }
 
 .assetList {
@@ -890,6 +921,10 @@
   .problemHeader > p:last-child {
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
+  }
+
+  .assetsHeader > p:last-child {
+    max-width: none;
   }
 
   .splitSectionInner {
