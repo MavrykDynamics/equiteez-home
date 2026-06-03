@@ -651,21 +651,18 @@
 .reviewsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--r-space-10);
+  column-gap: var(--r-space-10);
   margin-top: var(--r-space-8);
 }
 
 .reviewCard {
   display: flex;
   flex-direction: column;
-  gap: var(--r-space-8);
   min-width: 0;
 }
 
-.reviewCard p {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  row-gap: var(--r-space-8);
+.reviewQuote {
+  order: 1;
   min-height: 129px;
   margin: 0;
   color: var(--r-color-neutral-white);
@@ -673,18 +670,19 @@
   line-height: var(--r-line-height-body-m);
 }
 
-.reviewCard p::after {
-  display: block;
+.reviewDivider {
+  order: 2;
   width: 100%;
   height: var(--r-border-width-sm);
   background: var(--r-color-neutral-800);
-  content: "";
 }
 
 .reviewAuthor {
   display: flex;
+  order: 3;
   gap: var(--r-space-3);
   align-items: center;
+  margin-top: var(--r-space-8);
 }
 
 .reviewAuthor img {
@@ -1029,7 +1027,8 @@
 
   .reviewsGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--r-space-6);
+    column-gap: var(--r-space-6);
+    row-gap: var(--r-space-5);
     margin-top: var(--r-space-8);
   }
 
@@ -1037,15 +1036,19 @@
     gap: var(--r-space-5);
   }
 
-  .reviewCard p {
+  .reviewQuote {
     display: block;
     min-height: auto;
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
   }
 
-  .reviewCard p::after {
+  .reviewDivider {
     display: none;
+  }
+
+  .reviewAuthor {
+    margin-top: 0;
   }
 
   .reviewAuthor h3 {
@@ -1065,9 +1068,23 @@
     gap: var(--r-space-6);
   }
 
-  .reviewCard + .reviewCard {
-    padding-top: var(--r-space-6);
-    border-top: var(--r-border-width-sm) solid var(--r-color-neutral-800);
+  .reviewCard {
+    gap: 0;
+  }
+
+  .reviewDivider {
+    display: block;
+    order: 3;
+    margin-top: var(--r-space-6);
+  }
+
+  .reviewCard:last-child .reviewDivider {
+    display: none;
+  }
+
+  .reviewAuthor {
+    order: 2;
+    margin-top: var(--r-space-5);
   }
 }
 
@@ -1198,11 +1215,6 @@
 
   .reviewsGrid {
     gap: var(--r-space-6);
-  }
-
-  .reviewCard + .reviewCard {
-    padding-top: var(--r-space-6);
-    border-top: var(--r-border-width-sm) solid var(--r-color-neutral-800);
   }
 }
 

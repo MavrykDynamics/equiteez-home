@@ -663,7 +663,8 @@ function RReviewsSection() {
         <div className={styles.reviewsGrid}>
           {reviews.map((review) => (
             <article className={styles.reviewCard} key={review.name}>
-              <p>{`"${review.quote}"`}</p>
+              <p className={styles.reviewQuote}>{`"${review.quote}"`}</p>
+              <div className={styles.reviewDivider} />
               <div className={styles.reviewAuthor}>
                 <img alt="" aria-hidden src={review.avatar} />
                 <div>
