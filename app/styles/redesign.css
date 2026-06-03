@@ -80,6 +80,7 @@
   --r-surface-primary-black-button-default: var(--r-color-neutral-black);
   --r-surface-primary-black-button-hover: var(--r-color-neutral-800);
   --r-surface-primary-black-button-disabled: var(--r-color-neutral-500);
+  --r-surface-neutral-glass-subtle: rgba(246, 246, 247, 0.1);
   --r-surface-secondary-white-button-hover: rgba(246, 246, 247, 0.1);
   --r-surface-secondary-black-button-hover: var(--r-color-neutral-50);
   --r-border-secondary-button-default: var(--r-color-neutral-300);
@@ -145,4 +146,5 @@
   --r-border-width-sm: 1px;
   --r-focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.32);
   --r-transition-duration-fast: 160ms;
+  --r-transition-duration-base: 300ms;
 }

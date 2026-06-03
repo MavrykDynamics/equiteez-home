@@ -39,9 +39,12 @@ export function RHeader({
       isEnabled: variant === "transparent",
     });
   const hasDarkSurface = variant === "transparent";
-  const hasScrolledSurface =
-    variant === "transparent" && isScrolledPastElement;
+  const hasScrolledSurface = variant === "transparent" && isScrolledPastElement;
   const hasMenuSurface = variant === "transparent" && isMenuOpen;
+  const logoTone =
+    hasDarkSurface && !hasScrolledSurface && !hasMenuSurface
+      ? "white"
+      : "black";
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -60,15 +63,8 @@ export function RHeader({
       ref={headerRef}
     >
       <div className={styles.inner}>
-        <RLogo
-          className={styles.desktopLogo}
-          tone={hasDarkSurface ? "white" : "black"}
-        />
-        <RLogo
-          className={styles.compactLogo}
-          size="compact"
-          tone={hasDarkSurface ? "white" : "black"}
-        />
+        <RLogo className={styles.desktopLogo} tone={logoTone} />
+        <RLogo className={styles.compactLogo} size="compact" tone={logoTone} />
 
         <nav aria-label="Primary navigation" className={styles.nav}>
           {navItems.map((item) => (
@@ -89,6 +85,7 @@ export function RHeader({
           </a>
           <RButton
             as="link"
+            className={styles.launchButton}
             size="medium"
             to={launchAppTo}
             tone={hasDarkSurface ? "white" : "black"}
@@ -101,6 +98,7 @@ export function RHeader({
         <div className={styles.mobileActions}>
           <RButton
             as="link"
+            className={styles.launchButton}
             size="small"
             to={launchAppTo}
             tone={hasDarkSurface ? "white" : "black"}
@@ -145,7 +143,11 @@ export function RHeader({
         >
           Docs
         </a>
-        <Link className={styles.mobileLink} onClick={closeMenu} to={launchAppTo}>
+        <Link
+          className={styles.mobileLink}
+          onClick={closeMenu}
+          to={launchAppTo}
+        >
           Launch App
         </Link>
       </div>

@@ -25,6 +25,10 @@
   gap: var(--r-space-3);
 }
 
+.logo {
+  align-items: flex-start;
+}
+
 .description,
 .copyright,
 .groupTitle,

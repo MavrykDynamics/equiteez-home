@@ -8,11 +8,11 @@
   z-index: 40;
   color: var(--r-color-neutral-white);
   transition:
-    background-color 220ms ease,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    color 220ms ease;
+    background-color var(--r-transition-duration-base) ease,
+    background var(--r-transition-duration-base) ease,
+    border-color var(--r-transition-duration-base) ease,
+    box-shadow var(--r-transition-duration-base) ease,
+    color var(--r-transition-duration-base) ease;
 }
 
 .dark {
@@ -32,10 +32,11 @@
 .header[data-scrolled="true"],
 .scrolled,
 .menuOpen {
-  color: var(--r-color-neutral-white);
-  background-color: var(--r-color-neutral-black);
-  border-bottom: var(--r-border-width-sm) solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 28px rgba(1, 1, 1, 0.24);
+  color: var(--r-color-neutral-black);
+  background-color: var(--r-surface-neutral-glass-subtle);
+  border-bottom: var(--r-border-width-sm) solid transparent;
+  box-shadow: none;
+  backdrop-filter: blur(18px);
 }
 
 .inner {
@@ -80,6 +81,24 @@
   line-height: var(--r-line-height-body-m);
   text-decoration: none;
   transition: opacity var(--r-transition-duration-fast) ease;
+}
+
+.launchButton {
+  background-color: var(--r-surface-neutral-glass-subtle);
+  border-color: transparent;
+  transition:
+    background-color var(--r-transition-duration-base) ease,
+    border-color var(--r-transition-duration-base) ease,
+    color var(--r-transition-duration-base) ease,
+    box-shadow var(--r-transition-duration-base) ease;
+}
+
+.header[data-scrolled="true"] .launchButton,
+.scrolled .launchButton,
+.menuOpen .launchButton {
+  color: var(--r-color-neutral-white);
+  background-color: var(--r-color-neutral-black);
+  border-color: var(--r-color-neutral-black);
 }
 
 .navLink:hover,

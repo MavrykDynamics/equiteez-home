@@ -389,13 +389,7 @@ const reviews: Review[] = [
 ];
 
 function RPartnerLogo({ logo }: { logo: PartnerLogo }) {
-  return (
-    <img
-      alt={logo.alt}
-      className={styles[logo.variant]}
-      src={logo.src}
-    />
-  );
+  return <img alt={logo.alt} className={styles[logo.variant]} src={logo.src} />;
 }
 
 function RPartnerLogoItems({ itemClassName }: { itemClassName: string }) {
@@ -540,7 +534,7 @@ function RPlatformSection() {
                 aria-hidden
                 className={styles.solutionIcon}
                 name="arrow-long-up-right"
-                size="small"
+                size="medium"
               />
             </article>
           ))}
@@ -631,7 +625,11 @@ function RAnalogSystemsSection() {
           className={styles.problemHeader}
           description="Institutional capital is rushing toward tokenized real-world assets, but the infrastructure to make it scalable, compliant, and interoperable simply doesn't exist yet."
           eyebrow="The Problem"
-          heading={["$280T+ In Real World", "Assets Trapped In Analog", "Systems"]}
+          heading={[
+            "$280T+ In Real World",
+            "Assets Trapped In",
+            "Analog Systems",
+          ]}
         />
         <div className={styles.problemList}>
           {problemCards.map((problem) => (

@@ -52,11 +52,7 @@
   height: 104%;
   opacity: 0;
   transform: scale(1.06)
-    translate3d(
-      var(--hero-slide-pan-x, 0),
-      var(--hero-slide-pan-y, 0),
-      0
-    );
+    translate3d(var(--hero-slide-pan-x, 0), var(--hero-slide-pan-y, 0), 0);
   transition: opacity 1400ms ease-in-out;
   will-change: opacity, transform;
 }
@@ -115,11 +111,7 @@
 
   to {
     transform: scale(1.06)
-      translate3d(
-        var(--hero-slide-pan-x, 0),
-        var(--hero-slide-pan-y, 0),
-        0
-      );
+      translate3d(var(--hero-slide-pan-x, 0), var(--hero-slide-pan-y, 0), 0);
   }
 }
 
@@ -143,7 +135,7 @@
   gap: var(--r-space-2);
   padding: var(--r-space-2) var(--r-space-3);
   color: var(--r-color-neutral-white);
-  background: rgba(246, 246, 247, 0.1);
+  background: var(--r-surface-neutral-glass-subtle);
   border-radius: var(--r-radius-pill);
   font-size: var(--r-font-size-body-s);
   line-height: var(--r-line-height-body-s);
@@ -299,11 +291,11 @@
   flex-direction: column;
   gap: var(--r-space-1);
   min-height: 96px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 0 var(--r-space-5);
   border-left: var(--r-border-width-sm) solid var(--r-color-neutral-100);
-  text-align: center;
+  text-align: left;
 }
 
 .metric:first-child {
@@ -319,14 +311,20 @@
 }
 
 .metric span {
+  min-width: 160px;
   max-width: 188px;
   color: var(--r-color-neutral-600);
   font-size: var(--r-font-size-body-sm);
   line-height: var(--r-line-height-body-sm);
 }
 
-.platformSection {
-  border-bottom: var(--r-border-width-sm) solid var(--r-color-neutral-100);
+.analogSection .splitSectionInner {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--r-space-10);
+}
+
+.analogSection .problemHeader {
+  max-width: none;
 }
 
 .solutionGrid {
@@ -561,15 +559,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--r-space-4);
+  min-width: 0;
 }
 
 .problemCard {
   display: flex;
   gap: var(--r-space-4);
   align-items: flex-start;
+  min-width: 0;
   padding: var(--r-space-6);
   border: var(--r-border-width-sm) solid var(--r-color-neutral-100);
   border-radius: var(--r-radius-md);
+}
+
+.problemCard > div {
+  min-width: 0;
 }
 
 .problemCard strong {
@@ -607,10 +611,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--r-space-8);
+  min-width: 0;
 }
 
 .reviewCard p {
-  min-height: 96px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  row-gap: var(--r-space-8);
+  min-height: 129px;
   margin: 0;
   color: var(--r-color-neutral-white);
   font-size: var(--r-font-size-body-m);
@@ -621,7 +629,6 @@
   display: block;
   width: 100%;
   height: var(--r-border-width-sm);
-  margin-top: var(--r-space-8);
   background: var(--r-color-neutral-800);
   content: "";
 }
@@ -661,6 +668,10 @@
 
 .contactActions {
   margin-top: var(--r-space-10);
+}
+
+.contactHeader > p:last-child {
+  max-width: 540px;
 }
 
 @media (max-width: 1304px) {
@@ -973,6 +984,7 @@
   }
 
   .reviewCard p {
+    display: block;
     min-height: auto;
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
@@ -991,9 +1003,17 @@
     font-size: var(--r-font-size-body-s);
     line-height: var(--r-line-height-body-s);
   }
+}
 
-  .contactHeader > p:last-child {
-    max-width: 540px;
+@media (max-width: 500px) {
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--r-space-6);
+  }
+
+  .reviewCard + .reviewCard {
+    padding-top: var(--r-space-6);
+    border-top: var(--r-border-width-sm) solid var(--r-color-neutral-800);
   }
 }
 
