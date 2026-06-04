@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border-radius: var(--r-radius-md);
+}
+
+.light {
+  background: var(--r-color-neutral-white);
+  border: var(--r-border-width-sm) solid var(--r-color-neutral-100);
+}
+
+.dark {
+  background: rgba(246, 246, 247, 0.1);
+}
+
+.green {
+  background: var(--r-color-accent-green-500);
+}
+
+.shadow {
+  box-shadow: 0 30px 60px -15px rgba(1, 1, 1, 0.12);
+}

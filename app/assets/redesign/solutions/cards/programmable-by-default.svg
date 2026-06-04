@@ -1,0 +1,8 @@
+<svg width="398" height="227" viewBox="0 0 398 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 0.5H381.333C389.893 0.5 396.833 7.43959 396.833 16V211C396.833 219.56 389.893 226.5 381.333 226.5H16C7.43959 226.5 0.5 219.56 0.5 211V16C0.5 7.43959 7.43959 0.5 16 0.5Z" fill="white"/>
+<path d="M16 0.5H381.333C389.893 0.5 396.833 7.43959 396.833 16V211C396.833 219.56 389.893 226.5 381.333 226.5H16C7.43959 226.5 0.5 219.56 0.5 211V16C0.5 7.43959 7.43959 0.5 16 0.5Z" stroke="#E6E6E6"/>
+<path d="M24 36C24 29.3726 29.3726 24 36 24H60C66.6274 24 72 29.3726 72 36V60C72 66.6274 66.6274 72 60 72H36C29.3726 72 24 66.6274 24 60V36Z" fill="#A4C0BA" fill-opacity="0.5"/>
+<path d="M51 43L56 48L51 53M45 53L40 48L45 43" stroke="#1C6252" stroke-linecap="round" stroke-linejoin="round"/>
+<text fill="#010101" style="white-space: pre" xml:space="preserve" font-family="General Sans Variable" font-size="20" letter-spacing="0.01em"><tspan x="24" y="117.7">Programmable By Default</tspan></text>
+<text fill="#676767" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="14" letter-spacing="0em"><tspan x="24" y="155.591">Every asset is a live smart contract. Compose with </tspan><tspan x="24" y="176.591">DeFi, automate distributions, and unlock liquidity </tspan><tspan x="24" y="197.591">without rebuilding the asset.</tspan></text>
+</svg>

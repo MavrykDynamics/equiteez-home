@@ -106,6 +106,7 @@ Current icon names:
 - `arrow-long-up-right`
 - `arrow-round`
 - `burger-menu`
+- `check`
 - `loading`
 - `lock`
 - `lock-open`
@@ -184,6 +185,38 @@ Each reusable `R*` component folder should normally contain:
 - Styles: `app/lib/atoms/RIcon/RIcon.module.css`
 - Reusability notes: Use for common redesign icons and button icons. Extend the typed `RIconName` registry when adding shared icons.
 - Related tokens: `--r-size-icon-small`, `--r-size-icon-medium`
+
+## RCard
+
+- Purpose: Shared redesign card surface atom with light, dark, and green tones plus optional shadow.
+- Location: `app/lib/atoms/RCard/RCard.tsx`
+- Styles: `app/lib/atoms/RCard/RCard.module.css`
+- Reusability notes: Use for repeated redesign card surfaces before creating route-specific card shells.
+- Related tokens: `--r-radius-md`, `--r-border-width-sm`, `--r-color-neutral-*`, `--r-color-accent-green-*`
+
+## RChip
+
+- Purpose: Small redesign pill atom for compact labels and metric chips.
+- Location: `app/lib/atoms/RChip/RChip.tsx`
+- Styles: `app/lib/atoms/RChip/RChip.module.css`
+- Reusability notes: Use for non-interactive pill labels in redesign sections.
+- Related tokens: `--r-font-body`, `--r-font-size-body-*`, `--r-line-height-body-*`, `--r-radius-pill`, `--r-color-green-*`, `--r-color-neutral-*`
+
+## RTab
+
+- Purpose: Single redesign tab atom with selected, hover, focus, and disabled states.
+- Location: `app/lib/atoms/RTab/RTab.tsx`
+- Styles: `app/lib/atoms/RTab/RTab.module.css`
+- Reusability notes: Use inside redesign tablist controls such as `RTabSwitcher`.
+- Related tokens: `--r-font-body`, `--r-font-size-body-sm`, `--r-line-height-body-sm`, `--r-radius-pill`, `--r-focus-ring`, `--r-color-neutral-*`
+
+## RTabSwitcher
+
+- Purpose: Redesign tablist organism that groups `RTab` items for controlled tab switching.
+- Location: `app/lib/organisms/RTabSwitcher/RTabSwitcher.tsx`
+- Styles: `app/lib/organisms/RTabSwitcher/RTabSwitcher.module.css`
+- Reusability notes: Use for compact redesign tab switchers before creating page-specific switcher markup.
+- Related tokens: `RTab`, `--r-radius-pill`, `--r-color-neutral-100`
 
 ## RLogo
 
