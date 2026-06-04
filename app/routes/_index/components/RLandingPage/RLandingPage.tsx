@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
+import { Reveal } from "~/lib/atoms/Reveal";
 import { MarqueeCarousel } from "~/lib/organisms/MarqueeCarousel/MarqueeCarousel";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RFooter } from "~/layouts/RFooter";
@@ -456,7 +457,7 @@ function RLandingHero() {
         ))}
       </div>
       <div className={styles.heroOverlay} />
-      <div className={styles.heroContent}>
+      <Reveal className={styles.heroContent}>
         <div className={styles.heroBadge}>
           <span />
           Powering The Next Era Of Capital Markets
@@ -482,7 +483,7 @@ function RLandingHero() {
             Explore App
           </RButton>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -491,7 +492,7 @@ function RPartnersSection() {
   return (
     <section className={styles.partnersSection}>
       <div className={styles.sectionInner}>
-        <div className={styles.partnersIntro}>
+        <Reveal className={styles.partnersIntro}>
           <p className={styles.eyebrow}>
             Backed By Leading Institutional Partners
           </p>
@@ -506,14 +507,19 @@ function RPartnersSection() {
           <div className={styles.partnerLogoGrid}>
             <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
           </div>
-        </div>
+        </Reveal>
 
         <div className={styles.metricsGrid}>
-          {metrics.map((metric) => (
-            <div className={styles.metric} key={metric.label}>
+          {metrics.map((metric, index) => (
+            <Reveal
+              className={styles.metric}
+              delay={index * 0.04}
+              key={metric.label}
+              preset="fade"
+            >
               <strong>{metric.value}</strong>
               <span>{metric.label}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -525,14 +531,21 @@ function RPlatformSection() {
   return (
     <section className={styles.platformSection} id="solutions">
       <div className={styles.sectionInner}>
-        <RSectionHeader
-          align="center"
-          eyebrow="The Solution"
-          heading={["End-To-End RWA Infrastructure,", "One Platform"]}
-        />
+        <Reveal>
+          <RSectionHeader
+            align="center"
+            eyebrow="The Solution"
+            heading={["End-To-End RWA Infrastructure,", "One Platform"]}
+          />
+        </Reveal>
         <div className={styles.solutionGrid}>
-          {solutionCards.map((card) => (
-            <article className={styles.solutionCard} key={card.title}>
+          {solutionCards.map((card, index) => (
+            <Reveal
+              as="article"
+              className={styles.solutionCard}
+              delay={index * 0.04}
+              key={card.title}
+            >
               <span className={styles.pill}>{card.category}</span>
               <div>
                 <h3>{card.title}</h3>
@@ -544,7 +557,7 @@ function RPlatformSection() {
                 name="arrow-long-up-right"
                 size="medium"
               />
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -557,8 +570,14 @@ function REnterpriseSection() {
     <section className={styles.enterpriseSection} id="about">
       <div className={styles.enterpriseInner}>
         <div className={styles.enterpriseGrid}>
-          {enterpriseCards.map((card) => (
-            <article className={styles.enterpriseCard} key={card.title}>
+          {enterpriseCards.map((card, index) => (
+            <Reveal
+              as="article"
+              className={styles.enterpriseCard}
+              delay={index * 0.04}
+              key={card.title}
+              preset="image"
+            >
               <img alt="" aria-hidden src={card.image} />
               <div className={styles.enterpriseCardOverlay} />
               <div className={styles.enterpriseCardContent}>
@@ -569,15 +588,16 @@ function REnterpriseSection() {
                   <RIcon aria-hidden name="arrow-long-right" size="small" />
                 </a>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
-        <RSectionHeader
-          className={styles.enterpriseHeader}
-          description="We offer everything needed to launch, manage, and invest in onchain securities — all with the trust and transparency of a regulated platform."
-          eyebrow="Infrastructure"
-          heading={["Built For", "Enterprise"]}
-        />
+        <Reveal className={styles.enterpriseHeader}>
+          <RSectionHeader
+            description="We offer everything needed to launch, manage, and invest in onchain securities — all with the trust and transparency of a regulated platform."
+            eyebrow="Infrastructure"
+            heading={["Built For", "Enterprise"]}
+          />
+        </Reveal>
       </div>
     </section>
   );
@@ -587,21 +607,27 @@ function RAssetsSection() {
   return (
     <section className={styles.assetsSection}>
       <div className={styles.splitSectionInner}>
-        <RSectionHeader
-          className={styles.assetsHeader}
-          description="Our platform supports tokenization across diverse verticals, enabling access to historically illiquid markets."
-          eyebrow="Multi-Asset"
-          heading={["Every Asset Class,", "One Infrastructure"]}
-        />
+        <Reveal className={styles.assetsHeader}>
+          <RSectionHeader
+            description="Our platform supports tokenization across diverse verticals, enabling access to historically illiquid markets."
+            eyebrow="Multi-Asset"
+            heading={["Every Asset Class,", "One Infrastructure"]}
+          />
+        </Reveal>
         <div className={styles.assetList}>
-          {assetClasses.map((asset) => (
-            <div className={styles.assetRow} key={asset.title}>
+          {assetClasses.map((asset, index) => (
+            <Reveal
+              className={styles.assetRow}
+              delay={index * 0.03}
+              key={asset.title}
+              preset="fade"
+            >
               <div>
                 <h3>{asset.title}</h3>
                 <p>{asset.description}</p>
               </div>
               <strong>{asset.total}</strong>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -612,7 +638,7 @@ function RAssetsSection() {
 function RQuoteSection() {
   return (
     <section className={styles.quoteSection}>
-      <div className={styles.quoteInner}>
+      <Reveal className={styles.quoteInner}>
         <h2>Every asset. Every market. Always open.</h2>
         <blockquote>
           <p>
@@ -620,7 +646,7 @@ function RQuoteSection() {
           </p>
           <cite>~ Alex Davis, Founder & CEO, Mavryk</cite>
         </blockquote>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -629,25 +655,31 @@ function RAnalogSystemsSection() {
   return (
     <section className={styles.analogSection}>
       <div className={styles.splitSectionInner}>
-        <RSectionHeader
-          className={styles.problemHeader}
-          description="Institutional capital is rushing toward tokenized real-world assets, but the infrastructure to make it scalable, compliant, and interoperable simply doesn't exist yet."
-          eyebrow="The Problem"
-          heading={[
-            "$280T+ In Real World",
-            "Assets Trapped In",
-            "Analog Systems",
-          ]}
-        />
+        <Reveal className={styles.problemHeader}>
+          <RSectionHeader
+            description="Institutional capital is rushing toward tokenized real-world assets, but the infrastructure to make it scalable, compliant, and interoperable simply doesn't exist yet."
+            eyebrow="The Problem"
+            heading={[
+              "$280T+ In Real World",
+              "Assets Trapped In",
+              "Analog Systems",
+            ]}
+          />
+        </Reveal>
         <div className={styles.problemList}>
-          {problemCards.map((problem) => (
-            <article className={styles.problemCard} key={problem.number}>
+          {problemCards.map((problem, index) => (
+            <Reveal
+              as="article"
+              className={styles.problemCard}
+              delay={index * 0.04}
+              key={problem.number}
+            >
               <strong>{problem.number}</strong>
               <div>
                 <h3>{problem.title}</h3>
                 <p>{problem.description}</p>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -659,10 +691,17 @@ function RReviewsSection() {
   return (
     <section className={styles.reviewsSection}>
       <div className={styles.reviewsInner}>
-        <p className={styles.reviewsEyebrow}>Industry Perspectives</p>
+        <Reveal preset="fade">
+          <p className={styles.reviewsEyebrow}>Industry Perspectives</p>
+        </Reveal>
         <div className={styles.reviewsGrid}>
-          {reviews.map((review) => (
-            <article className={styles.reviewCard} key={review.name}>
+          {reviews.map((review, index) => (
+            <Reveal
+              as="article"
+              className={styles.reviewCard}
+              delay={index * 0.04}
+              key={review.name}
+            >
               <p className={styles.reviewQuote}>{`"${review.quote}"`}</p>
               <div className={styles.reviewDivider} />
               <div className={styles.reviewAuthor}>
@@ -672,7 +711,7 @@ function RReviewsSection() {
                   <span>{review.title}</span>
                 </div>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -684,13 +723,14 @@ function RGetInTouchSection() {
   return (
     <section className={styles.contactSection} id="contact">
       <div className={styles.contactInner}>
-        <RSectionHeader
-          align="center"
-          className={styles.contactHeader}
-          description="Join leading institutional asset owners leveraging Equiteez infrastructure to access global capital markets."
-          heading={["Ready To Bring Your", "Assets Onchain?"]}
-        />
-        <div className={styles.contactActions}>
+        <Reveal className={styles.contactHeader}>
+          <RSectionHeader
+            align="center"
+            description="Join leading institutional asset owners leveraging Equiteez infrastructure to access global capital markets."
+            heading={["Ready To Bring Your", "Assets Onchain?"]}
+          />
+        </Reveal>
+        <Reveal className={styles.contactActions} delay={0.05}>
           <RButton
             as="a"
             href="mailto:hello@equiteez.com"
@@ -702,7 +742,7 @@ function RGetInTouchSection() {
           <RButton as="link" to="/marketplace" tone="black" variant="secondary">
             Launch App
           </RButton>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,11 +1,14 @@
 import clsx from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 
 import { Container } from "~/lib/atoms/Container";
+import { getMotionAwareScrollBehavior } from "~/lib/animations/animations";
 import { RButton } from "~/lib/atoms/RButton";
 import { RCard } from "~/lib/atoms/RCard";
 import { RChip } from "~/lib/atoms/RChip";
 import { RIcon } from "~/lib/atoms/RIcon";
+import { Reveal } from "~/lib/atoms/Reveal";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
@@ -195,7 +198,49 @@ const tradingFeatures: TradingFeature[] = [
   },
 ];
 
-const suiteObserverThresholds = [0, 0.2, 0.4, 0.6, 0.8, 1];
+const suiteObserverThresholds = [0, 0.25, 0.5, 0.75, 1];
+const suiteSelectionBand = {
+  bottom: 0.68,
+  top: 0.32,
+} as const;
+
+type SuiteStepCandidate = {
+  distanceFromCenter: number;
+  id: string;
+  score: number;
+};
+
+function getSuiteStepCandidate(
+  node: HTMLButtonElement,
+  stepId: string
+): SuiteStepCandidate | null {
+  const viewportHeight = window.innerHeight || 1;
+  const rect = node.getBoundingClientRect();
+  const visibleHeight = Math.max(
+    0,
+    Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
+  );
+  const visibleRatio = Math.min(1, visibleHeight / Math.max(rect.height, 1));
+  const viewportCenter = viewportHeight / 2;
+  const stepCenter = rect.top + rect.height / 2;
+  const distanceFromCenter = Math.abs(stepCenter - viewportCenter);
+  const isInsideSelectionBand =
+    rect.top <= viewportHeight * suiteSelectionBand.bottom &&
+    rect.bottom >= viewportHeight * suiteSelectionBand.top;
+
+  if (visibleRatio === 0 && !isInsideSelectionBand) {
+    return null;
+  }
+
+  return {
+    distanceFromCenter,
+    id: stepId,
+    score:
+      visibleRatio +
+      (isInsideSelectionBand ? 0.35 : 0) -
+      distanceFromCenter / viewportHeight,
+  };
+}
 
 function RSolutionsHero() {
   const [activeTabId, setActiveTabId] = useState(heroTabs[0].id);
@@ -207,7 +252,7 @@ function RSolutionsHero() {
   return (
     <section className={clsx(styles.section, styles.heroSection)} id="solutions">
       <div className={styles.sectionShell}>
-        <div className={styles.heroHeader}>
+        <Reveal className={styles.heroHeader}>
           <p className={styles.eyebrow}>Solutions</p>
           <div className={styles.heroCopyGrid}>
             <h1 className={styles.heroTitle}>
@@ -221,9 +266,9 @@ function RSolutionsHero() {
               secondary liquidity, and automated on-chain distributions.
             </p>
           </div>
-        </div>
+        </Reveal>
 
-        <div className={styles.heroShowcase}>
+        <Reveal className={styles.heroShowcase} delay={0.05} preset="image">
           <RTabSwitcher
             activeTabId={activeTabId}
             ariaLabel="Solutions audience"
@@ -243,7 +288,7 @@ function RSolutionsHero() {
               src={activeTab.image}
             />
           </RCard>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -255,24 +300,38 @@ function RTechnologyStackSection() {
       className={clsx(styles.section, styles.stackSection)}
       id="technology"
     >
-      <div className={clsx(styles.sectionShell, styles.stackShell)}>
+      <Reveal className={clsx(styles.sectionShell, styles.stackShell)}>
         <p className={styles.stackEyebrow}>Powering The Tokenization Stack</p>
         <p className={styles.stackLine}>
           Mavryk Network · Fireblocks MPC · Dynamic Wallets · Maven Finance ·
           VARA Compliant · KT1 Smart Contracts · 24/7 Settlement
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }
 
 function RSuiteSection() {
   const [activeStepId, setActiveStepId] = useState(suiteSteps[0].id);
+  const activeStepIdRef = useRef(activeStepId);
+  const observerFrameRef = useRef<number | null>(null);
   const stepRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const shouldReduceMotion = useReducedMotion();
   const activeStep = useMemo(
     () => suiteSteps.find((step) => step.id === activeStepId) ?? suiteSteps[0],
     [activeStepId]
   );
+
+  const setActiveStep = useCallback((stepId: string) => {
+    activeStepIdRef.current = stepId;
+    setActiveStepId((currentStepId) =>
+      currentStepId === stepId ? currentStepId : stepId
+    );
+  }, []);
+
+  useEffect(() => {
+    activeStepIdRef.current = activeStepId;
+  }, [activeStepId]);
 
   useEffect(() => {
     if (!("IntersectionObserver" in window)) {
@@ -280,9 +339,7 @@ function RSuiteSection() {
     }
 
     const syncActiveStep = () => {
-      const viewportCenter = window.innerHeight / 2;
-      const viewportBandTop = window.innerHeight * 0.4;
-      const viewportBandBottom = window.innerHeight * 0.6;
+      observerFrameRef.current = null;
       const candidates = suiteSteps
         .map((step) => {
           const node = stepRefs.current[step.id];
@@ -291,50 +348,50 @@ function RSuiteSection() {
             return null;
           }
 
-          const rect = node.getBoundingClientRect();
-          const stepCenter = rect.top + rect.height / 2;
-
-          return {
-            distanceFromCenter: Math.abs(stepCenter - viewportCenter),
-            id: step.id,
-            isInsideSelectionBand:
-              rect.top <= viewportBandBottom && rect.bottom >= viewportBandTop,
-          };
+          return getSuiteStepCandidate(node, step.id);
         })
         .filter(
-          (
-            candidate
-          ): candidate is {
-            distanceFromCenter: number;
-            id: string;
-            isInsideSelectionBand: boolean;
-          } => candidate !== null
+          (candidate): candidate is SuiteStepCandidate => candidate !== null
         );
-      const selectionPool = candidates.some(
-        (candidate) => candidate.isInsideSelectionBand
-      )
-        ? candidates.filter((candidate) => candidate.isInsideSelectionBand)
-        : candidates;
-      const closestCandidate = selectionPool.sort(
-        (leftCandidate, rightCandidate) =>
-          leftCandidate.distanceFromCenter - rightCandidate.distanceFromCenter
+
+      const closestCandidate = candidates.sort(
+        (leftCandidate, rightCandidate) => {
+          const scoreDifference =
+            rightCandidate.score - leftCandidate.score;
+
+          if (scoreDifference !== 0) {
+            return scoreDifference;
+          }
+
+          return (
+            leftCandidate.distanceFromCenter -
+            rightCandidate.distanceFromCenter
+          );
+        }
       )[0];
 
-      if (closestCandidate) {
-        setActiveStepId((currentStepId) =>
-          currentStepId === closestCandidate.id
-            ? currentStepId
-            : closestCandidate.id
-        );
+      if (
+        closestCandidate &&
+        activeStepIdRef.current !== closestCandidate.id
+      ) {
+        setActiveStep(closestCandidate.id);
       }
+    };
+
+    const scheduleActiveStepSync = () => {
+      if (observerFrameRef.current !== null) {
+        return;
+      }
+
+      observerFrameRef.current = window.requestAnimationFrame(syncActiveStep);
     };
 
     const observer = new IntersectionObserver(
       () => {
-        syncActiveStep();
+        scheduleActiveStepSync();
       },
       {
-        rootMargin: "-40% 0px -40% 0px",
+        rootMargin: "-24% 0px -24% 0px",
         threshold: suiteObserverThresholds,
       }
     );
@@ -344,25 +401,31 @@ function RSuiteSection() {
         observer.observe(node);
       }
     });
-    syncActiveStep();
+    window.addEventListener("resize", scheduleActiveStepSync);
+    scheduleActiveStepSync();
 
     return () => {
       observer.disconnect();
-    };
-  }, []);
+      window.removeEventListener("resize", scheduleActiveStepSync);
 
-  const handleStepClick = (stepId: string) => {
-    setActiveStepId(stepId);
+      if (observerFrameRef.current !== null) {
+        window.cancelAnimationFrame(observerFrameRef.current);
+      }
+    };
+  }, [setActiveStep]);
+
+  const handleStepClick = useCallback((stepId: string) => {
+    setActiveStep(stepId);
     stepRefs.current[stepId]?.scrollIntoView({
-      behavior: "smooth",
+      behavior: getMotionAwareScrollBehavior(shouldReduceMotion),
       block: "center",
     });
-  };
+  }, [setActiveStep, shouldReduceMotion]);
 
   return (
     <section className={styles.section} id="suite">
       <div className={styles.sectionShell}>
-        <div className={styles.suiteHeader}>
+        <Reveal className={styles.suiteHeader}>
           <p className={styles.eyebrow}>Equiteez Solutions</p>
           <h2 className={styles.sectionTitle}>
             <span>Your Turnkey</span>
@@ -373,10 +436,10 @@ function RSuiteSection() {
             their full lifecycle, oversee holders, and audit every action, from
             one workspace.
           </p>
-        </div>
+        </Reveal>
 
         <div className={styles.suiteContent}>
-          <div className={styles.suiteMockColumn}>
+          <Reveal className={styles.suiteMockColumn} preset="image">
             <RCard
               className={styles.suiteMockCard}
               shadow="soft"
@@ -390,8 +453,8 @@ function RSuiteSection() {
                 src={activeStep.image}
               />
             </RCard>
-          </div>
-          <div className={styles.suiteStepList}>
+          </Reveal>
+          <Reveal className={styles.suiteStepList} delay={0.06}>
             {suiteSteps.map((step) => {
               const isActive = step.id === activeStepId;
 
@@ -419,7 +482,7 @@ function RSuiteSection() {
                 </button>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -430,14 +493,15 @@ function ROperatorSection() {
   return (
     <section className={styles.section} id="modules">
       <div className={styles.sectionShell}>
-        <RSectionHeader
-          align="center"
-          className={styles.operatorHeader}
-          eyebrow="More Modules"
-          heading="Built For Operators & Compliance Teams"
-        />
+        <Reveal className={styles.operatorHeader}>
+          <RSectionHeader
+            align="center"
+            eyebrow="More Modules"
+            heading="Built For Operators & Compliance Teams"
+          />
+        </Reveal>
 
-        <div className={styles.operatorBody}>
+        <Reveal className={styles.operatorBody} delay={0.05}>
           <RCard className={styles.operatorSuiteCard} tone="green">
             <h3>Your Multi-Tenant Tokenization Suite</h3>
             <p>
@@ -465,7 +529,7 @@ function ROperatorSection() {
               />
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -478,7 +542,7 @@ function RAppMarketsSection() {
       id="capital-markets"
     >
       <div className={styles.sectionShell}>
-        <div className={styles.appHeader}>
+        <Reveal className={styles.appHeader}>
           <p className={styles.darkEyebrow}>Equiteez App</p>
           <h2 className={styles.darkSectionTitle}>
             <span>Capital Markets</span>
@@ -488,9 +552,9 @@ function RAppMarketsSection() {
             Buy, trade, borrow, and earn on tokenized real-world assets.
             Non-custodial, 24/7, no intermediaries.
           </p>
-        </div>
+        </Reveal>
 
-        <div className={styles.marketGrid}>
+        <Reveal className={styles.marketGrid} delay={0.05}>
           {marketCards.map((card) => (
             <RCard
               className={clsx(
@@ -518,7 +582,7 @@ function RAppMarketsSection() {
               ) : null}
             </RCard>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -529,7 +593,7 @@ function RTradingVenueSection() {
     <section className={styles.section} id="secondary-market">
       <div className={styles.sectionShell}>
         <div className={styles.tradingLayout}>
-          <div className={styles.tradingCopy}>
+          <Reveal className={styles.tradingCopy}>
             <p className={styles.eyebrow}>Secondary Market</p>
             <h2 className={styles.tradingTitle}>
               <span>Embed a High-Performance</span>
@@ -564,20 +628,18 @@ function RTradingVenueSection() {
             >
               Explore App
             </RButton>
-          </div>
+          </Reveal>
 
-          <RCard
-            className={styles.tradingMockCard}
-            shadow="soft"
-            shape="mock"
-          >
-            <img
-              alt="Equiteez embedded trading venue"
-              className={styles.mockImage}
-              decoding="async"
-              src={tradingVenueImage}
-            />
-          </RCard>
+          <Reveal className={styles.tradingMockCard} delay={0.05} preset="image">
+            <RCard shadow="soft" shape="mock">
+              <img
+                alt="Equiteez embedded trading venue"
+                className={styles.mockImage}
+                decoding="async"
+                src={tradingVenueImage}
+              />
+            </RCard>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -588,25 +650,24 @@ function RAdvancedTradeSection() {
   return (
     <section className={styles.section} id="advanced-trade">
       <div className={styles.sectionShell}>
-        <RSectionHeader
-          align="center"
-          className={styles.advancedHeader}
-          description="A full trading workspace, candlestick charts, depth-of-book, limit / market / OTC orders, and live order history. Built for serious operators and institutional desks."
-          eyebrow="Advanced Trade"
-          heading="Advanced RWA Execution Workspace"
-        />
-        <RCard
-          className={styles.advancedMockCard}
-          shadow="strong"
-          shape="mock"
-        >
-          <img
-            alt="Advanced RWA execution workspace"
-            className={styles.mockImage}
-            decoding="async"
-            src={advancedTradeImage}
+        <Reveal className={styles.advancedHeader}>
+          <RSectionHeader
+            align="center"
+            description="A full trading workspace, candlestick charts, depth-of-book, limit / market / OTC orders, and live order history. Built for serious operators and institutional desks."
+            eyebrow="Advanced Trade"
+            heading="Advanced RWA Execution Workspace"
           />
-        </RCard>
+        </Reveal>
+        <Reveal className={styles.advancedMockCard} delay={0.05} preset="image">
+          <RCard shadow="strong" shape="mock">
+            <img
+              alt="Advanced RWA execution workspace"
+              className={styles.mockImage}
+              decoding="async"
+              src={advancedTradeImage}
+            />
+          </RCard>
+        </Reveal>
       </div>
     </section>
   );
@@ -616,13 +677,14 @@ function RSolutionsCtaSection() {
   return (
     <section className={styles.ctaSection} id="contact">
       <div className={styles.sectionShell}>
-        <RSectionHeader
-          align="center"
-          className={styles.ctaHeader}
-          description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
-          heading={["Built For The Future Of", "Capital Markets"]}
-        />
-        <div className={styles.ctaActions}>
+        <Reveal className={styles.ctaHeader}>
+          <RSectionHeader
+            align="center"
+            description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
+            heading={["Built For The Future Of", "Capital Markets"]}
+          />
+        </Reveal>
+        <Reveal className={styles.ctaActions} delay={0.05}>
           <RButton
             as="a"
             href="mailto:hello@equiteez.com"
@@ -634,7 +696,7 @@ function RSolutionsCtaSection() {
           <RButton as="link" to="/marketplace" tone="black" variant="secondary">
             Launch App
           </RButton>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

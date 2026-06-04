@@ -8,11 +8,10 @@
   z-index: 40;
   color: var(--r-color-neutral-white);
   transition:
-    background-color var(--r-transition-duration-base) ease,
-    background var(--r-transition-duration-base) ease,
-    border-color var(--r-transition-duration-base) ease,
-    box-shadow var(--r-transition-duration-base) ease,
-    color var(--r-transition-duration-base) ease;
+    background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    background var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    border-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    color var(--r-motion-duration-base) var(--r-motion-ease-premium);
 }
 
 .landing,
@@ -97,15 +96,15 @@
   letter-spacing: var(--r-letter-spacing-body);
   line-height: var(--r-line-height-body-m);
   text-decoration: none;
-  transition: opacity var(--r-transition-duration-fast) ease;
+  transition: opacity var(--r-motion-duration-fast) var(--r-motion-ease-premium);
 }
 
 .launchButton {
   transition:
-    background-color var(--r-transition-duration-base) ease,
-    border-color var(--r-transition-duration-base) ease,
-    color var(--r-transition-duration-base) ease,
-    box-shadow var(--r-transition-duration-base) ease;
+    background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    border-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    box-shadow var(--r-motion-duration-base) var(--r-motion-ease-premium);
 }
 
 .header[data-variant="landing"] .launchButton {

@@ -147,4 +147,8 @@
   --r-focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.32);
   --r-transition-duration-fast: 160ms;
   --r-transition-duration-base: 300ms;
+  --r-motion-ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --r-motion-duration-fast: 200ms;
+  --r-motion-duration-base: 360ms;
+  --r-motion-duration-reveal: 560ms;
 }

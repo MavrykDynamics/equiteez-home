@@ -45,6 +45,7 @@ Use these token groups:
 - Landing/shared layout spacing additions: `--r-space-10`, `--r-space-11`, `--r-space-12`, `--r-space-14`, `--r-space-16`, `--r-space-18`, `--r-space-25`
 - Icon sizes: `--r-size-icon-small`, `--r-size-icon-medium`
 - Radius, border, focus, transitions: `--r-radius-md`, `--r-radius-lg`, `--r-radius-pill`, `--r-border-width-sm`, `--r-focus-ring`, `--r-transition-duration-fast`
+- Motion: `--r-motion-ease-premium`, `--r-motion-duration-fast`, `--r-motion-duration-base`, `--r-motion-duration-reveal`
 
 Add new tokens only when they are shared by multiple redesign components or map directly to the Figma system.
 

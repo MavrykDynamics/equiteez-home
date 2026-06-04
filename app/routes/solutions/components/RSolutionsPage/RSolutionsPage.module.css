@@ -110,7 +110,8 @@
 }
 
 .mockSwapImage {
-  animation: mockScaleRise 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: mockScaleRise var(--r-motion-duration-reveal)
+    var(--r-motion-ease-premium);
   transform-origin: center bottom;
   will-change: opacity, transform;
 }
@@ -204,9 +205,9 @@
   cursor: pointer;
   scroll-margin-top: 130px;
   transition:
-    background-color var(--r-transition-duration-base) ease,
-    color var(--r-transition-duration-base) ease,
-    transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+    background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    transform var(--r-motion-duration-reveal) var(--r-motion-ease-premium);
 }
 
 .suiteStep:hover {
@@ -223,7 +224,8 @@
   width: 2px;
   flex: 0 0 2px;
   background: var(--r-color-neutral-100);
-  transition: background-color var(--r-transition-duration-base) ease;
+  transition: background-color var(--r-motion-duration-base)
+    var(--r-motion-ease-premium);
 }
 
 .suiteStepCopy {
@@ -492,7 +494,7 @@
   margin: 0 auto;
 }
 
-.ctaHeader > p:last-child {
+.ctaHeader p:last-child {
   max-width: 706px;
   font-size: var(--r-font-size-body-l);
   line-height: var(--r-line-height-body-l);
@@ -576,7 +578,7 @@
   }
 
   .heroDescription,
-  .ctaHeader > p:last-child {
+  .ctaHeader p:last-child {
     font-size: var(--r-font-size-body-m);
     line-height: var(--r-line-height-body-m);
   }
@@ -631,5 +633,12 @@
   .ctaActions {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockSwapImage {
+    animation: none;
+    transform: none;
   }
 }

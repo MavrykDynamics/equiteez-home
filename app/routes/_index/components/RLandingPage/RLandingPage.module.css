@@ -345,7 +345,7 @@
   max-width: 564px;
 }
 
-.analogSection .problemHeader > p:last-child {
+.analogSection .problemHeader p:last-child {
   max-width: 441px;
 }
 
@@ -517,7 +517,7 @@
   max-width: 564px;
 }
 
-.assetsHeader > p:last-child {
+.assetsHeader p:last-child {
   max-width: 440px;
 }
 
@@ -716,7 +716,7 @@
   margin-top: var(--r-space-10);
 }
 
-.contactHeader > p:last-child {
+.contactHeader p:last-child {
   max-width: 540px;
 }
 
@@ -933,14 +933,14 @@
     max-width: 319px;
   }
 
-  .enterpriseHeader > p:last-child,
-  .assetsHeader > p:last-child,
-  .problemHeader > p:last-child {
+  .enterpriseHeader p:last-child,
+  .assetsHeader p:last-child,
+  .problemHeader p:last-child {
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
   }
 
-  .assetsHeader > p:last-child {
+  .assetsHeader p:last-child {
     max-width: none;
   }
 

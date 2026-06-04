@@ -479,6 +479,7 @@ html {
 html {
   scrollbar-width: thin;
   scrollbar-color: #cccccc transparent;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -583,4 +584,10 @@ input[type="number"] {
 
 .no-scroll {
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
