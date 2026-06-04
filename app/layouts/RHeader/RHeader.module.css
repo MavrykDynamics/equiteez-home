@@ -15,23 +15,34 @@
     color var(--r-transition-duration-base) ease;
 }
 
+.landing,
 .dark {
   color: var(--r-color-neutral-white);
   background-color: transparent;
   border-bottom: var(--r-border-width-sm) solid transparent;
 }
 
+.solutions,
 .light {
   color: var(--r-color-neutral-black);
-  background-color: rgba(255, 255, 255, 0.92);
-  border-bottom: var(--r-border-width-sm) solid rgba(230, 230, 230, 0.82);
-  box-shadow: 0 12px 28px rgba(1, 1, 1, 0.08);
+  background-color: rgba(255, 255, 255, 0.98);
+  border-bottom: var(--r-border-width-sm) solid transparent;
+  box-shadow: none;
   backdrop-filter: blur(18px);
 }
 
-.header[data-scrolled="true"],
-.scrolled,
+.header[data-variant="landing"][data-scrolled="true"],
+.header[data-variant="landing"].scrolled,
 .menuOpen {
+  color: var(--r-color-neutral-black);
+  background-color: var(--r-surface-neutral-glass-subtle);
+  border-bottom: var(--r-border-width-sm) solid transparent;
+  box-shadow: none;
+  backdrop-filter: blur(18px);
+}
+
+.header[data-variant="solutions"][data-scrolled="true"],
+.header[data-variant="solutions"].scrolled {
   color: var(--r-color-neutral-black);
   background-color: var(--r-surface-neutral-glass-subtle);
   border-bottom: var(--r-border-width-sm) solid transparent;
@@ -62,6 +73,10 @@
   margin-left: auto;
 }
 
+.header[data-variant="solutions"] .nav {
+  gap: var(--r-space-8);
+}
+
 .actions {
   gap: var(--r-space-6);
   margin-left: auto;
@@ -86,11 +101,6 @@
 }
 
 .launchButton {
-  --r-header-launch-button-background: var(--r-surface-neutral-glass-subtle);
-  --r-header-launch-button-border: var(--r-border-secondary-button-default);
-
-  background-color: var(--r-header-launch-button-background);
-  border-color: var(--r-header-launch-button-border);
   transition:
     background-color var(--r-transition-duration-base) ease,
     border-color var(--r-transition-duration-base) ease,
@@ -98,14 +108,22 @@
     box-shadow var(--r-transition-duration-base) ease;
 }
 
-.header .launchButton:hover:not(:disabled) {
+.header[data-variant="landing"] .launchButton {
+  --r-header-launch-button-background: var(--r-surface-neutral-glass-subtle);
+  --r-header-launch-button-border: var(--r-border-secondary-button-default);
+
   background-color: var(--r-header-launch-button-background);
   border-color: var(--r-header-launch-button-border);
 }
 
-.header[data-scrolled="true"] .launchButton,
-.scrolled .launchButton,
-.menuOpen .launchButton {
+.header[data-variant="landing"] .launchButton:hover:not(:disabled) {
+  background-color: var(--r-header-launch-button-background);
+  border-color: var(--r-header-launch-button-border);
+}
+
+.header[data-variant="landing"][data-scrolled="true"] .launchButton,
+.header[data-variant="landing"].scrolled .launchButton,
+.header[data-variant="landing"].menuOpen .launchButton {
   --r-header-launch-button-background: var(--r-color-neutral-black);
   --r-header-launch-button-border: var(--r-color-neutral-black);
 

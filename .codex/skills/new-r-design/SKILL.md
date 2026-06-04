@@ -188,10 +188,10 @@ Each reusable `R*` component folder should normally contain:
 
 ## RCard
 
-- Purpose: Shared redesign card surface atom with light, dark, and green tones plus optional shadow.
+- Purpose: Shared redesign card surface atom with light, dark, and green tones plus reusable default and mock-image shapes.
 - Location: `app/lib/atoms/RCard/RCard.tsx`
 - Styles: `app/lib/atoms/RCard/RCard.module.css`
-- Reusability notes: Use for repeated redesign card surfaces before creating route-specific card shells.
+- Reusability notes: Use for repeated redesign card surfaces before creating route-specific card shells. Use `shape="mock"` with `shadow="soft"` or `shadow="strong"` for Figma-exported mock images whose bitmap assets should not include shadows.
 - Related tokens: `--r-radius-md`, `--r-border-width-sm`, `--r-color-neutral-*`, `--r-color-accent-green-*`
 
 ## RChip
@@ -236,10 +236,10 @@ Each reusable `R*` component folder should normally contain:
 
 ## RHeader
 
-- Purpose: Shared fixed redesign header with overlay-friendly transparent state, scrolled state, scroll-direction hide/show behavior, desktop navigation, and mobile-ready menu structure.
+- Purpose: Shared fixed redesign header with landing and solutions variants, scrolled state, desktop navigation, and mobile-ready menu structure.
 - Location: `app/layouts/RHeader/RHeader.tsx`
 - Styles: `app/layouts/RHeader/RHeader.module.css`
-- Reusability notes: Use for redesign pages that need the Equiteez 2.0 top navigation without consuming page layout height.
+- Reusability notes: Use `variant="landing"` for overlay-friendly home hero navigation and `variant="solutions"` for white page headers with section links. Both variants share the no-shadow glass scrolled surface. Legacy `transparent` and `light` variants remain compatible aliases.
 - Related tokens: `RLogo`, `RButton`, `RIcon`, `--r-space-*`, `--r-color-neutral-*`, `--r-border-width-sm`, `--r-radius-pill`
 
 ## RFooter

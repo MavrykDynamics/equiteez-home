@@ -18,11 +18,11 @@ export type RHeaderProps = {
   docsHref?: string;
   launchAppTo?: string;
   navItems?: RHeaderNavItem[];
-  variant?: "transparent" | "light";
+  variant?: "landing" | "light" | "solutions" | "transparent";
 };
 
 const defaultNavItems: RHeaderNavItem[] = [
-  { href: "#solutions", label: "Solutions" },
+  { href: "/solutions", label: "Solutions" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
@@ -31,16 +31,26 @@ export function RHeader({
   docsHref = "https://docs.equiteez.com/",
   launchAppTo = "/marketplace",
   navItems = defaultNavItems,
-  variant = "transparent",
+  variant = "landing",
 }: RHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const resolvedVariant =
+    variant === "transparent"
+      ? "landing"
+      : variant === "light"
+        ? "solutions"
+        : variant;
   const { elementRef: headerRef, isScrolledPastElement } =
     useIsScrolledPastElement<HTMLElement>({
-      isEnabled: variant === "transparent",
+      isEnabled: true,
     });
-  const hasDarkSurface = variant === "transparent";
-  const hasScrolledSurface = variant === "transparent" && isScrolledPastElement;
-  const hasMenuSurface = variant === "transparent" && isMenuOpen;
+  const hasLandingSurface = resolvedVariant === "landing";
+  const hasSolutionsSurface = resolvedVariant === "solutions";
+  const hasDarkSurface = hasLandingSurface;
+  const hasScrolledSurface = isScrolledPastElement;
+  const hasMenuSurface = hasLandingSurface && isMenuOpen;
+  const launchButtonTone = hasLandingSurface ? "white" : "black";
+  const launchButtonVariant = hasSolutionsSurface ? "primary" : "secondary";
   const logoTone =
     hasDarkSurface && !hasScrolledSurface && !hasMenuSurface
       ? "white"
@@ -54,12 +64,13 @@ export function RHeader({
     <header
       className={clsx(
         styles.header,
-        hasDarkSurface ? styles.dark : styles.light,
+        styles[resolvedVariant],
         hasScrolledSurface && styles.scrolled,
         hasScrolledSurface && "r-header--scrolled",
         hasMenuSurface && styles.menuOpen
       )}
       data-scrolled={hasScrolledSurface ? "true" : "false"}
+      data-variant={resolvedVariant}
       ref={headerRef}
     >
       <div className={styles.inner}>
@@ -68,9 +79,9 @@ export function RHeader({
 
         <nav aria-label="Primary navigation" className={styles.nav}>
           {navItems.map((item) => (
-            <a className={styles.navLink} href={item.href} key={item.href}>
+            <Link className={styles.navLink} to={item.href} key={item.href}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -88,8 +99,8 @@ export function RHeader({
             className={styles.launchButton}
             size="medium"
             to={launchAppTo}
-            tone={hasDarkSurface ? "white" : "black"}
-            variant="secondary"
+            tone={launchButtonTone}
+            variant={launchButtonVariant}
           >
             Launch App
           </RButton>
@@ -101,8 +112,8 @@ export function RHeader({
             className={styles.launchButton}
             size="small"
             to={launchAppTo}
-            tone={hasDarkSurface ? "white" : "black"}
-            variant="secondary"
+            tone={launchButtonTone}
+            variant={launchButtonVariant}
           >
             Launch App
           </RButton>

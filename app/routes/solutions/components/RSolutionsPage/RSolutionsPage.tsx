@@ -9,7 +9,7 @@ import { RIcon } from "~/lib/atoms/RIcon";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
-import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
+import { RHeader } from "~/layouts/RHeader";
 
 import adminWindowImage from "app/assets/redesign/solutions/mocks/solutions-admin-window.png";
 import dashboardImage from "app/assets/redesign/solutions/mocks/solutions-dashboard.png";
@@ -54,12 +54,6 @@ type TradingFeature = {
   description: string;
   title: string;
 };
-
-const navItems: RHeaderNavItem[] = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "/#about", label: "About" },
-  { href: "#contact", label: "Contact" },
-];
 
 const heroTabs: HeroTab[] = [
   {
@@ -201,6 +195,8 @@ const tradingFeatures: TradingFeature[] = [
   },
 ];
 
+const suiteObserverThresholds = [0, 0.2, 0.4, 0.6, 0.8, 1];
+
 function RSolutionsHero() {
   const [activeTabId, setActiveTabId] = useState(heroTabs[0].id);
   const activeTab = useMemo(
@@ -234,7 +230,11 @@ function RSolutionsHero() {
             onChange={setActiveTabId}
             tabs={heroTabs}
           />
-          <div className={styles.heroMockFrame}>
+          <RCard
+            className={styles.heroMockFrame}
+            shadow="strong"
+            shape="mock"
+          >
             <img
               alt={activeTab.alt}
               className={clsx(styles.mockImage, styles.mockSwapImage)}
@@ -242,7 +242,7 @@ function RSolutionsHero() {
               key={activeTab.id}
               src={activeTab.image}
             />
-          </div>
+          </RCard>
         </div>
       </div>
     </section>
@@ -251,7 +251,10 @@ function RSolutionsHero() {
 
 function RTechnologyStackSection() {
   return (
-    <section className={styles.section}>
+    <section
+      className={clsx(styles.section, styles.stackSection)}
+      id="technology"
+    >
       <div className={clsx(styles.sectionShell, styles.stackShell)}>
         <p className={styles.stackEyebrow}>Powering The Tokenization Stack</p>
         <p className={styles.stackLine}>
@@ -276,17 +279,64 @@ function RSuiteSection() {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries.find((entry) => entry.isIntersecting);
-        const nextStepId =
-          visibleEntry?.target.getAttribute("data-suite-step-id") ?? null;
+    const syncActiveStep = () => {
+      const viewportCenter = window.innerHeight / 2;
+      const viewportBandTop = window.innerHeight * 0.4;
+      const viewportBandBottom = window.innerHeight * 0.6;
+      const candidates = suiteSteps
+        .map((step) => {
+          const node = stepRefs.current[step.id];
 
-        if (nextStepId && suiteSteps.some((step) => step.id === nextStepId)) {
-          setActiveStepId(nextStepId);
-        }
+          if (!node) {
+            return null;
+          }
+
+          const rect = node.getBoundingClientRect();
+          const stepCenter = rect.top + rect.height / 2;
+
+          return {
+            distanceFromCenter: Math.abs(stepCenter - viewportCenter),
+            id: step.id,
+            isInsideSelectionBand:
+              rect.top <= viewportBandBottom && rect.bottom >= viewportBandTop,
+          };
+        })
+        .filter(
+          (
+            candidate
+          ): candidate is {
+            distanceFromCenter: number;
+            id: string;
+            isInsideSelectionBand: boolean;
+          } => candidate !== null
+        );
+      const selectionPool = candidates.some(
+        (candidate) => candidate.isInsideSelectionBand
+      )
+        ? candidates.filter((candidate) => candidate.isInsideSelectionBand)
+        : candidates;
+      const closestCandidate = selectionPool.sort(
+        (leftCandidate, rightCandidate) =>
+          leftCandidate.distanceFromCenter - rightCandidate.distanceFromCenter
+      )[0];
+
+      if (closestCandidate) {
+        setActiveStepId((currentStepId) =>
+          currentStepId === closestCandidate.id
+            ? currentStepId
+            : closestCandidate.id
+        );
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      () => {
+        syncActiveStep();
       },
-      { rootMargin: "-40% 0px -40% 0px" }
+      {
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: suiteObserverThresholds,
+      }
     );
 
     Object.values(stepRefs.current).forEach((node) => {
@@ -294,14 +344,23 @@ function RSuiteSection() {
         observer.observe(node);
       }
     });
+    syncActiveStep();
 
     return () => {
       observer.disconnect();
     };
   }, []);
 
+  const handleStepClick = (stepId: string) => {
+    setActiveStepId(stepId);
+    stepRefs.current[stepId]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="suite">
       <div className={styles.sectionShell}>
         <div className={styles.suiteHeader}>
           <p className={styles.eyebrow}>Equiteez Solutions</p>
@@ -318,13 +377,19 @@ function RSuiteSection() {
 
         <div className={styles.suiteContent}>
           <div className={styles.suiteMockColumn}>
-            <img
-              alt={activeStep.alt}
-              className={clsx(styles.suiteMockImage, styles.mockSwapImage)}
-              decoding="async"
-              key={activeStep.id}
-              src={activeStep.image}
-            />
+            <RCard
+              className={styles.suiteMockCard}
+              shadow="soft"
+              shape="mock"
+            >
+              <img
+                alt={activeStep.alt}
+                className={clsx(styles.mockImage, styles.mockSwapImage)}
+                decoding="async"
+                key={activeStep.id}
+                src={activeStep.image}
+              />
+            </RCard>
           </div>
           <div className={styles.suiteStepList}>
             {suiteSteps.map((step) => {
@@ -338,7 +403,7 @@ function RSuiteSection() {
                   )}
                   data-suite-step-id={step.id}
                   key={step.id}
-                  onClick={() => setActiveStepId(step.id)}
+                  onClick={() => handleStepClick(step.id)}
                   ref={(node) => {
                     stepRefs.current[step.id] = node;
                   }}
@@ -363,10 +428,11 @@ function RSuiteSection() {
 
 function ROperatorSection() {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="modules">
       <div className={styles.sectionShell}>
         <RSectionHeader
           align="center"
+          className={styles.operatorHeader}
           eyebrow="More Modules"
           heading="Built For Operators & Compliance Teams"
         />
@@ -407,7 +473,10 @@ function ROperatorSection() {
 
 function RAppMarketsSection() {
   return (
-    <section className={clsx(styles.section, styles.appSection)}>
+    <section
+      className={clsx(styles.section, styles.appSection)}
+      id="capital-markets"
+    >
       <div className={styles.sectionShell}>
         <div className={styles.appHeader}>
           <p className={styles.darkEyebrow}>Equiteez App</p>
@@ -457,7 +526,7 @@ function RAppMarketsSection() {
 
 function RTradingVenueSection() {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="secondary-market">
       <div className={styles.sectionShell}>
         <div className={styles.tradingLayout}>
           <div className={styles.tradingCopy}>
@@ -476,7 +545,7 @@ function RTradingVenueSection() {
               {tradingFeatures.map((feature) => (
                 <div className={styles.tradingFeature} key={feature.title}>
                   <span className={styles.tradingIconBox}>
-                    <RIcon aria-hidden name="check" size="small" />
+                    <RIcon aria-hidden name="check" size="medium" />
                   </span>
                   <span>
                     <strong>{feature.title}</strong>
@@ -497,12 +566,18 @@ function RTradingVenueSection() {
             </RButton>
           </div>
 
-          <img
-            alt="Equiteez embedded trading venue"
-            className={styles.tradingMockImage}
-            decoding="async"
-            src={tradingVenueImage}
-          />
+          <RCard
+            className={styles.tradingMockCard}
+            shadow="soft"
+            shape="mock"
+          >
+            <img
+              alt="Equiteez embedded trading venue"
+              className={styles.mockImage}
+              decoding="async"
+              src={tradingVenueImage}
+            />
+          </RCard>
         </div>
       </div>
     </section>
@@ -511,7 +586,7 @@ function RTradingVenueSection() {
 
 function RAdvancedTradeSection() {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="advanced-trade">
       <div className={styles.sectionShell}>
         <RSectionHeader
           align="center"
@@ -520,12 +595,18 @@ function RAdvancedTradeSection() {
           eyebrow="Advanced Trade"
           heading="Advanced RWA Execution Workspace"
         />
-        <img
-          alt="Advanced RWA execution workspace"
-          className={styles.advancedMockImage}
-          decoding="async"
-          src={advancedTradeImage}
-        />
+        <RCard
+          className={styles.advancedMockCard}
+          shadow="strong"
+          shape="mock"
+        >
+          <img
+            alt="Advanced RWA execution workspace"
+            className={styles.mockImage}
+            decoding="async"
+            src={advancedTradeImage}
+          />
+        </RCard>
       </div>
     </section>
   );
@@ -562,7 +643,7 @@ function RSolutionsCtaSection() {
 export function RSolutionsPage() {
   return (
     <div className={styles.page}>
-      <RHeader navItems={navItems} variant="light" />
+      <RHeader variant="solutions" />
       <main>
         <Container className={styles.pageFrame} maxWidth={1440}>
           <RSolutionsHero />

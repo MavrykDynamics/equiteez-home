@@ -12,8 +12,8 @@
   background: var(--r-color-neutral-white);
 }
 
-.section,
-.ctaSection {
+.heroSection,
+.stackSection {
   border-bottom: var(--r-border-width-sm) solid var(--r-color-neutral-100);
 }
 
@@ -100,13 +100,10 @@
 }
 
 .heroMockFrame {
-  width: min(100%, 1000px);
+  width: min(100%, 880px);
 }
 
-.mockImage,
-.suiteMockImage,
-.tradingMockImage,
-.advancedMockImage {
+.mockImage {
   display: block;
   width: 100%;
   height: auto;
@@ -183,7 +180,7 @@
 .suiteMockColumn {
   position: sticky;
   top: 120px;
-  width: min(100%, 650px);
+  width: min(100%, 560px);
 }
 
 .suiteStepList {
@@ -197,12 +194,23 @@
   width: 100%;
   gap: 22px;
   align-items: center;
-  padding: var(--r-space-3) 0;
+  margin-left: calc(var(--r-space-3) * -1);
+  padding: var(--r-space-3);
   color: var(--r-color-neutral-500);
   background: transparent;
   border: 0;
+  border-radius: 12px;
   text-align: left;
   cursor: pointer;
+  scroll-margin-top: 130px;
+  transition:
+    background-color var(--r-transition-duration-base) ease,
+    color var(--r-transition-duration-base) ease,
+    transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.suiteStep:hover {
+  background: var(--r-color-neutral-50);
 }
 
 .suiteStep:focus-visible {
@@ -242,6 +250,7 @@
 
 .suiteStepActive {
   color: var(--r-color-neutral-black);
+  background: rgba(246, 246, 247, 0.72);
 }
 
 .suiteStepActive .suiteStepRail {
@@ -250,6 +259,15 @@
 
 .suiteStepActive .suiteStepDescription {
   color: var(--r-color-neutral-600);
+}
+
+.suiteMockCard {
+  width: 100%;
+}
+
+.operatorHeader {
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .operatorBody {
@@ -351,6 +369,7 @@
 
 .marketCardCopy {
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   gap: 14px;
 }
@@ -449,8 +468,8 @@
   border-radius: 8px;
 }
 
-.tradingMockImage {
-  max-width: 630px;
+.tradingMockCard {
+  width: min(100%, 550px);
   justify-self: end;
 }
 
@@ -459,8 +478,8 @@
   margin: 0 auto;
 }
 
-.advancedMockImage {
-  width: min(100%, 1357px);
+.advancedMockCard {
+  width: min(100%, 1240px);
   margin: var(--r-space-8) auto 0;
 }
 
@@ -519,7 +538,7 @@
   }
 
   .suiteMockColumn,
-  .tradingMockImage {
+  .tradingMockCard {
     max-width: 720px;
     justify-self: start;
   }
