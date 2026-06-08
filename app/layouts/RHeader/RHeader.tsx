@@ -23,7 +23,7 @@ export type RHeaderProps = {
 
 const defaultNavItems: RHeaderNavItem[] = [
   { href: "/solutions", label: "Solutions" },
-  { href: "#about", label: "About" },
+  { href: "/about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 

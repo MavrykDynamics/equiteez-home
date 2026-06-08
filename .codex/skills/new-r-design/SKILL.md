@@ -219,6 +219,14 @@ Each reusable `R*` component folder should normally contain:
 - Reusability notes: Use for compact redesign tab switchers before creating page-specific switcher markup.
 - Related tokens: `RTab`, `--r-radius-pill`, `--r-color-neutral-100`
 
+## RFeatureCard
+
+- Purpose: Shared redesign icon-card organism for feature, framework, and advantage cards.
+- Location: `app/lib/organisms/RFeatureCard/RFeatureCard.tsx`
+- Styles: `app/lib/organisms/RFeatureCard/RFeatureCard.module.css`
+- Reusability notes: Use for repeated white cards with a Figma-exported icon, heading, and description. Supports medium and large padding variants.
+- Related tokens: `RCard`, `--r-color-neutral-*`, `--r-color-accent-green-50`, `--r-font-heading`, `--r-font-body`, `--r-space-*`
+
 ## RLogo
 
 - Purpose: Redesign Equiteez by Mavryk logo atom with white and black tones.
@@ -258,6 +266,22 @@ Each reusable `R*` component folder should normally contain:
 - Styles: `app/routes/_index/components/RLandingPage/RLandingPage.module.css`
 - Reusability notes: Keep page-specific section data here until sections are reused elsewhere, then promote reusable sections into `app/templates` or shared R components.
 - Related tokens: `RHeader`, `RFooter`, `RButton`, `RIcon`, `RSectionHeader`, `MarqueeCarousel`, `app/assets/redesign/landing/*`
+
+## RMarketingCtaSection
+
+- Purpose: Shared redesign CTA section for marketing pages with centered heading, description, and one or two actions.
+- Location: `app/templates/RMarketingCtaSection/RMarketingCtaSection.tsx`
+- Styles: `app/templates/RMarketingCtaSection/RMarketingCtaSection.module.css`
+- Reusability notes: Use for shared page-level CTA blocks before recreating route-local CTA markup.
+- Related tokens: `RSectionHeader`, `RButton`, `RIcon`, `Reveal`, `--r-space-*`
+
+## RAboutPage
+
+- Purpose: Route-level Equiteez 2.0 About page composition.
+- Location: `app/routes/about/components/RAboutPage/RAboutPage.tsx`
+- Styles: `app/routes/about/components/RAboutPage/RAboutPage.module.css`
+- Reusability notes: Keep About-specific section data here; shared card and CTA patterns live in `RFeatureCard` and `RMarketingCtaSection`.
+- Related tokens: `RHeader`, `RFooter`, `RFeatureCard`, `RMarketingCtaSection`, `RSectionHeader`, `app/assets/redesign/about/*`
 
 # Registry Update Protocol
 

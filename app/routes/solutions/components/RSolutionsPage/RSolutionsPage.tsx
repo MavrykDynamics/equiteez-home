@@ -12,7 +12,8 @@ import { Reveal } from "~/lib/atoms/Reveal";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
-import { RHeader } from "~/layouts/RHeader";
+import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
+import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 
 import adminWindowImage from "app/assets/redesign/solutions/mocks/solutions-admin-window.png";
 import dashboardImage from "app/assets/redesign/solutions/mocks/solutions-dashboard.png";
@@ -57,6 +58,12 @@ type TradingFeature = {
   description: string;
   title: string;
 };
+
+const solutionsNavItems: RHeaderNavItem[] = [
+  { href: "#solutions", label: "Solutions" },
+  { href: "/about", label: "About" },
+  { href: "#contact", label: "Contact" },
+];
 
 const heroTabs: HeroTab[] = [
   {
@@ -250,7 +257,10 @@ function RSolutionsHero() {
   );
 
   return (
-    <section className={clsx(styles.section, styles.heroSection)} id="solutions">
+    <section
+      className={clsx(styles.section, styles.heroSection)}
+      id="solutions"
+    >
       <div className={styles.sectionShell}>
         <Reveal className={styles.heroHeader}>
           <p className={styles.eyebrow}>Solutions</p>
@@ -275,11 +285,7 @@ function RSolutionsHero() {
             onChange={setActiveTabId}
             tabs={heroTabs}
           />
-          <RCard
-            className={styles.heroMockFrame}
-            shadow="strong"
-            shape="mock"
-          >
+          <RCard className={styles.heroMockFrame} shadow="strong" shape="mock">
             <img
               alt={activeTab.alt}
               className={clsx(styles.mockImage, styles.mockSwapImage)}
@@ -356,24 +362,19 @@ function RSuiteSection() {
 
       const closestCandidate = candidates.sort(
         (leftCandidate, rightCandidate) => {
-          const scoreDifference =
-            rightCandidate.score - leftCandidate.score;
+          const scoreDifference = rightCandidate.score - leftCandidate.score;
 
           if (scoreDifference !== 0) {
             return scoreDifference;
           }
 
           return (
-            leftCandidate.distanceFromCenter -
-            rightCandidate.distanceFromCenter
+            leftCandidate.distanceFromCenter - rightCandidate.distanceFromCenter
           );
         }
       )[0];
 
-      if (
-        closestCandidate &&
-        activeStepIdRef.current !== closestCandidate.id
-      ) {
+      if (closestCandidate && activeStepIdRef.current !== closestCandidate.id) {
         setActiveStep(closestCandidate.id);
       }
     };
@@ -414,13 +415,16 @@ function RSuiteSection() {
     };
   }, [setActiveStep]);
 
-  const handleStepClick = useCallback((stepId: string) => {
-    setActiveStep(stepId);
-    stepRefs.current[stepId]?.scrollIntoView({
-      behavior: getMotionAwareScrollBehavior(shouldReduceMotion),
-      block: "center",
-    });
-  }, [setActiveStep, shouldReduceMotion]);
+  const handleStepClick = useCallback(
+    (stepId: string) => {
+      setActiveStep(stepId);
+      stepRefs.current[stepId]?.scrollIntoView({
+        behavior: getMotionAwareScrollBehavior(shouldReduceMotion),
+        block: "center",
+      });
+    },
+    [setActiveStep, shouldReduceMotion]
+  );
 
   return (
     <section className={styles.section} id="suite">
@@ -440,11 +444,7 @@ function RSuiteSection() {
 
         <div className={styles.suiteContent}>
           <Reveal className={styles.suiteMockColumn} preset="image">
-            <RCard
-              className={styles.suiteMockCard}
-              shadow="soft"
-              shape="mock"
-            >
+            <RCard className={styles.suiteMockCard} shadow="soft" shape="mock">
               <img
                 alt={activeStep.alt}
                 className={clsx(styles.mockImage, styles.mockSwapImage)}
@@ -630,7 +630,11 @@ function RTradingVenueSection() {
             </RButton>
           </Reveal>
 
-          <Reveal className={styles.tradingMockCard} delay={0.05} preset="image">
+          <Reveal
+            className={styles.tradingMockCard}
+            delay={0.05}
+            preset="image"
+          >
             <RCard shadow="soft" shape="mock">
               <img
                 alt="Equiteez embedded trading venue"
@@ -675,37 +679,29 @@ function RAdvancedTradeSection() {
 
 function RSolutionsCtaSection() {
   return (
-    <section className={styles.ctaSection} id="contact">
-      <div className={styles.sectionShell}>
-        <Reveal className={styles.ctaHeader}>
-          <RSectionHeader
-            align="center"
-            description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
-            heading={["Built For The Future Of", "Capital Markets"]}
-          />
-        </Reveal>
-        <Reveal className={styles.ctaActions} delay={0.05}>
-          <RButton
-            as="a"
-            href="mailto:hello@equiteez.com"
-            iconRight={<RIcon aria-hidden name="arrow-long-right" />}
-            tone="black"
-          >
-            Get In Touch
-          </RButton>
-          <RButton as="link" to="/marketplace" tone="black" variant="secondary">
-            Launch App
-          </RButton>
-        </Reveal>
-      </div>
-    </section>
+    <RMarketingCtaSection
+      className={styles.ctaSection}
+      description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
+      heading={["Built For The Future Of", "Capital Markets"]}
+      id="contact"
+      primaryAction={{
+        href: "mailto:hello@equiteez.com",
+        label: "Get In Touch",
+      }}
+      secondaryAction={{
+        iconRight: null,
+        label: "Launch App",
+        to: "/marketplace",
+        variant: "secondary",
+      }}
+    />
   );
 }
 
 export function RSolutionsPage() {
   return (
     <div className={styles.page}>
-      <RHeader variant="solutions" />
+      <RHeader navItems={solutionsNavItems} variant="solutions" />
       <main>
         <Container className={styles.pageFrame} maxWidth={1440}>
           <RSolutionsHero />

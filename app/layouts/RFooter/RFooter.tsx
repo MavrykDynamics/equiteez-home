@@ -30,7 +30,7 @@ const defaultFooterGroups: RFooterGroup[] = [
   {
     title: "Company",
     links: [
-      { href: "#about", label: "About" },
+      { href: "/about", label: "About" },
       { href: "#contact", label: "Contact" },
     ],
   },
