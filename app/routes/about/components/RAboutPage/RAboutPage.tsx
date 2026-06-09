@@ -322,7 +322,7 @@ function RVisionMissionSection() {
                   : styles.statementCardGreen
               )}
               key={card.label}
-              tone="dark"
+              tone={card.tone === "green" ? "green" : "dark"}
             >
               <p className={styles.statementLabel}>{card.label}</p>
               <p className={styles.statementText}>{card.statement}</p>
@@ -347,6 +347,7 @@ export function RAboutPage() {
           <RWealthArchitectureSection />
           <RVisionMissionSection />
           <RMarketingCtaSection
+            className={styles.aboutCtaSection}
             description="Investors, issuers, and partners building the next era of capital markets."
             heading="Build With Us."
             id="contact"
