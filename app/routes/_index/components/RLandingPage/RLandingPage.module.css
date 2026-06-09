@@ -119,18 +119,11 @@
 
 .heroOverlay {
   z-index: 1;
-  background: radial-gradient(
-      circle at center,
-      rgba(1, 1, 1, 0.26) 0%,
-      rgba(1, 1, 1, 0.16) 42%,
-      rgba(1, 1, 1, 0.08) 72%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(1, 1, 1, 0.1) 0%,
-      rgba(1, 1, 1, 0.18) 52%,
-      rgba(1, 1, 1, 0.16) 100%
-    );
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
   pointer-events: none;
 }
 
