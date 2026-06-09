@@ -46,13 +46,16 @@
 }
 
 .heroSlideImage {
+  --hero-slide-end-scale: 1.15;
+
   position: absolute;
   display: block;
   inset: -2%;
   width: 104%;
   height: 104%;
   opacity: 0;
-  transform: scale(1.06)
+  /* Keep the resting state aligned with the animation end state to prevent exit snaps. */
+  transform: scale(var(--hero-slide-end-scale))
     translate3d(var(--hero-slide-pan-x, 0), var(--hero-slide-pan-y, 0), 0);
   transition: opacity 1400ms ease-in-out;
   will-change: opacity, transform;
@@ -112,7 +115,7 @@
   }
 
   to {
-    transform: scale(1.15)
+    transform: scale(var(--hero-slide-end-scale))
       translate3d(var(--hero-slide-pan-x, 0), var(--hero-slide-pan-y, 0), 0);
   }
 }
