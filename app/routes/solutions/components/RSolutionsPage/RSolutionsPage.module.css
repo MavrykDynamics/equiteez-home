@@ -267,6 +267,72 @@
   width: 100%;
 }
 
+.suiteResponsiveContent {
+  display: none;
+}
+
+.suiteResponsiveGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--r-space-4);
+}
+
+.suiteResponsiveCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--r-space-4);
+}
+
+.suiteResponsiveCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-3);
+}
+
+.suiteResponsiveCopy h3,
+.operatorResponsiveCopy h3 {
+  margin: 0;
+  color: var(--r-color-neutral-black);
+  font-family: var(--r-font-heading);
+  font-size: var(--r-font-size-heading-h7);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+  line-height: var(--r-line-height-heading-h7);
+}
+
+.suiteResponsiveCopy p,
+.operatorResponsiveCopy p {
+  margin: 0;
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.suiteResponsiveMockCard {
+  width: 100%;
+}
+
+.suitePagination {
+  display: flex;
+  gap: var(--r-space-2);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.suitePaginationDot {
+  width: 10px;
+  height: 10px;
+  background: var(--r-color-neutral-100);
+  border-radius: 50%;
+}
+
+.suitePaginationDotActive {
+  background: var(--r-color-neutral-black);
+}
+
 .operatorHeader {
   max-width: 760px;
   margin: 0 auto;
@@ -323,6 +389,45 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+.operatorResponsiveGrid {
+  display: none;
+}
+
+.operatorResponsiveCard {
+  gap: var(--r-space-6);
+  padding: var(--r-space-6);
+  border-radius: var(--r-radius-md);
+}
+
+.operatorResponsiveIcon {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--r-color-accent-green-500);
+  background: rgba(164, 192, 186, 0.5);
+  border-radius: 12px;
+}
+
+.operatorResponsiveIconSvg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.operatorResponsiveCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--r-space-3);
 }
 
 .appSection {
@@ -400,11 +505,15 @@
 .tradingLayout {
   display: grid;
   grid-template-columns: minmax(0, 658px) minmax(0, 550px);
+  grid-template-areas:
+    "copy mock"
+    "features mock";
   gap: var(--r-space-8);
   align-items: start;
 }
 
 .tradingCopy {
+  grid-area: copy;
   gap: var(--r-space-3);
   padding-top: var(--r-space-1);
 }
@@ -426,7 +535,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--r-space-1);
-  margin: var(--r-space-8) 0 var(--r-space-8);
+  width: 100%;
+  margin: var(--r-space-8) 0;
+}
+
+.tradingFeaturePanel {
+  display: flex;
+  grid-area: features;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .tradingFeature {
@@ -471,6 +588,7 @@
 }
 
 .tradingMockCard {
+  grid-area: mock;
   width: min(100%, 550px);
   justify-self: end;
 }
@@ -486,6 +604,10 @@
 }
 
 .ctaSection {
+  --r-marketing-cta-phone-action-width: 100%;
+  --r-marketing-cta-phone-padding-y: var(--r-space-14);
+  --r-marketing-cta-tablet-padding-y: var(--r-space-14);
+
   border-bottom: 0;
 }
 
@@ -507,10 +629,21 @@
 }
 
 @media (max-width: 1180px) {
+  .page {
+    padding-top: 62px;
+  }
+
   .heroCopyGrid,
   .suiteContent,
   .tradingLayout {
     grid-template-columns: 1fr;
+  }
+
+  .tradingLayout {
+    grid-template-areas:
+      "copy"
+      "mock"
+      "features";
   }
 
   .heroDescription,
@@ -538,16 +671,13 @@
 }
 
 @media (max-width: 820px) {
-  .page {
-    padding-top: 62px;
-  }
-
   .sectionShell {
     padding: var(--r-space-16) var(--r-space-8);
   }
 
   .heroSection .sectionShell {
-    padding-top: 124px;
+    padding-top: var(--r-space-16);
+    padding-bottom: 120px;
   }
 
   .heroTitle,
@@ -564,31 +694,169 @@
   }
 
   .heroShowcase {
-    margin-top: var(--r-space-12);
+    gap: var(--r-space-8);
+    margin-top: 52px;
+  }
+
+  .heroTabSwitcher {
+    width: auto;
   }
 
   .suiteContent {
-    margin-top: var(--r-space-6);
+    display: none;
   }
 
-  .suiteStep {
+  .suiteHeader {
+    gap: var(--r-space-6);
+  }
+
+  .sectionDescription,
+  .tradingDescription,
+  .advancedHeader p:last-child {
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .suiteResponsiveContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--r-space-6);
+    margin-top: var(--r-space-8);
+  }
+
+  .marketGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--r-space-4);
+    margin-top: var(--r-space-8);
+  }
+
+  .operatorBody {
+    gap: var(--r-space-4);
+    margin-top: var(--r-space-8);
+  }
+
+  .operatorSuiteCard {
+    gap: var(--r-space-4);
+    padding: 28px var(--r-space-6);
+  }
+
+  .operatorSuiteCard h3 {
+    font-size: var(--r-font-size-heading-h6);
+    line-height: var(--r-line-height-heading-h6);
+  }
+
+  .operatorSuiteCard p {
+    max-width: none;
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .operatorCardGrid {
+    display: none;
+  }
+
+  .operatorResponsiveGrid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--r-space-4);
   }
 
-  .operatorCardGrid,
-  .marketGrid {
-    grid-template-columns: 1fr;
+  .appHeader {
+    gap: var(--r-space-4);
+  }
+
+  .darkDescription {
+    max-width: none;
+    margin-top: 0;
+    font-size: var(--r-font-size-body-m);
+    line-height: var(--r-line-height-body-m);
+  }
+
+  .marketCardLarge {
+    grid-column: span 2;
+    min-height: 190px;
+    border-radius: var(--r-radius-md);
+  }
+
+  .marketCardSmall {
+    grid-column: span 1;
+    min-height: 148px;
+  }
+
+  .marketCard {
+    padding: var(--r-space-6);
+  }
+
+  .marketCardLarge h3 {
+    font-size: var(--r-font-size-heading-h6);
+    line-height: var(--r-line-height-heading-h6);
+  }
+
+  .marketCardSmall h3 {
+    font-size: var(--r-font-size-heading-h7);
+    line-height: var(--r-line-height-heading-h7);
+  }
+
+  .marketCard p {
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .tradingLayout {
+    grid-template-areas:
+      "copy"
+      "mock"
+      "features";
+    gap: var(--r-space-8);
+  }
+
+  .tradingCopy {
+    gap: var(--r-space-3);
+    padding-top: 0;
+  }
+
+  .tradingTitle {
+    margin-top: 0;
+  }
+
+  .tradingDescription {
+    margin-top: var(--r-space-1);
+    max-width: none;
+  }
+
+  .tradingMockCard {
+    width: min(100%, 532px);
+    justify-self: center;
+  }
+
+  .tradingFeaturePanel {
+    width: 100%;
+    align-items: center;
+  }
+
+  .tradingFeatureList {
+    margin: 0;
   }
 
   .tradingFeature {
     align-items: flex-start;
   }
+
+  .advancedMockCard {
+    width: 100%;
+    margin-top: var(--r-space-8);
+  }
 }
 
 @media (max-width: 480px) {
   .sectionShell {
-    padding-right: var(--r-space-4);
-    padding-left: var(--r-space-4);
+    padding: var(--r-space-14) var(--r-space-4);
+  }
+
+  .heroSection .sectionShell {
+    padding-top: var(--r-space-14);
+    padding-bottom: var(--r-space-25);
   }
 
   .heroTitle,
@@ -599,15 +867,88 @@
     line-height: var(--r-line-height-heading-h5);
   }
 
+  .heroCopyGrid {
+    gap: var(--r-space-3);
+  }
+
+  .heroShowcase {
+    gap: var(--r-space-6);
+    margin-top: var(--r-space-14);
+  }
+
+  .heroTabSwitcher {
+    width: 100%;
+  }
+
+  .heroTabSwitcher > * {
+    flex: 1 1 0;
+  }
+
   .heroMockFrame {
-    width: calc(100% + var(--r-space-4));
-    margin-right: calc(var(--r-space-2) * -1);
-    margin-left: calc(var(--r-space-2) * -1);
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .stackShell {
+    gap: var(--r-space-6);
+  }
+
+  .suiteHeader {
+    gap: var(--r-space-4);
+  }
+
+  .suiteResponsiveGrid,
+  .operatorResponsiveGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .suiteResponsiveCard:not(:first-child) {
+    display: none;
   }
 
   .operatorSuiteCard,
+  .operatorResponsiveCard {
+    padding: var(--r-space-6);
+  }
+
   .marketCard {
+    padding: var(--r-space-6);
+  }
+
+  .marketGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketCardLarge {
+    grid-column: span 2;
+  }
+
+  .marketCardSmall {
     padding: var(--r-space-5);
+  }
+
+  .tradingLayout {
+    gap: var(--r-space-8);
+  }
+
+  .tradingFeaturePanel > a,
+  .tradingFeaturePanel > button {
+    width: 100%;
+  }
+
+  .advancedSection .sectionShell {
+    padding-top: var(--r-space-18);
+    padding-bottom: var(--r-space-18);
+  }
+
+  .ctaSection a,
+  .ctaSection button {
+    min-height: 45px;
+    padding-top: var(--r-space-3);
+    padding-bottom: var(--r-space-3);
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
   }
 }
 

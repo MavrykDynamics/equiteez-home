@@ -45,6 +45,14 @@ type OperatorCardAsset = {
   src: string;
 };
 
+type OperatorResponsiveCardIcon = "code" | "users" | "shield";
+
+type OperatorResponsiveCard = {
+  description: string;
+  icon: OperatorResponsiveCardIcon;
+  title: string;
+};
+
 type MarketCard = {
   category: string;
   description: string;
@@ -138,6 +146,27 @@ const operatorCards: OperatorCardAsset[] = [
   },
 ];
 
+const operatorResponsiveCards: OperatorResponsiveCard[] = [
+  {
+    description:
+      "Every asset is a live smart contract. Compose with DeFi, automate distributions, and unlock liquidity without rebuilding the asset.",
+    icon: "code",
+    title: "Programmable By Default",
+  },
+  {
+    description:
+      "Bring on legal counsel, transfer agents, originators, and external auditors, each with the right permissions.",
+    icon: "users",
+    title: "Collaborate With Your Team",
+  },
+  {
+    description:
+      "Freeze assets pending review, unfreeze holders, enforce whitelists, and gate transfers, all logged for the regulator.",
+    icon: "shield",
+    title: "Compliance Controls",
+  },
+];
+
 const marketCards: MarketCard[] = [
   {
     category: "Exchange",
@@ -206,6 +235,8 @@ const tradingFeatures: TradingFeature[] = [
 ];
 
 const suiteObserverThresholds = [0, 0.25, 0.5, 0.75, 1];
+const suiteResponsiveSteps = suiteSteps.slice(0, 2);
+const suitePaginationDots = suiteSteps.slice(0, 4);
 const suiteSelectionBand = {
   bottom: 0.68,
   top: 0.32,
@@ -249,6 +280,53 @@ function getSuiteStepCandidate(
   };
 }
 
+function OperatorCardIcon({ icon }: { icon: OperatorResponsiveCardIcon }) {
+  if (icon === "users") {
+    return (
+      <svg
+        aria-hidden
+        className={styles.operatorResponsiveIconSvg}
+        fill="none"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path d="M15 19c0-2-2.7-3.5-6-3.5S3 17 3 19" />
+        <path d="M21 19c0-1.5-1.4-2.7-3.5-3.2" />
+        <path d="M13.5 5.4A3 3 0 1 1 12 11" />
+        <path d="M9 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "shield") {
+    return (
+      <svg
+        aria-hidden
+        className={styles.operatorResponsiveIconSvg}
+        fill="none"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path d="m15 10-4 4-2-2" />
+        <path d="M20 11.2c0 5-3.8 7.2-7.2 8.5a2.2 2.2 0 0 1-1.6 0C7.8 18.4 4 16.2 4 11.2V5.8c0-1 .8-1.8 1.8-1.8h12.4c1 0 1.8.8 1.8 1.8v5.4Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      aria-hidden
+      className={styles.operatorResponsiveIconSvg}
+      fill="none"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path d="m15 8 4 4-4 4" />
+      <path d="m9 16-4-4 4-4" />
+    </svg>
+  );
+}
+
 function RSolutionsHero() {
   const [activeTabId, setActiveTabId] = useState(heroTabs[0].id);
   const activeTab = useMemo(
@@ -282,6 +360,7 @@ function RSolutionsHero() {
           <RTabSwitcher
             activeTabId={activeTabId}
             ariaLabel="Solutions audience"
+            className={styles.heroTabSwitcher}
             onChange={setActiveTabId}
             tabs={heroTabs}
           />
@@ -484,6 +563,42 @@ function RSuiteSection() {
             })}
           </Reveal>
         </div>
+
+        <Reveal className={styles.suiteResponsiveContent} delay={0.05}>
+          <div className={styles.suiteResponsiveGrid}>
+            {suiteResponsiveSteps.map((step) => (
+              <article className={styles.suiteResponsiveCard} key={step.id}>
+                <div className={styles.suiteResponsiveCopy}>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </div>
+                <RCard
+                  className={styles.suiteResponsiveMockCard}
+                  shadow="soft"
+                  shape="mock"
+                >
+                  <img
+                    alt={step.alt}
+                    className={styles.mockImage}
+                    decoding="async"
+                    src={step.image}
+                  />
+                </RCard>
+              </article>
+            ))}
+          </div>
+          <div aria-hidden className={styles.suitePagination}>
+            {suitePaginationDots.map((step, index) => (
+              <span
+                className={clsx(
+                  styles.suitePaginationDot,
+                  index === 0 && styles.suitePaginationDotActive
+                )}
+                key={step.id}
+              />
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -527,6 +642,20 @@ function ROperatorSection() {
                 key={card.alt}
                 src={card.src}
               />
+            ))}
+          </div>
+
+          <div className={styles.operatorResponsiveGrid}>
+            {operatorResponsiveCards.map((card) => (
+              <RCard className={styles.operatorResponsiveCard} key={card.title}>
+                <span className={styles.operatorResponsiveIcon}>
+                  <OperatorCardIcon icon={card.icon} />
+                </span>
+                <div className={styles.operatorResponsiveCopy}>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                </div>
+              </RCard>
             ))}
           </div>
         </Reveal>
@@ -604,7 +733,24 @@ function RTradingVenueSection() {
               market & limit orders, transparent depth, every trade settled
               instantly, on-chain.
             </p>
+          </Reveal>
 
+          <Reveal
+            className={styles.tradingMockCard}
+            delay={0.05}
+            preset="image"
+          >
+            <RCard shadow="soft" shape="mock">
+              <img
+                alt="Equiteez embedded trading venue"
+                className={styles.mockImage}
+                decoding="async"
+                src={tradingVenueImage}
+              />
+            </RCard>
+          </Reveal>
+
+          <Reveal className={styles.tradingFeaturePanel} delay={0.06}>
             <div className={styles.tradingFeatureList}>
               {tradingFeatures.map((feature) => (
                 <div className={styles.tradingFeature} key={feature.title}>
@@ -629,21 +775,6 @@ function RTradingVenueSection() {
               Explore App
             </RButton>
           </Reveal>
-
-          <Reveal
-            className={styles.tradingMockCard}
-            delay={0.05}
-            preset="image"
-          >
-            <RCard shadow="soft" shape="mock">
-              <img
-                alt="Equiteez embedded trading venue"
-                className={styles.mockImage}
-                decoding="async"
-                src={tradingVenueImage}
-              />
-            </RCard>
-          </Reveal>
         </div>
       </div>
     </section>
@@ -652,7 +783,10 @@ function RTradingVenueSection() {
 
 function RAdvancedTradeSection() {
   return (
-    <section className={styles.section} id="advanced-trade">
+    <section
+      className={clsx(styles.section, styles.advancedSection)}
+      id="advanced-trade"
+    >
       <div className={styles.sectionShell}>
         <Reveal className={styles.advancedHeader}>
           <RSectionHeader
