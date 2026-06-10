@@ -472,10 +472,10 @@ function RLandingHero() {
         </p>
         <div className={styles.heroActions}>
           <RButton
-            as="a"
-            href="#contact"
+            as="link"
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
             tone="white"
+            to="/mondav"
           >
             Start Tokenizing
           </RButton>
