@@ -101,6 +101,7 @@
 
 .heroMockFrame {
   width: min(100%, 880px);
+  height: 552px;
 }
 
 .mockImage {
@@ -109,7 +110,13 @@
   height: auto;
 }
 
-.mockSwapImage {
+.heroMockImage {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.mockSwapCard {
   animation: mockScaleRise var(--r-motion-duration-reveal)
     var(--r-motion-ease-premium);
   transform-origin: center bottom;
@@ -271,11 +278,20 @@
   display: none;
 }
 
-.suiteResponsiveGrid {
-  display: grid;
+.suiteResponsiveViewport {
   width: 100%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.suiteResponsiveContainer {
+  display: flex;
   gap: var(--r-space-4);
+  touch-action: pan-y pinch-zoom;
+}
+
+.suiteResponsiveSlide {
+  min-width: 0;
+  flex: 0 0 calc((100% - var(--r-space-4)) / 2);
 }
 
 .suiteResponsiveCard {
@@ -325,12 +341,22 @@
 .suitePaginationDot {
   width: 10px;
   height: 10px;
+  padding: 0;
   background: var(--r-color-neutral-100);
+  border: 0;
   border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--r-motion-duration-fast)
+    var(--r-motion-ease-premium);
 }
 
 .suitePaginationDotActive {
   background: var(--r-color-neutral-black);
+}
+
+.suitePaginationDot:focus-visible {
+  outline: none;
+  box-shadow: var(--r-focus-ring);
 }
 
 .operatorHeader {
@@ -702,6 +728,10 @@
     width: auto;
   }
 
+  .heroMockFrame {
+    height: 454px;
+  }
+
   .suiteContent {
     display: none;
   }
@@ -886,6 +916,7 @@
 
   .heroMockFrame {
     width: 100%;
+    height: 266px;
     margin-right: 0;
     margin-left: 0;
   }
@@ -898,13 +929,12 @@
     gap: var(--r-space-4);
   }
 
-  .suiteResponsiveGrid,
-  .operatorResponsiveGrid {
-    grid-template-columns: 1fr;
+  .suiteResponsiveSlide {
+    flex-basis: 100%;
   }
 
-  .suiteResponsiveCard:not(:first-child) {
-    display: none;
+  .operatorResponsiveGrid {
+    grid-template-columns: 1fr;
   }
 
   .operatorSuiteCard,
@@ -953,7 +983,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mockSwapImage {
+  .mockSwapCard {
     animation: none;
     transform: none;
   }

@@ -6,7 +6,6 @@ import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { Reveal } from "~/lib/atoms/Reveal";
-import { MarqueeCarousel } from "~/lib/organisms/MarqueeCarousel/MarqueeCarousel";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader } from "~/layouts/RHeader";
@@ -79,6 +78,7 @@ type EnterpriseCard = {
 type AssetClass = {
   description: string;
   total: string;
+  totalNote?: string;
   title: string;
 };
 
@@ -250,7 +250,7 @@ const partnerLogos: PartnerLogo[] = [
 
 const metrics: Metric[] = [
   { label: "Real World Assets TAM By 2030, EY", value: "$28.7T+" },
-  { label: "Equiteez Contracted Pipeline", value: "$10B+" },
+  { label: "Equiteez Pipeline", value: "$14.9B" },
   { label: "Asset Classes Supported To Date", value: "6+" },
   { label: "Market Trading", value: "24/7" },
 ];
@@ -271,7 +271,7 @@ const solutionCards: SolutionCard[] = [
   {
     category: "DeFi",
     description:
-      "Borrow against tokenized assets with automated loan servicing.",
+      "Leveraging Maven Finance by Mavryk: Access automated loan servicing to borrow liquidity against tokenized assets.",
     title: "Collateralized Lending",
   },
   {
@@ -282,13 +282,14 @@ const solutionCards: SolutionCard[] = [
   },
   {
     category: "Security",
-    description: "MPC wallet integration keeps users in full control.",
+    description:
+      "Our MPC wallet integration ensures users maintain absolute control over their assets without the operational burden of managing private keys.",
     title: "Non-Custodial Architecture",
   },
   {
     category: "Settlement",
     description: "Every trade is final, blockchain-settled, and transparent.",
-    title: "Guaranteed Settlement",
+    title: "Instant Onchain Settlement",
   },
 ];
 
@@ -321,34 +322,52 @@ const enterpriseCards: EnterpriseCard[] = [
 
 const assetClasses: AssetClass[] = [
   {
-    description: "Commercial, residential, hotels",
+    description: "Options, futures, swaps, tokenized structured products",
+    title: "Global Derivatives",
+    total: "$700T – $1Qa",
+  },
+  {
+    description: "Commercial, residential, industrial, hotels, land",
     title: "Real Estate",
-    total: "$50M+",
+    total: "~$350T – $400T",
   },
   {
-    description: "Gold, precious metals, physical assets",
+    description: "Sovereign bonds, municipal, corporate debt, U.S. Treasuries",
+    title: "Fixed Income / Bonds",
+    total: "~$130T",
+    totalNote: "(U.S. Treasuries: ~$31.6T)",
+  },
+  {
+    description: "Public stock markets, global indexes",
+    title: "Global Equities",
+    total: "~$110T – $120T",
+  },
+  {
+    description: "Cash, checking deposits, near-money savings",
+    title: "Global M2 (Money Supply)",
+    total: "~$100T+",
+  },
+  {
+    description: "Carrier reserves, Insurance-Linked Securities (ILS)",
+    title: "Insurance Portfolio Assets",
+    total: "~$40T Pool",
+    totalNote: "(ILS Market: ~$100B)",
+  },
+  {
+    description: "Gold, precious metals, physical energy/agriculture",
     title: "Commodities",
-    total: "$11.5B",
+    total: "~$20T+",
+    totalNote: "(Gold Cap: ~$15T–$18T)",
   },
   {
-    description: "Debt portfolios, loan instruments",
-    title: "Private Credit",
-    total: "$50M+",
+    description: "Debt portfolios, SME loans, mid-market instruments",
+    title: "Private Credit / Debt",
+    total: "~$1.7T – $2.0T",
   },
   {
-    description: "U.S. Treasury bonds",
-    title: "Treasuries",
-    total: "—",
-  },
-  {
-    description: "Insurance-linked securities",
-    title: "Insurance",
-    total: "—",
-  },
-  {
-    description: "Bitcoin miners, digital infrastructure",
+    description: "Bitcoin, core L1/L2 networks, crypto infrastructure",
     title: "Digital Assets",
-    total: "—",
+    total: "~$2.5T – $3.0T",
   },
 ];
 
@@ -496,14 +515,6 @@ function RPartnersSection() {
           <p className={styles.eyebrow}>
             Backed By Leading Institutional Partners
           </p>
-          <MarqueeCarousel
-            autoFill
-            className={styles.partnerMarquee}
-            pauseOnHover
-            speed={24}
-          >
-            <RPartnerLogoItems itemClassName={styles.partnerLogoItem} />
-          </MarqueeCarousel>
           <div className={styles.partnerLogoGrid}>
             <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
           </div>
@@ -611,7 +622,7 @@ function RAssetsSection() {
           <RSectionHeader
             description="Our platform supports tokenization across diverse verticals, enabling access to historically illiquid markets."
             eyebrow="Multi-Asset"
-            heading={["Every Asset Class,", "One Infrastructure"]}
+            heading="Every Asset Class, One Infrastructure"
           />
         </Reveal>
         <div className={styles.assetList}>
@@ -626,7 +637,10 @@ function RAssetsSection() {
                 <h3>{asset.title}</h3>
                 <p>{asset.description}</p>
               </div>
-              <strong>{asset.total}</strong>
+              <strong className={styles.assetTotal}>
+                <span>{asset.total}</span>
+                {asset.totalNote ? <small>{asset.totalNote}</small> : null}
+              </strong>
             </Reveal>
           ))}
         </div>

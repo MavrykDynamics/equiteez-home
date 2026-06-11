@@ -136,14 +136,14 @@ export function RHeader({
         id="r-header-mobile-menu"
       >
         {navItems.map((item) => (
-          <a
+          <Link
             className={styles.mobileLink}
-            href={item.href}
             key={item.href}
             onClick={closeMenu}
+            to={item.href}
           >
             {item.label}
-          </a>
+          </Link>
         ))}
         <a
           className={styles.mobileLink}

@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import type { EmblaCarouselType } from "embla-carousel";
+import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
@@ -15,13 +17,18 @@ import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
 import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 
-import adminWindowImage from "app/assets/redesign/solutions/mocks/solutions-admin-window.png";
-import dashboardImage from "app/assets/redesign/solutions/mocks/solutions-dashboard.png";
-import tradingVenueImage from "app/assets/redesign/solutions/mocks/solutions-trading-venue.png";
-import advancedTradeImage from "app/assets/redesign/solutions/mocks/solutions-advanced-trade.png";
+import advancedTradeImage from "app/assets/redesign/solutions/mocks/advanced-trade-1.svg";
 import programmableCardImage from "app/assets/redesign/solutions/cards/programmable-by-default.svg";
 import collaborateCardImage from "app/assets/redesign/solutions/cards/collaborate-with-your-team.svg";
 import complianceCardImage from "app/assets/redesign/solutions/cards/compliance-controls.svg";
+import suiteStepOneImage from "app/assets/redesign/solutions/mocks/step-1.svg";
+import suiteStepTwoImage from "app/assets/redesign/solutions/mocks/step-2.svg";
+import suiteStepThreeImage from "app/assets/redesign/solutions/mocks/step-3.svg";
+import suiteStepFourImage from "app/assets/redesign/solutions/mocks/step-4.svg";
+import suiteStepFiveImage from "app/assets/redesign/solutions/mocks/step-5.svg";
+import heroIssuerTabImage from "app/assets/redesign/solutions/mocks/tab-1.svg";
+import heroInvestorTabImage from "app/assets/redesign/solutions/mocks/tab-2.svg";
+import tradingVenueImage from "app/assets/redesign/solutions/mocks/venue.svg";
 
 import styles from "./RSolutionsPage.module.css";
 
@@ -77,13 +84,13 @@ const heroTabs: HeroTab[] = [
   {
     alt: "Equiteez issuer admin panel",
     id: "issuers",
-    image: adminWindowImage,
+    image: heroIssuerTabImage,
     label: "For Issuers",
   },
   {
     alt: "Equiteez investor admin panel",
     id: "investors",
-    image: adminWindowImage,
+    image: heroInvestorTabImage,
     label: "For Investors",
   },
 ];
@@ -94,7 +101,7 @@ const suiteSteps: SuiteStep[] = [
     description:
       "Launch assets with whitelist, allocation, and KYC controls. Configure vesting, lockups, and primary sale mechanics.",
     id: "issuance",
-    image: dashboardImage,
+    image: suiteStepOneImage,
     title: "Issuance and Primary Distribution",
   },
   {
@@ -102,7 +109,7 @@ const suiteSteps: SuiteStep[] = [
     description:
       "Steer assets through Dev, Pre-Market, Primary, and Secondary. Freeze, pause, or unpause on demand. Every contract address surfaced.",
     id: "lifecycle",
-    image: dashboardImage,
+    image: suiteStepTwoImage,
     title: "Asset Lifecycle Management",
   },
   {
@@ -110,7 +117,7 @@ const suiteSteps: SuiteStep[] = [
     description:
       "Decide where and how your asset trades. Whitelist venues, enforce transfer restrictions, and monitor volume and liquidity in real time.",
     id: "markets",
-    image: dashboardImage,
+    image: suiteStepThreeImage,
     title: "Secondary Market Controls",
   },
   {
@@ -118,7 +125,7 @@ const suiteSteps: SuiteStep[] = [
     description:
       "Real-time ownership across every asset and share class. Holdings, valuations, transfer history, and vesting. Export to CSV.",
     id: "cap-table",
-    image: dashboardImage,
+    image: suiteStepFourImage,
     title: "Cap Table Management",
   },
   {
@@ -126,7 +133,7 @@ const suiteSteps: SuiteStep[] = [
     description:
       "Execute dividends, interest, and redemptions in one operation. Every system event logged with actor and timestamp. Regulator-ready.",
     id: "audit",
-    image: dashboardImage,
+    image: suiteStepFiveImage,
     title: "Distributions and Audit Trail",
   },
 ];
@@ -235,8 +242,6 @@ const tradingFeatures: TradingFeature[] = [
 ];
 
 const suiteObserverThresholds = [0, 0.25, 0.5, 0.75, 1];
-const suiteResponsiveSteps = suiteSteps.slice(0, 2);
-const suitePaginationDots = suiteSteps.slice(0, 4);
 const suiteSelectionBand = {
   bottom: 0.68,
   top: 0.32,
@@ -327,6 +332,96 @@ function OperatorCardIcon({ icon }: { icon: OperatorResponsiveCardIcon }) {
   );
 }
 
+function SuiteResponsiveCarousel({ steps }: { steps: SuiteStep[] }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    slidesToScroll: 1,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
+  const syncCarouselState = useCallback((api: EmblaCarouselType) => {
+    setSelectedIndex(api.selectedScrollSnap());
+    setScrollSnaps(api.scrollSnapList());
+  }, []);
+
+  const handleDotClick = useCallback(
+    (index: number) => {
+      emblaApi?.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return undefined;
+    }
+
+    syncCarouselState(emblaApi);
+    emblaApi.on("reInit", syncCarouselState);
+    emblaApi.on("select", syncCarouselState);
+
+    return () => {
+      emblaApi.off("reInit", syncCarouselState);
+      emblaApi.off("select", syncCarouselState);
+    };
+  }, [emblaApi, syncCarouselState]);
+
+  return (
+    <>
+      <div className={styles.suiteResponsiveViewport} ref={emblaRef}>
+        <div className={styles.suiteResponsiveContainer}>
+          {steps.map((step) => (
+            <article className={styles.suiteResponsiveSlide} key={step.id}>
+              <div className={styles.suiteResponsiveCard}>
+                <div className={styles.suiteResponsiveCopy}>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </div>
+                <RCard
+                  className={styles.suiteResponsiveMockCard}
+                  shadow="soft"
+                  shape="mock"
+                >
+                  <img
+                    alt={step.alt}
+                    className={styles.mockImage}
+                    decoding="async"
+                    src={step.image}
+                  />
+                </RCard>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div
+        aria-label="Suite carousel pagination"
+        className={styles.suitePagination}
+      >
+        {scrollSnaps.map((_, index) => {
+          const isSelected = index === selectedIndex;
+
+          return (
+            <button
+              aria-current={isSelected ? "true" : undefined}
+              aria-label={`Go to suite slide ${index + 1}`}
+              className={clsx(
+                styles.suitePaginationDot,
+                isSelected && styles.suitePaginationDotActive
+              )}
+              key={index}
+              onClick={() => handleDotClick(index)}
+              type="button"
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
 function RSolutionsHero() {
   const [activeTabId, setActiveTabId] = useState(heroTabs[0].id);
   const activeTab = useMemo(
@@ -364,12 +459,16 @@ function RSolutionsHero() {
             onChange={setActiveTabId}
             tabs={heroTabs}
           />
-          <RCard className={styles.heroMockFrame} shadow="strong" shape="mock">
+          <RCard
+            className={clsx(styles.heroMockFrame, styles.mockSwapCard)}
+            key={activeTab.id}
+            shadow="strong"
+            shape="mock"
+          >
             <img
               alt={activeTab.alt}
-              className={clsx(styles.mockImage, styles.mockSwapImage)}
+              className={clsx(styles.mockImage, styles.heroMockImage)}
               decoding="async"
-              key={activeTab.id}
               src={activeTab.image}
             />
           </RCard>
@@ -523,12 +622,16 @@ function RSuiteSection() {
 
         <div className={styles.suiteContent}>
           <Reveal className={styles.suiteMockColumn} preset="image">
-            <RCard className={styles.suiteMockCard} shadow="soft" shape="mock">
+            <RCard
+              className={clsx(styles.suiteMockCard, styles.mockSwapCard)}
+              key={activeStep.id}
+              shadow="soft"
+              shape="mock"
+            >
               <img
                 alt={activeStep.alt}
-                className={clsx(styles.mockImage, styles.mockSwapImage)}
+                className={styles.mockImage}
                 decoding="async"
-                key={activeStep.id}
                 src={activeStep.image}
               />
             </RCard>
@@ -565,39 +668,7 @@ function RSuiteSection() {
         </div>
 
         <Reveal className={styles.suiteResponsiveContent} delay={0.05}>
-          <div className={styles.suiteResponsiveGrid}>
-            {suiteResponsiveSteps.map((step) => (
-              <article className={styles.suiteResponsiveCard} key={step.id}>
-                <div className={styles.suiteResponsiveCopy}>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-                <RCard
-                  className={styles.suiteResponsiveMockCard}
-                  shadow="soft"
-                  shape="mock"
-                >
-                  <img
-                    alt={step.alt}
-                    className={styles.mockImage}
-                    decoding="async"
-                    src={step.image}
-                  />
-                </RCard>
-              </article>
-            ))}
-          </div>
-          <div aria-hidden className={styles.suitePagination}>
-            {suitePaginationDots.map((step, index) => (
-              <span
-                className={clsx(
-                  styles.suitePaginationDot,
-                  index === 0 && styles.suitePaginationDotActive
-                )}
-                key={step.id}
-              />
-            ))}
-          </div>
+          <SuiteResponsiveCarousel steps={suiteSteps} />
         </Reveal>
       </div>
     </section>

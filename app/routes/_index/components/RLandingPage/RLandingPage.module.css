@@ -225,27 +225,13 @@
   text-transform: uppercase;
 }
 
-.partnerMarquee {
-  width: min(100%, 1102px);
-  min-height: 32px;
-}
-
 .partnerLogoGrid {
-  display: none;
-}
-
-.partnerLogoItem {
-  display: inline-flex;
-  height: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 52px var(--r-space-11);
   align-items: center;
   justify-content: center;
-  margin-right: var(--r-space-11);
-}
-
-.partnerLogoItem img {
-  display: block;
-  object-fit: contain;
-  filter: grayscale(1);
+  width: min(100%, 1102px);
 }
 
 .partnerLogoGridItem {
@@ -253,6 +239,12 @@
   height: 32px;
   align-items: center;
   justify-content: center;
+}
+
+.partnerLogoGridItem img {
+  display: block;
+  object-fit: contain;
+  filter: grayscale(1);
 }
 
 .multibank {
@@ -281,7 +273,7 @@
 }
 
 .cluster {
-  width: 180px;
+  width: 164px;
   height: 32px;
 }
 
@@ -292,25 +284,26 @@
 
 .metricsGrid {
   display: grid;
-  width: min(100%, 1124px);
+  width: min(100%, 1208px);
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0 auto;
+  margin: var(--r-space-10) auto 0;
 }
 
 .metric {
   display: flex;
   flex-direction: column;
   gap: var(--r-space-1);
-  min-height: 96px;
+  min-height: 97px;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 var(--r-space-5);
+  padding: 0 0 0 28px;
   border-left: var(--r-border-width-sm) solid var(--r-color-neutral-100);
   text-align: left;
 }
 
 .metric:first-child {
   border-left: 0;
+  padding-left: 0;
 }
 
 .metric strong {
@@ -356,7 +349,7 @@
 
 .solutionCard {
   display: flex;
-  min-height: 205px;
+  min-height: 231px;
   flex-direction: column;
   justify-content: space-between;
   padding: var(--r-space-6);
@@ -464,7 +457,7 @@
 }
 
 .enterpriseCardOverlay {
-  background: rgba(0, 0, 0, 0.42);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .enterpriseCardContent {
@@ -514,7 +507,7 @@
 }
 
 .assetsHeader p:last-child {
-  max-width: 440px;
+  max-width: 441px;
 }
 
 .analogSection .problemList {
@@ -528,12 +521,18 @@
   flex-direction: column;
 }
 
+.assetsSection .splitSectionInner {
+  grid-template-columns: 516px 600px;
+  gap: var(--r-space-10);
+  justify-content: space-between;
+}
+
 .assetRow {
   display: flex;
   gap: var(--r-space-2);
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
+  min-height: 81px;
   padding: var(--r-space-4);
   border-bottom: var(--r-border-width-sm) solid var(--r-color-neutral-100);
 }
@@ -548,13 +547,24 @@
   margin-top: var(--r-space-1);
 }
 
-.assetRow strong {
-  flex: 0 0 80px;
+.assetTotal {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
   color: var(--r-color-neutral-black);
   font-size: var(--r-font-size-body-l);
   font-weight: var(--r-font-weight-medium);
   line-height: var(--r-line-height-body-l);
-  text-align: left;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.assetTotal small {
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-s);
+  font-weight: var(--r-font-weight-regular);
+  line-height: var(--r-line-height-body-s);
 }
 
 .quoteSection {
@@ -806,27 +816,16 @@
     padding-bottom: var(--r-space-10);
   }
 
-  .partnerMarquee {
-    display: none;
-  }
-
   .partnerLogoGrid {
-    display: flex;
-    flex-wrap: wrap;
     gap: var(--r-space-6) var(--r-space-8);
     align-items: flex-end;
-    justify-content: center;
     width: 100%;
-  }
-
-  .partnerLogoGridItem .cluster {
-    width: 164px;
   }
 
   .metricsGrid {
     width: 100%;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    padding-top: 40px;
+    margin-top: var(--r-space-10);
   }
 
   .metric {
@@ -860,7 +859,7 @@
   }
 
   .solutionCard {
-    min-height: auto;
+    min-height: 155px;
     gap: 14px;
     justify-content: flex-start;
     padding: var(--r-space-6);
@@ -945,7 +944,7 @@
   }
 
   .assetsSection .splitSectionInner {
-    grid-template-columns: 357px minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .analogSection .splitSectionInner {
@@ -963,14 +962,14 @@
   }
 
   .assetRow {
-    min-height: 72px;
+    min-height: 81px;
     align-items: center;
     flex-direction: row;
     padding: var(--r-space-4);
   }
 
-  .assetRow strong {
-    flex: 0 0 80px;
+  .assetTotal {
+    flex: 0 0 auto;
   }
 
   .quoteInner {
@@ -1203,6 +1202,21 @@
 
   .assetsSection {
     border-bottom: 0;
+  }
+
+  .assetRow {
+    min-height: 0;
+    padding: var(--r-space-4) 0;
+  }
+
+  .assetRow p {
+    font-size: var(--r-font-size-body-s);
+    line-height: var(--r-line-height-body-s);
+  }
+
+  .assetTotal {
+    font-size: var(--r-font-size-body-m);
+    line-height: var(--r-line-height-body-m);
   }
 
   .problemCard {
