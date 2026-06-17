@@ -1,4 +1,5 @@
 import { Container } from "~/lib/atoms/Container";
+import { RCard } from "~/lib/atoms/RCard";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader } from "~/layouts/RHeader";
 
@@ -13,12 +14,20 @@ export function RMondavPage() {
       <RHeader variant="solutions" />
       <main className={styles.main}>
         <Container className={styles.pageFrame} maxWidth={1440}>
-          <section className={styles.formSection} id="contact">
-            <iframe
-              className={styles.formFrame}
-              src={mondayFormUrl}
-              title="Equiteez Mondav form"
-            />
+          <section
+            aria-label="Equiteez enquiry form"
+            className={styles.formSection}
+            id="contact"
+          >
+            <RCard className={styles.formShell} shadow="soft">
+              <div className={styles.formViewport}>
+                <iframe
+                  className={styles.formFrame}
+                  src={mondayFormUrl}
+                  title="Equiteez Mondav form"
+                />
+              </div>
+            </RCard>
           </section>
         </Container>
       </main>
