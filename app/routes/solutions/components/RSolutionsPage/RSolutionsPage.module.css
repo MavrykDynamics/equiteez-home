@@ -348,8 +348,7 @@
   gap: var(--r-space-3);
 }
 
-.suiteResponsiveCopy h3,
-.operatorResponsiveCopy h3 {
+.suiteResponsiveCopy h3 {
   margin: 0;
   color: var(--r-color-neutral-black);
   font-family: var(--r-font-heading);
@@ -359,8 +358,7 @@
   line-height: var(--r-line-height-heading-h7);
 }
 
-.suiteResponsiveCopy p,
-.operatorResponsiveCopy p {
+.suiteResponsiveCopy p {
   margin: 0;
   color: var(--r-color-neutral-600);
   font-size: var(--r-font-size-body-sm);
@@ -456,51 +454,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--r-space-6);
-}
-
-.operatorCardImage {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.operatorResponsiveGrid {
-  display: none;
-}
-
-.operatorResponsiveCard {
-  gap: var(--r-space-6);
-  padding: var(--r-space-6);
-  border-radius: var(--r-radius-md);
-}
-
-.operatorResponsiveIcon {
-  display: inline-flex;
-  width: 48px;
-  height: 48px;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  color: var(--r-color-accent-green-500);
-  background: rgba(164, 192, 186, 0.5);
-  border-radius: 12px;
-}
-
-.operatorResponsiveIconSvg {
-  display: block;
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.5;
-}
-
-.operatorResponsiveCopy {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: var(--r-space-3);
 }
 
 .appSection {
@@ -736,7 +689,6 @@
     justify-self: start;
   }
 
-  .operatorCardGrid,
   .marketGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -833,14 +785,18 @@
   }
 
   .operatorCardGrid {
-    display: none;
-  }
-
-  .operatorResponsiveGrid {
-    display: grid;
     width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--r-space-4);
+  }
+
+  .operatorFeatureCard > div {
+    gap: var(--r-space-3);
+  }
+
+  .operatorFeatureCard h3 {
+    font-size: var(--r-font-size-heading-h7);
+    line-height: var(--r-line-height-heading-h7);
   }
 
   .appHeader {
@@ -984,12 +940,12 @@
     flex-basis: 100%;
   }
 
-  .operatorResponsiveGrid {
+  .operatorCardGrid {
     grid-template-columns: 1fr;
   }
 
   .operatorSuiteCard,
-  .operatorResponsiveCard {
+  .operatorFeatureCard {
     padding: var(--r-space-6);
   }
 

@@ -13,15 +13,16 @@ import { RIcon } from "~/lib/atoms/RIcon";
 import { Reveal } from "~/lib/atoms/Reveal";
 import { RMetricCard } from "~/lib/molecules/RMetricCard";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
+import { RFeatureCard } from "~/lib/organisms/RFeatureCard";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
 import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 
+import codeArrowsIcon from "app/icons/code-arrows.svg";
+import peopleIcon from "app/icons/people.svg";
+import shieldWithCheckmarkIcon from "app/icons/shield-with-checkmark.svg";
 import advancedTradeImage from "app/assets/redesign/solutions/mocks/advanced-trade-1.svg";
-import programmableCardImage from "app/assets/redesign/solutions/cards/programmable-by-default.svg";
-import collaborateCardImage from "app/assets/redesign/solutions/cards/collaborate-with-your-team.svg";
-import complianceCardImage from "app/assets/redesign/solutions/cards/compliance-controls.svg";
 import suiteStepOneImage from "app/assets/redesign/solutions/mocks/step-1.svg";
 import suiteStepTwoImage from "app/assets/redesign/solutions/mocks/step-2.svg";
 import suiteStepThreeImage from "app/assets/redesign/solutions/mocks/step-3.svg";
@@ -48,16 +49,9 @@ type SuiteStep = {
   title: string;
 };
 
-type OperatorCardAsset = {
-  alt: string;
-  src: string;
-};
-
-type OperatorResponsiveCardIcon = "code" | "users" | "shield";
-
-type OperatorResponsiveCard = {
+type OperatorCard = {
   description: string;
-  icon: OperatorResponsiveCardIcon;
+  iconSrc: string;
   title: string;
 };
 
@@ -144,38 +138,23 @@ const suiteSteps: SuiteStep[] = [
   },
 ];
 
-const operatorCards: OperatorCardAsset[] = [
-  {
-    alt: "Programmable By Default",
-    src: programmableCardImage,
-  },
-  {
-    alt: "Collaborate With Your Team",
-    src: collaborateCardImage,
-  },
-  {
-    alt: "Compliance Controls",
-    src: complianceCardImage,
-  },
-];
-
-const operatorResponsiveCards: OperatorResponsiveCard[] = [
+const operatorCards: OperatorCard[] = [
   {
     description:
       "Every asset is a live smart contract. Compose with DeFi, automate distributions, and unlock liquidity without rebuilding the asset.",
-    icon: "code",
+    iconSrc: codeArrowsIcon,
     title: "Programmable By Default",
   },
   {
     description:
       "Bring on legal counsel, transfer agents, originators, and external auditors, each with the right permissions.",
-    icon: "users",
+    iconSrc: peopleIcon,
     title: "Collaborate With Your Team",
   },
   {
     description:
       "Freeze assets pending review, unfreeze holders, enforce whitelists, and gate transfers, all logged for the regulator.",
-    icon: "shield",
+    iconSrc: shieldWithCheckmarkIcon,
     title: "Compliance Controls",
   },
 ];
@@ -298,53 +277,6 @@ function getSuiteStepCandidate(
       (isInsideSelectionBand ? 0.35 : 0) -
       distanceFromCenter / viewportHeight,
   };
-}
-
-function OperatorCardIcon({ icon }: { icon: OperatorResponsiveCardIcon }) {
-  if (icon === "users") {
-    return (
-      <svg
-        aria-hidden
-        className={styles.operatorResponsiveIconSvg}
-        fill="none"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path d="M15 19c0-2-2.7-3.5-6-3.5S3 17 3 19" />
-        <path d="M21 19c0-1.5-1.4-2.7-3.5-3.2" />
-        <path d="M13.5 5.4A3 3 0 1 1 12 11" />
-        <path d="M9 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-      </svg>
-    );
-  }
-
-  if (icon === "shield") {
-    return (
-      <svg
-        aria-hidden
-        className={styles.operatorResponsiveIconSvg}
-        fill="none"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path d="m15 10-4 4-2-2" />
-        <path d="M20 11.2c0 5-3.8 7.2-7.2 8.5a2.2 2.2 0 0 1-1.6 0C7.8 18.4 4 16.2 4 11.2V5.8c0-1 .8-1.8 1.8-1.8h12.4c1 0 1.8.8 1.8 1.8v5.4Z" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg
-      aria-hidden
-      className={styles.operatorResponsiveIconSvg}
-      fill="none"
-      focusable="false"
-      viewBox="0 0 24 24"
-    >
-      <path d="m15 8 4 4-4 4" />
-      <path d="m9 16-4-4 4-4" />
-    </svg>
-  );
 }
 
 function SuiteResponsiveCarousel({ steps }: { steps: SuiteStep[] }) {
@@ -732,27 +664,14 @@ function ROperatorSection() {
 
           <div className={styles.operatorCardGrid}>
             {operatorCards.map((card) => (
-              <img
-                alt={card.alt}
-                className={styles.operatorCardImage}
-                decoding="async"
-                key={card.alt}
-                src={card.src}
+              <RFeatureCard
+                className={styles.operatorFeatureCard}
+                description={card.description}
+                iconSrc={card.iconSrc}
+                key={card.title}
+                padding="medium"
+                title={card.title}
               />
-            ))}
-          </div>
-
-          <div className={styles.operatorResponsiveGrid}>
-            {operatorResponsiveCards.map((card) => (
-              <RCard className={styles.operatorResponsiveCard} key={card.title}>
-                <span className={styles.operatorResponsiveIcon}>
-                  <OperatorCardIcon icon={card.icon} />
-                </span>
-                <div className={styles.operatorResponsiveCopy}>
-                  <h3>{card.title}</h3>
-                  <p>{card.description}</p>
-                </div>
-              </RCard>
             ))}
           </div>
         </Reveal>
