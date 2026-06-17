@@ -81,9 +81,12 @@
   margin-left: auto;
 }
 
-.compactLogo,
 .mobileActions {
   display: none;
+}
+
+.logo {
+  flex: 0 0 auto;
 }
 
 .navLink,
@@ -169,13 +172,20 @@
     display: none;
   }
 
-  .desktopLogo {
-    display: none;
-  }
-
-  .compactLogo,
   .mobileActions {
     display: flex;
+  }
+
+  .header .logo {
+    --r-logo-primary-line-gap: 7.386px;
+    --r-logo-mark-width: 11.415px;
+    --r-logo-mark-height: 12.086px;
+    --r-logo-wordmark-size: 17.46px;
+    --r-logo-byline-size: 5.09px;
+    --r-logo-byline-gap: 2.266px;
+    --r-logo-byline-margin-top: 2px;
+    --r-logo-mavryk-wordmark-width: 44.937px;
+    --r-logo-mavryk-wordmark-height: 11.709px;
   }
 
   .mobileActions {

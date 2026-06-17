@@ -135,8 +135,7 @@ export function RHeader({
       ref={headerRef}
     >
       <div className={styles.inner}>
-        <RLogo className={styles.desktopLogo} tone={logoTone} />
-        <RLogo className={styles.compactLogo} size="compact" tone={logoTone} />
+        <RLogo className={styles.logo} tone={logoTone} />
 
         <nav aria-label="Primary navigation" className={styles.nav}>
           {navItems.map((item) => (

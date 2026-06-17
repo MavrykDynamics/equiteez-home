@@ -11,6 +11,18 @@
   transition: color var(--r-transition-duration-base) ease;
 }
 
+.medium {
+  --r-logo-primary-line-gap: 9.5px;
+  --r-logo-mark-width: 16.23px;
+  --r-logo-mark-height: 16.98px;
+  --r-logo-wordmark-size: 22.47px;
+  --r-logo-byline-size: 6.55px;
+  --r-logo-byline-gap: 3px;
+  --r-logo-byline-margin-top: 2px;
+  --r-logo-mavryk-wordmark-width: 57.84px;
+  --r-logo-mavryk-wordmark-height: 15.07px;
+}
+
 .black {
   color: var(--r-color-neutral-black);
 }
@@ -22,10 +34,13 @@
 .primaryLine {
   display: inline-flex;
   align-items: center;
+  gap: var(--r-logo-primary-line-gap);
 }
 
 .mark {
   flex: 0 0 auto;
+  width: var(--r-logo-mark-width);
+  height: var(--r-logo-mark-height);
 }
 
 .mark * {
@@ -39,13 +54,16 @@
 }
 
 .wordmark {
+  font-size: var(--r-logo-wordmark-size);
   line-height: 1;
 }
 
 .byline {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--r-logo-byline-gap);
+  margin-top: var(--r-logo-byline-margin-top);
+  font-size: var(--r-logo-byline-size);
   line-height: 1.05;
 }
 
@@ -53,72 +71,31 @@
   fill: currentColor;
 }
 
-.medium .primaryLine {
-  gap: 9.5px;
+.small {
+  --r-logo-primary-line-gap: 8.5px;
+  --r-logo-mark-width: 14.69px;
+  --r-logo-mark-height: 15.56px;
+  --r-logo-wordmark-size: 22px;
+  --r-logo-byline-size: 6px;
+  --r-logo-byline-gap: 3px;
+  --r-logo-byline-margin-top: 2px;
+  --r-logo-mavryk-wordmark-width: 53px;
+  --r-logo-mavryk-wordmark-height: 13.81px;
 }
 
-.medium .mark {
-  width: 16.23px;
-  height: 16.98px;
+.compact {
+  --r-logo-primary-line-gap: 7.386px;
+  --r-logo-mark-width: 11.415px;
+  --r-logo-mark-height: 12.086px;
+  --r-logo-wordmark-size: 17.46px;
+  --r-logo-byline-size: 5.09px;
+  --r-logo-byline-gap: 2.266px;
+  --r-logo-byline-margin-top: 2px;
+  --r-logo-mavryk-wordmark-width: 44.937px;
+  --r-logo-mavryk-wordmark-height: 11.709px;
 }
 
-.medium .wordmark {
-  font-size: 22.47px;
-}
-
-.medium .byline {
-  font-size: 6.55px;
-  margin-top: 2px;
-}
-
-.medium .mavrykWordmark {
-  width: 57.84px;
-  height: 15.07px;
-}
-
-.small .primaryLine {
-  gap: 8.5px;
-}
-
-.small .mark {
-  width: 14.69px;
-  height: 15.56px;
-}
-
-.small .wordmark {
-  font-size: 22px;
-}
-
-.small .byline {
-  font-size: 6px;
-  margin-top: 2px;
-}
-
-.small .mavrykWordmark {
-  width: 53px;
-  height: 13.81px;
-}
-
-.compact .primaryLine {
-  gap: 7.386px;
-}
-
-.compact .mark {
-  width: 11.415px;
-  height: 12.086px;
-}
-
-.compact .wordmark {
-  font-size: 17.46px;
-}
-
-.compact .byline {
-  font-size: 5.09px;
-  gap: 2.266px;
-  margin-top: 2px;
-}
-
-.compact .mavrykWordmark {
-  width: 44.937px;
-  height: 11.709px;
+.mavrykWordmark {
+  width: var(--r-logo-mavryk-wordmark-width);
+  height: var(--r-logo-mavryk-wordmark-height);
 }
