@@ -439,6 +439,12 @@
   line-height: var(--r-line-height-body-sm);
 }
 
+.chipRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .marketMetricGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 148px), 1fr));

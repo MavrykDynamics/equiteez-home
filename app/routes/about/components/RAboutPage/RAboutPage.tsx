@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { ComponentType, SVGProps } from "react";
 
 import { Container } from "~/lib/atoms/Container";
 import { RCard } from "~/lib/atoms/RCard";
@@ -9,12 +10,12 @@ import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
 import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 
-import earthIcon from "app/icons/earth.svg";
-import lockIcon from "app/icons/lock.svg";
-import radioCircleIcon from "app/icons/radio-circle.svg";
-import roundedArrowsIcon from "app/icons/rounded-arrows.svg";
-import trendingUpIcon from "app/icons/trending-up-arrow.svg";
-import unlockIcon from "app/icons/unlock.svg";
+import EarthIcon from "app/icons/earth.svg?react";
+import LockIcon from "app/icons/lock.svg?react";
+import RadioCircleIcon from "app/icons/radio-circle.svg?react";
+import RoundedArrowsIcon from "app/icons/rounded-arrows.svg?react";
+import TrendingUpIcon from "app/icons/trending-up-arrow.svg?react";
+import UnlockIcon from "app/icons/unlock.svg?react";
 import assetRealEstateImage from "app/assets/redesign/about/images/asset-real-estate.png";
 import assetFixedIncomeImage from "app/assets/redesign/about/images/asset-fixed-income.jpg";
 import assetAlternativesImage from "app/assets/redesign/about/images/asset-alternatives.jpg";
@@ -25,7 +26,7 @@ import styles from "./RAboutPage.module.css";
 
 type FeatureCard = {
   description: string;
-  iconSrc: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
   title: string;
 };
 
@@ -48,23 +49,25 @@ const aboutNavItems: RHeaderNavItem[] = [
   { href: "#contact", label: "Contact" },
 ];
 
+const ABOUT_FEATURE_ICON_COLOR = "var(--r-color-accent-green-500)";
+
 const frameworkCards: FeatureCard[] = [
   {
     description:
       "We eliminate traditional entry barriers, providing fractional exposure to exclusive asset classes including Real Estate, Corporate Debt, and Insurance-Linked Securities, with no minimum capital requirements.",
-    iconSrc: earthIcon,
+    Icon: EarthIcon,
     title: "Institutional Access For All",
   },
   {
     description:
       "Unlike traditional private markets, our platform enables secondary market trading, allowing investors to exit positions with greater flexibility than physical asset ownership typically allows.",
-    iconSrc: roundedArrowsIcon,
+    Icon: RoundedArrowsIcon,
     title: "Enhanced Liquidity",
   },
   {
     description:
       "Operating on a decentralized, non-custodial model, Equiteez ensures users retain full sovereignty over their assets. This reduces counterparty risk, eliminates institutional mismanagement vulnerabilities, and lowers fee structures by removing third-party intermediaries.",
-    iconSrc: lockIcon,
+    Icon: LockIcon,
     title: "Non-Custodial Architecture",
   },
 ];
@@ -103,25 +106,25 @@ const advantageCards: FeatureCard[] = [
   {
     description:
       "Dividends and interest payments are distributed programmatically and directly to investor wallets in real-time.",
-    iconSrc: trendingUpIcon,
+    Icon: TrendingUpIcon,
     title: "Passive Income & Distribution",
   },
   {
     description:
       "Full on-chain reporting provides real-time auditing of asset performance, occupancy rates, and mining efficiency.",
-    iconSrc: radioCircleIcon,
+    Icon: RadioCircleIcon,
     title: "Operational Transparency",
   },
   {
     description:
       "Seamlessly manage cross-border investments across multiple jurisdictions and asset types through a single, compliant interface.",
-    iconSrc: earthIcon,
+    Icon: EarthIcon,
     title: "Global Diversification",
   },
   {
     description:
       "We prioritize capital mobility, allowing investors to manage their portfolios according to shifting financial goals without arbitrary holding periods.",
-    iconSrc: unlockIcon,
+    Icon: UnlockIcon,
     title: "Zero Lock-ins",
   },
 ];
@@ -181,15 +184,20 @@ function RFrameworkSection() {
           />
         </Reveal>
         <Reveal className={styles.frameworkGrid} delay={0.05}>
-          {frameworkCards.map((card) => (
-            <RFeatureCard
-              className={styles.frameworkCard}
-              description={card.description}
-              iconSrc={card.iconSrc}
-              key={card.title}
-              title={card.title}
-            />
-          ))}
+          {frameworkCards.map((card) => {
+            const Icon = card.Icon;
+
+            return (
+              <RFeatureCard
+                className={styles.frameworkCard}
+                description={card.description}
+                icon={<Icon aria-hidden focusable="false" />}
+                iconColor={ABOUT_FEATURE_ICON_COLOR}
+                key={card.title}
+                title={card.title}
+              />
+            );
+          })}
         </Reveal>
       </div>
     </section>
@@ -264,15 +272,20 @@ function RInstitutionalPerformanceSection() {
           />
         </Reveal>
         <Reveal className={styles.advantagesGrid} delay={0.05}>
-          {advantageCards.map((card) => (
-            <RFeatureCard
-              className={styles.advantageCard}
-              description={card.description}
-              iconSrc={card.iconSrc}
-              key={card.title}
-              title={card.title}
-            />
-          ))}
+          {advantageCards.map((card) => {
+            const Icon = card.Icon;
+
+            return (
+              <RFeatureCard
+                className={styles.advantageCard}
+                description={card.description}
+                icon={<Icon aria-hidden focusable="false" />}
+                iconColor={ABOUT_FEATURE_ICON_COLOR}
+                key={card.title}
+                title={card.title}
+              />
+            );
+          })}
         </Reveal>
       </div>
     </section>

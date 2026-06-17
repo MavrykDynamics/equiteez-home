@@ -224,8 +224,8 @@ Each reusable `R*` component folder should normally contain:
 - Purpose: Shared redesign icon-card organism for feature, framework, and advantage cards.
 - Location: `app/lib/organisms/RFeatureCard/RFeatureCard.tsx`
 - Styles: `app/lib/organisms/RFeatureCard/RFeatureCard.module.css`
-- Reusability notes: Use for repeated white cards with a Figma-exported icon, heading, and description. Supports medium and large padding variants.
-- Related tokens: `RCard`, `--r-color-neutral-*`, `--r-color-accent-green-50`, `--r-font-heading`, `--r-font-body`, `--r-space-*`
+- Reusability notes: Use for repeated white cards with a Figma-exported icon, heading, and description. Supports medium and large padding variants, legacy image-source icons, inline SVG icons, and `iconColor` for `currentColor`-driven icon rendering.
+- Related tokens: `RCard`, `--r-color-neutral-*`, `--r-color-accent-green-*`, `--r-font-heading`, `--r-font-body`, `--r-space-*`
 
 ## RLogo
 

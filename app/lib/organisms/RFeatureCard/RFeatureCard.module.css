@@ -21,9 +21,23 @@
   justify-content: center;
   background: rgba(164, 192, 186, 0.5);
   border-radius: 12px;
+  color: var(--r-feature-card-icon-color, currentColor);
 }
 
 .icon {
+  display: block;
+  width: var(--r-size-icon-medium);
+  height: var(--r-size-icon-medium);
+  color: inherit;
+}
+
+.icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.iconImage {
   display: block;
   width: auto;
   height: auto;
