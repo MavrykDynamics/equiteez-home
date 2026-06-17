@@ -29,17 +29,18 @@ import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 import codeArrowsIcon from "app/icons/code-arrows.svg";
 import peopleIcon from "app/icons/people.svg";
 import shieldWithCheckmarkIcon from "app/icons/shield-with-checkmark.svg";
-import advancedTradeImage from "app/assets/redesign/solutions/mocks/advanced-trade-1.svg";
-import suiteStepOneImage from "app/assets/redesign/solutions/mocks/step-1.svg";
-import suiteStepTwoImage from "app/assets/redesign/solutions/mocks/step-2.svg";
-import suiteStepThreeImage from "app/assets/redesign/solutions/mocks/step-3.svg";
-import suiteStepFourImage from "app/assets/redesign/solutions/mocks/step-4.svg";
-import suiteStepFiveImage from "app/assets/redesign/solutions/mocks/step-5.svg";
-import heroIssuerTabImage from "app/assets/redesign/solutions/mocks/tab-1.svg";
-import heroInvestorTabImage from "app/assets/redesign/solutions/mocks/tab-2.jpg";
-import tradingVenueImage from "app/assets/redesign/solutions/mocks/venue.svg";
+import advancedTradeImage from "app/assets/redesign/solutions/mocks/advanced-trade.webp";
+import suiteStepOneImage from "app/assets/redesign/solutions/mocks/step-1.webp";
+import suiteStepTwoImage from "app/assets/redesign/solutions/mocks/step-2.webp";
+import suiteStepThreeImage from "app/assets/redesign/solutions/mocks/step-3.webp";
+import suiteStepFourImage from "app/assets/redesign/solutions/mocks/step-4.webp";
+import suiteStepFiveImage from "app/assets/redesign/solutions/mocks/step-5.webp";
+import heroIssuerTabImage from "app/assets/redesign/solutions/mocks/tab-1.webp";
+import heroInvestorTabImage from "app/assets/redesign/solutions/mocks/tab-2.webp";
+import tradingVenueImage from "app/assets/redesign/solutions/mocks/venue.webp";
 
 import styles from "./RSolutionsPage.module.css";
+import { linker } from "~/a11y/linker";
 
 type HeroTab = {
   alt: string;
@@ -802,7 +803,9 @@ function RTradingVenueSection() {
               as="link"
               iconRight={<RIcon aria-hidden name="arrow-long-right" />}
               size="large"
-              to="/marketplace"
+              to={linker("/")}
+              target="_black"
+              referrerPolicy="no-referrer"
               tone="black"
             >
               Explore App
