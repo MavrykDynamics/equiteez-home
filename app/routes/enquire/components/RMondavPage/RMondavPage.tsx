@@ -14,14 +14,11 @@ export function RMondavPage() {
       <main className={styles.main}>
         <Container className={styles.pageFrame} maxWidth={1440}>
           <section className={styles.formSection} id="contact">
-            <div className={styles.formShell}>
-              <iframe
-                className={styles.formFrame}
-                scrolling="no"
-                src={mondayFormUrl}
-                title="Equiteez Mondav form"
-              />
-            </div>
+            <iframe
+              className={styles.formFrame}
+              src={mondayFormUrl}
+              title="Equiteez Mondav form"
+            />
           </section>
         </Container>
       </main>

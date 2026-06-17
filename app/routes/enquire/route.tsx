@@ -4,7 +4,7 @@ import { RMondavPage } from "./components/RMondavPage";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Mondav | Equiteez" },
+    { title: "Enquire | Equiteez" },
     {
       name: "description",
       content:

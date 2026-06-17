@@ -177,11 +177,11 @@ const marketCards: MarketCard[] = [
     description:
       "Order book, AMM, and Smart Escrow venues with instant on-chain settlement. No counterparty risk, no settlement windows, no intermediaries.",
     id: "trade",
-    metrics: [
-      { label: "Active Markets", value: "XXX" },
-      { label: "Total Liquidity", value: "XXX" },
-      { label: "24h Volume", value: "XXX" },
-    ],
+    // metrics: [
+    //   { label: "Active Markets", value: "XXX" },
+    //   { label: "Total Liquidity", value: "XXX" },
+    //   { label: "24h Volume", value: "XXX" },
+    // ],
     size: "large",
     title: "Trade 24/7",
   },
@@ -190,11 +190,11 @@ const marketCards: MarketCard[] = [
     description:
       "Use your tokenized assets as collateral to borrow against. Integrated with Maven Finance and settled on-chain. The automated liquidity layer for private markets.",
     id: "liquidity",
-    metrics: [
-      { label: "Total Borrowed", value: "XXX" },
-      { label: "Average APY", value: "XXX" },
-      { label: "Collateral Locked", value: "XXX" },
-    ],
+    // metrics: [
+    //   { label: "Total Borrowed", value: "XXX" },
+    //   { label: "Average APY", value: "XXX" },
+    //   { label: "Collateral Locked", value: "XXX" },
+    // ],
     size: "large",
     title: "Liquidity Without Selling",
   },
@@ -668,9 +668,8 @@ function ROperatorSection() {
               instant secondary liquidity, and automated on-chain distributions.
             </p>
             <div className={styles.chipRow}>
-              <RChip tone="white">Client 1</RChip>
-              <RChip tone="white">Client 2</RChip>
-              <RChip tone="white">Client 3</RChip>
+              <RChip tone="white">MultiBank</RChip>
+              <RChip tone="white">JL Properties</RChip>
             </div>
           </RCard>
 
