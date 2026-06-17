@@ -9,13 +9,12 @@ import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
 import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
 
-import frameworkAccessIcon from "app/assets/redesign/about/icons/framework-access.svg";
-import frameworkLiquidityIcon from "app/assets/redesign/about/icons/framework-liquidity.svg";
-import frameworkCustodyIcon from "app/assets/redesign/about/icons/framework-custody.svg";
-import advantageDistributionIcon from "app/assets/redesign/about/icons/advantage-distribution.svg";
-import advantageTransparencyIcon from "app/assets/redesign/about/icons/advantage-transparency.svg";
-import advantageDiversificationIcon from "app/assets/redesign/about/icons/advantage-diversification.svg";
-import advantageZeroLockinsIcon from "app/assets/redesign/about/icons/advantage-zero-lockins.svg";
+import earthIcon from "app/icons/earth.svg";
+import lockIcon from "app/icons/lock.svg";
+import radioCircleIcon from "app/icons/radio-circle.svg";
+import roundedArrowsIcon from "app/icons/rounded-arrows.svg";
+import trendingUpIcon from "app/icons/trending-up-arrow.svg";
+import unlockIcon from "app/icons/unlock.svg";
 import assetRealEstateImage from "app/assets/redesign/about/images/asset-real-estate.png";
 import assetFixedIncomeImage from "app/assets/redesign/about/images/asset-fixed-income.jpg";
 import assetAlternativesImage from "app/assets/redesign/about/images/asset-alternatives.jpg";
@@ -53,19 +52,19 @@ const frameworkCards: FeatureCard[] = [
   {
     description:
       "We eliminate traditional entry barriers, providing fractional exposure to exclusive asset classes including Real Estate, Corporate Debt, and Insurance-Linked Securities, with no minimum capital requirements.",
-    iconSrc: frameworkAccessIcon,
+    iconSrc: earthIcon,
     title: "Institutional Access For All",
   },
   {
     description:
       "Unlike traditional private markets, our platform enables secondary market trading, allowing investors to exit positions with greater flexibility than physical asset ownership typically allows.",
-    iconSrc: frameworkLiquidityIcon,
+    iconSrc: roundedArrowsIcon,
     title: "Enhanced Liquidity",
   },
   {
     description:
       "Operating on a decentralized, non-custodial model, Equiteez ensures users retain full sovereignty over their assets. This reduces counterparty risk, eliminates institutional mismanagement vulnerabilities, and lowers fee structures by removing third-party intermediaries.",
-    iconSrc: frameworkCustodyIcon,
+    iconSrc: lockIcon,
     title: "Non-Custodial Architecture",
   },
 ];
@@ -104,25 +103,25 @@ const advantageCards: FeatureCard[] = [
   {
     description:
       "Dividends and interest payments are distributed programmatically and directly to investor wallets in real-time.",
-    iconSrc: advantageDistributionIcon,
+    iconSrc: trendingUpIcon,
     title: "Passive Income & Distribution",
   },
   {
     description:
       "Full on-chain reporting provides real-time auditing of asset performance, occupancy rates, and mining efficiency.",
-    iconSrc: advantageTransparencyIcon,
+    iconSrc: radioCircleIcon,
     title: "Operational Transparency",
   },
   {
     description:
       "Seamlessly manage cross-border investments across multiple jurisdictions and asset types through a single, compliant interface.",
-    iconSrc: advantageDiversificationIcon,
+    iconSrc: earthIcon,
     title: "Global Diversification",
   },
   {
     description:
       "We prioritize capital mobility, allowing investors to manage their portfolios according to shifting financial goals without arbitrary holding periods.",
-    iconSrc: advantageZeroLockinsIcon,
+    iconSrc: unlockIcon,
     title: "Zero Lock-ins",
   },
 ];
