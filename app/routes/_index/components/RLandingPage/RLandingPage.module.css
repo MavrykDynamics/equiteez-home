@@ -1143,12 +1143,15 @@
   .heroActions,
   .contactActions {
     flex-direction: column;
+    align-items: stretch;
     width: 100%;
     gap: var(--r-space-3);
   }
 
-  .heroActions > *,
-  .contactActions > * {
+  .heroActions > a,
+  .heroActions > button,
+  .contactActions > a,
+  .contactActions > button {
     width: 100%;
   }
 
