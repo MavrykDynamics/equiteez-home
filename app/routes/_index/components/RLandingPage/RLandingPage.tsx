@@ -28,13 +28,13 @@ import heroShanghaiTabletImage from "app/assets/redesign/landing/banner/tablet/h
 import heroTokyoDesktopImage from "app/assets/redesign/landing/banner/desktop/hero-tokyo.webp";
 import heroTokyoMobileImage from "app/assets/redesign/landing/banner/mobile/hero-tokyo.webp";
 import heroTokyoTabletImage from "app/assets/redesign/landing/banner/tablet/hero-tokyo.webp";
-import partnerAtlasLogo from "app/assets/redesign/landing/partners/atlas.svg";
-import partnerBigBrainLogo from "app/assets/redesign/landing/partners/big-brain.svg";
-import partnerBlockchainAlphaLogo from "app/assets/redesign/landing/partners/blockchain-alpha.svg";
+import partnerAtlasLogo from "app/assets/redesign/landing/partner-atlas.png";
+import partnerBigBrainLogo from "app/assets/redesign/landing/partner-big-brain.png";
+import partnerBlockchainAlphaLogo from "app/assets/redesign/landing/partner-blockchain-alpha.png";
 import partnerClusterLogo from "app/assets/redesign/landing/partners/cluster.svg";
-import partnerCollectiveLogo from "app/assets/redesign/landing/partners/collective.svg";
-import partnerDraperGorenLogo from "app/assets/redesign/landing/partners/draper-goren.svg";
-import partnerMultibankLogo from "app/assets/redesign/landing/partners/multibank.svg";
+import partnerCollectiveLogo from "app/assets/redesign/landing/partner-collective-text.png";
+import partnerDraperGorenLogo from "app/assets/redesign/landing/partner-draper-goren.png";
+import partnerMultibankLogo from "app/assets/redesign/landing/partner-multibank.png";
 import enterpriseIssuanceImage from "app/assets/redesign/landing/enterprise-issuance.webp";
 import enterpriseTradingImage from "app/assets/redesign/landing/enterprise-trading.webp";
 import enterpriseLendingImage from "app/assets/redesign/landing/enterprise-lending.webp";
@@ -445,7 +445,11 @@ function RLandingHero() {
     });
 
   return (
-    <section className={styles.hero} ref={containerRef}>
+    <section
+      className={styles.hero}
+      data-r-header-theme-boundary="landing-hero"
+      ref={containerRef}
+    >
       <div
         aria-hidden
         className={styles.heroSlides}

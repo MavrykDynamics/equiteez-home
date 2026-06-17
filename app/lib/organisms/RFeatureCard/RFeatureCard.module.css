@@ -25,8 +25,11 @@
 
 .icon {
   display: block;
-  width: var(--r-size-icon-medium);
-  height: var(--r-size-icon-medium);
+  width: auto;
+  height: auto;
+  max-width: var(--r-size-icon-medium);
+  max-height: var(--r-size-icon-medium);
+  object-fit: contain;
 }
 
 .copy {

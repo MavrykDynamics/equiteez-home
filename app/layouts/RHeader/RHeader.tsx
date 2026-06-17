@@ -1,8 +1,7 @@
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { useIsScrolledPastElement } from "~/hooks/useIsScrolledPastElement";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { RLogo } from "~/lib/atoms/RLogo";
@@ -18,6 +17,7 @@ export type RHeaderProps = {
   docsHref?: string;
   launchAppTo?: string;
   navItems?: RHeaderNavItem[];
+  scrollBoundarySelector?: string;
   variant?: "landing" | "light" | "solutions" | "transparent";
 };
 
@@ -27,27 +27,46 @@ const defaultNavItems: RHeaderNavItem[] = [
   { href: "#contact", label: "Contact" },
 ];
 
+const defaultLandingScrollBoundarySelector =
+  '[data-r-header-theme-boundary="landing-hero"]';
+
+function getDefaultScrolledState(header: HTMLElement | null) {
+  return window.scrollY > (header?.offsetHeight ?? 0);
+}
+
+function getLandingScrolledState(
+  boundarySelector: string,
+  header: HTMLElement | null
+) {
+  const boundary = document.querySelector<HTMLElement>(boundarySelector);
+
+  if (!boundary) {
+    return getDefaultScrolledState(header);
+  }
+
+  return boundary.getBoundingClientRect().bottom <= (header?.offsetHeight ?? 0);
+}
+
 export function RHeader({
   docsHref = "https://docs.equiteez.com/",
   launchAppTo = "/marketplace",
   navItems = defaultNavItems,
+  scrollBoundarySelector = defaultLandingScrollBoundarySelector,
   variant = "landing",
 }: RHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolledPastSurface, setIsScrolledPastSurface] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
   const resolvedVariant =
     variant === "transparent"
       ? "landing"
       : variant === "light"
         ? "solutions"
         : variant;
-  const { elementRef: headerRef, isScrolledPastElement } =
-    useIsScrolledPastElement<HTMLElement>({
-      isEnabled: true,
-    });
   const hasLandingSurface = resolvedVariant === "landing";
   const hasSolutionsSurface = resolvedVariant === "solutions";
   const hasDarkSurface = hasLandingSurface;
-  const hasScrolledSurface = isScrolledPastElement;
+  const hasScrolledSurface = isScrolledPastSurface;
   const hasMenuSurface = hasLandingSurface && isMenuOpen;
   const launchButtonTone = hasLandingSurface ? "white" : "black";
   const launchButtonVariant = hasSolutionsSurface ? "primary" : "secondary";
@@ -55,6 +74,48 @@ export function RHeader({
     hasDarkSurface && !hasScrolledSurface && !hasMenuSurface
       ? "white"
       : "black";
+
+  useEffect(() => {
+    const syncScrolledState = () => {
+      const nextIsScrolledPastSurface = hasLandingSurface
+        ? getLandingScrolledState(scrollBoundarySelector, headerRef.current)
+        : getDefaultScrolledState(headerRef.current);
+
+      setIsScrolledPastSurface((currentIsScrolledPastSurface) =>
+        currentIsScrolledPastSurface === nextIsScrolledPastSurface
+          ? currentIsScrolledPastSurface
+          : nextIsScrolledPastSurface
+      );
+    };
+
+    const scrollListenerOptions: AddEventListenerOptions = {
+      capture: true,
+      passive: true,
+    };
+
+    window.addEventListener("scroll", syncScrolledState, scrollListenerOptions);
+    window.addEventListener("resize", syncScrolledState);
+    document.addEventListener(
+      "scroll",
+      syncScrolledState,
+      scrollListenerOptions
+    );
+    syncScrolledState();
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        syncScrolledState,
+        scrollListenerOptions
+      );
+      window.removeEventListener("resize", syncScrolledState);
+      document.removeEventListener(
+        "scroll",
+        syncScrolledState,
+        scrollListenerOptions
+      );
+    };
+  }, [hasLandingSurface, scrollBoundarySelector]);
 
   const closeMenu = () => {
     setIsMenuOpen(false);

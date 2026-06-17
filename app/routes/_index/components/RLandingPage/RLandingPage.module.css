@@ -307,10 +307,10 @@
 }
 
 .metric strong {
-  font-family: var(--r-font-heading);
+  font-family: var(--r-font-body);
   font-size: var(--r-font-size-heading-h2);
   font-weight: var(--r-font-weight-medium);
-  letter-spacing: var(--r-letter-spacing-heading);
+  letter-spacing: var(--r-letter-spacing-body);
   line-height: var(--r-line-height-heading-h2);
 }
 
@@ -408,7 +408,7 @@
 }
 
 .solutionIcon {
-  color: var(--r-color-neutral-300);
+  color: var(--r-color-neutral-400);
   transition: color var(--r-transition-duration-base) ease;
 }
 

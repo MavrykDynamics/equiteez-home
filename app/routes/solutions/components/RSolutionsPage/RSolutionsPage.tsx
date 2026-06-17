@@ -380,7 +380,10 @@ function SuiteResponsiveCarousel({ steps }: { steps: SuiteStep[] }) {
                   <p>{step.description}</p>
                 </div>
                 <RCard
-                  className={styles.suiteResponsiveMockCard}
+                  className={clsx(
+                    styles.suiteResponsiveMockCard,
+                    styles.browserMockFrame
+                  )}
                   shadow="soft"
                   shape="mock"
                 >
@@ -460,7 +463,11 @@ function RSolutionsHero() {
             tabs={heroTabs}
           />
           <RCard
-            className={clsx(styles.heroMockFrame, styles.mockSwapCard)}
+            className={clsx(
+              styles.heroMockFrame,
+              styles.browserMockFrame,
+              styles.mockSwapCard
+            )}
             key={activeTab.id}
             shadow="strong"
             shape="mock"
@@ -623,7 +630,11 @@ function RSuiteSection() {
         <div className={styles.suiteContent}>
           <Reveal className={styles.suiteMockColumn} preset="image">
             <RCard
-              className={clsx(styles.suiteMockCard, styles.mockSwapCard)}
+              className={clsx(
+                styles.suiteMockCard,
+                styles.browserMockFrame,
+                styles.mockSwapCard
+              )}
               key={activeStep.id}
               shadow="soft"
               shape="mock"
@@ -811,7 +822,11 @@ function RTradingVenueSection() {
             delay={0.05}
             preset="image"
           >
-            <RCard shadow="soft" shape="mock">
+            <RCard
+              className={styles.browserMockFrame}
+              shadow="soft"
+              shape="mock"
+            >
               <img
                 alt="Equiteez embedded trading venue"
                 className={styles.mockImage}
@@ -868,7 +883,11 @@ function RAdvancedTradeSection() {
           />
         </Reveal>
         <Reveal className={styles.advancedMockCard} delay={0.05} preset="image">
-          <RCard shadow="strong" shape="mock">
+          <RCard
+            className={styles.browserMockFrame}
+            shadow="strong"
+            shape="mock"
+          >
             <img
               alt="Advanced RWA execution workspace"
               className={styles.mockImage}
