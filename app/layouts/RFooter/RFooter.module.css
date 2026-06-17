@@ -109,27 +109,11 @@
   text-decoration: none;
 }
 
-.mavrykBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
-  color: var(--r-color-neutral-white);
-  background: var(--r-color-neutral-600);
-  border-radius: 50%;
-  font-family: var(--r-font-heading);
-  font-size: 10px;
-  line-height: 1;
-}
-
-.mavrykText {
-  color: var(--r-color-neutral-600);
-  font-family: var(--r-font-heading);
-  font-size: var(--r-font-size-body-sm);
-  font-weight: var(--r-font-weight-medium);
-  letter-spacing: var(--r-letter-spacing-heading);
-  line-height: var(--r-line-height-body-sm);
+.mavrykLogo {
+  display: block;
+  width: 96px;
+  height: 18px;
+  flex: 0 0 auto;
 }
 
 @media (max-width: 1180px) {

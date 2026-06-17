@@ -2,6 +2,8 @@ import { Link } from "@remix-run/react";
 
 import { RLogo } from "~/lib/atoms/RLogo";
 
+import mavrykLogoSrc from "app/icons/maven-logo.svg";
+
 import styles from "./RFooter.module.css";
 
 export type RFooterLink = {
@@ -76,6 +78,8 @@ function RFooterLinkItem({ href, label }: RFooterLink) {
 }
 
 export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -84,7 +88,7 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
             <RLogo className={styles.logo} tone="black" />
             <p className={styles.description}>
               Institutional-grade real-world asset tokenization infrastructure,
-              powered by Mavryk.
+              powered by Mavryk Network.
             </p>
           </div>
 
@@ -108,7 +112,7 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
 
         <div className={styles.bottom}>
           <p className={styles.copyright}>
-            © 2026 Equiteez. All rights reserved.
+            © {currentYear} Equiteez. All rights reserved.
           </p>
           <a
             className={styles.builtOn}
@@ -117,8 +121,11 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
             target="_blank"
           >
             <span>Built on</span>
-            <span className={styles.mavrykBadge}>m</span>
-            <span className={styles.mavrykText}>MAVRYK</span>
+            <img
+              alt="MAVRYK"
+              className={styles.mavrykLogo}
+              src={mavrykLogoSrc}
+            />
           </a>
         </div>
       </div>
