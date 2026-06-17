@@ -1,0 +1,969 @@
+@import "../../../../styles/breakpoints.css";
+
+.page {
+  min-height: 100vh;
+  padding-top: 73px;
+  color: var(--r-color-neutral-black);
+  background: var(--r-color-neutral-white);
+  font-family: var(--r-font-body);
+}
+
+.pageFrame {
+  background: var(--r-color-neutral-white);
+}
+
+.heroSection,
+.stackSection {
+  border-bottom: var(--r-border-width-sm) solid var(--r-color-neutral-100);
+}
+
+.sectionShell {
+  padding: var(--r-space-18) clamp(var(--r-space-8), 6.94vw, var(--r-space-25));
+}
+
+.heroSection .sectionShell {
+  padding-top: 120px;
+}
+
+.heroHeader,
+.suiteHeader,
+.appHeader,
+.tradingCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heroHeader {
+  gap: var(--r-space-3);
+}
+
+.eyebrow,
+.darkEyebrow,
+.stackEyebrow {
+  margin: 0;
+  font-family: var(--r-font-body);
+  font-size: var(--r-font-size-body-s);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-body);
+  line-height: var(--r-line-height-body-s);
+  text-transform: uppercase;
+}
+
+.eyebrow,
+.stackEyebrow {
+  color: var(--r-color-neutral-600);
+}
+
+.darkEyebrow {
+  color: var(--r-color-neutral-200);
+}
+
+.heroCopyGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 540px);
+  gap: var(--r-space-3);
+  align-items: start;
+}
+
+.heroTitle,
+.sectionTitle,
+.darkSectionTitle,
+.tradingTitle {
+  margin: 0;
+  font-family: var(--r-font-heading);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+}
+
+.heroTitle {
+  max-width: 688px;
+  font-size: var(--r-font-size-heading-h2);
+  line-height: var(--r-line-height-heading-h2);
+}
+
+.heroDescription {
+  width: min(100%, 540px);
+  margin: 0;
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-l);
+  line-height: var(--r-line-height-body-l);
+}
+
+.heroShowcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-8);
+  align-items: center;
+  margin-top: calc(var(--r-space-18) + var(--r-space-12));
+}
+
+.heroMockFrame {
+  --solutions-hero-frame-border-height: calc(
+    var(--r-border-width-sm) + var(--r-border-width-sm)
+  );
+  --solutions-hero-image-height: 552px;
+
+  width: min(100%, 741px);
+  height: calc(var(--solutions-hero-image-height));
+}
+
+.mockImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.heroMockImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.browserMockFrame {
+  --solutions-browser-chrome-height: 28px;
+
+  position: relative;
+  box-sizing: border-box;
+  background: var(--r-color-neutral-white);
+}
+
+.mockSwapCard {
+  animation: mockScaleRise var(--r-motion-duration-reveal)
+    var(--r-motion-ease-premium);
+  transform-origin: center bottom;
+  will-change: opacity, transform;
+}
+
+@keyframes mockScaleRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stackShell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-6);
+  align-items: center;
+  text-align: center;
+}
+
+.stackLine {
+  width: 100%;
+  margin: 0;
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-m);
+  line-height: var(--r-line-height-body-m);
+}
+
+.suiteHeader {
+  gap: var(--r-space-6);
+  max-width: 1240px;
+}
+
+.sectionTitle,
+.darkSectionTitle {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--r-font-size-heading-h2);
+  line-height: var(--r-line-height-heading-h2);
+}
+
+.sectionDescription,
+.darkDescription,
+.tradingDescription {
+  margin: 0;
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-m);
+  line-height: var(--r-line-height-body-m);
+}
+
+.sectionDescription {
+  max-width: 648px;
+}
+
+.suiteContent {
+  display: grid;
+  grid-template-columns: minmax(0, 560px) minmax(0, 620px);
+  gap: var(--r-space-18);
+  align-items: start;
+  margin-top: var(--r-space-8);
+}
+
+.suiteMockColumn {
+  position: sticky;
+  top: 120px;
+  width: min(100%, 560px);
+}
+
+.suiteStepList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-1);
+}
+
+.suiteStep {
+  display: flex;
+  width: 100%;
+  gap: 22px;
+  align-items: center;
+  margin-left: calc(var(--r-space-3) * -1);
+  padding: var(--r-space-3);
+  color: var(--r-color-neutral-500);
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  scroll-margin-top: 130px;
+  transition:
+    background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    color var(--r-motion-duration-base) var(--r-motion-ease-premium),
+    transform var(--r-motion-duration-reveal) var(--r-motion-ease-premium);
+}
+
+.suiteStep:hover {
+  background: transparent;
+}
+
+.suiteStep:focus-visible {
+  outline: none;
+  box-shadow: var(--r-focus-ring);
+}
+
+.suiteStepRail {
+  align-self: stretch;
+  width: 2px;
+  flex: 0 0 2px;
+  background: var(--r-color-neutral-100);
+  transition: background-color var(--r-motion-duration-base)
+    var(--r-motion-ease-premium);
+}
+
+.suiteStepCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--r-space-3);
+}
+
+.suiteStepTitle {
+  color: currentColor;
+  font-family: var(--r-font-heading);
+  font-size: var(--r-font-size-heading-h6);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+  line-height: var(--r-line-height-heading-h6);
+}
+
+.suiteStepDescription {
+  color: currentColor;
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.suiteStepActive {
+  color: var(--r-color-neutral-black);
+  background: transparent;
+}
+
+.suiteStepActive .suiteStepRail {
+  background: var(--r-color-accent-green-500);
+}
+
+.suiteStepActive .suiteStepDescription {
+  color: var(--r-color-neutral-600);
+}
+
+.suiteMockCard {
+  width: 100%;
+}
+
+.suiteResponsiveContent {
+  display: none;
+}
+
+.suiteResponsiveViewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.suiteResponsiveContainer {
+  display: flex;
+  gap: var(--r-space-4);
+  touch-action: pan-y pinch-zoom;
+}
+
+.suiteResponsiveSlide {
+  min-width: 0;
+  flex: 0 0 calc((100% - var(--r-space-4)) / 2);
+}
+
+.suiteResponsiveCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--r-space-4);
+}
+
+.suiteResponsiveCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-3);
+}
+
+.suiteResponsiveCopy h3 {
+  margin: 0;
+  color: var(--r-color-neutral-black);
+  font-family: var(--r-font-heading);
+  font-size: var(--r-font-size-heading-h7);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+  line-height: var(--r-line-height-heading-h7);
+}
+
+.suiteResponsiveCopy p {
+  margin: 0;
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.suiteResponsiveMockCard {
+  width: 100%;
+}
+
+.suitePagination {
+  display: flex;
+  gap: var(--r-space-2);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.suitePaginationDot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  background: var(--r-color-neutral-100);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--r-motion-duration-fast)
+    var(--r-motion-ease-premium);
+}
+
+.suitePaginationDotActive {
+  background: var(--r-color-neutral-black);
+}
+
+.suitePaginationDot:focus-visible {
+  outline: none;
+  box-shadow: var(--r-focus-ring);
+}
+
+.operatorHeader {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.operatorBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-6);
+  margin-top: var(--r-space-8);
+}
+
+.operatorSuiteCard {
+  gap: var(--r-space-4);
+  padding: 28px var(--r-space-6);
+  color: var(--r-color-neutral-white);
+  border-radius: var(--r-radius-md);
+}
+
+.operatorSuiteCard h3,
+.marketCard h3 {
+  margin: 0;
+  font-family: var(--r-font-heading);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+}
+
+.operatorSuiteCard h3 {
+  font-size: var(--r-font-size-heading-h5);
+  line-height: var(--r-line-height-heading-h5);
+}
+
+.operatorSuiteCard p {
+  max-width: 652px;
+  margin: 0;
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.chipRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marketMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 148px), 1fr));
+  gap: var(--r-space-3);
+  margin-top: var(--r-space-6);
+}
+
+.operatorCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--r-space-6);
+}
+
+.appSection {
+  color: var(--r-color-neutral-white);
+  background: var(--r-color-neutral-black);
+  border-bottom-color: var(--r-color-neutral-black);
+}
+
+.appHeader {
+  gap: var(--r-space-3);
+  max-width: 1240px;
+}
+
+.darkSectionTitle {
+  color: var(--r-color-neutral-white);
+}
+
+.darkDescription {
+  max-width: 465px;
+  margin-top: var(--r-space-3);
+  color: var(--r-color-neutral-200);
+}
+
+.marketGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--r-space-6);
+  margin-top: var(--r-space-8);
+}
+
+.marketCard {
+  justify-content: space-between;
+  padding: var(--r-space-6);
+}
+
+.marketCardLarge {
+  grid-column: span 2;
+  min-height: 209px;
+  border-radius: var(--r-radius-md);
+}
+
+.marketCardSmall {
+  min-height: 159px;
+  border-radius: 12px;
+}
+
+.marketCardCopy {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.marketCard h3 {
+  color: var(--r-color-neutral-white);
+}
+
+.marketCardLarge h3 {
+  font-size: var(--r-font-size-heading-h5);
+  line-height: var(--r-line-height-heading-h5);
+}
+
+.marketCardSmall h3 {
+  font-size: var(--r-font-size-heading-h6);
+  line-height: var(--r-line-height-heading-h6);
+}
+
+.marketCard p {
+  margin: calc(var(--r-space-1) * -1) 0 0;
+  color: var(--r-color-neutral-200);
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.tradingLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 658px) minmax(0, 550px);
+  grid-template-areas:
+    "copy mock"
+    "features mock";
+  gap: var(--r-space-8);
+  align-items: start;
+}
+
+.tradingCopy {
+  grid-area: copy;
+  gap: var(--r-space-3);
+  padding-top: var(--r-space-1);
+}
+
+.tradingTitle {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--r-space-1);
+  font-size: var(--r-font-size-heading-h3);
+  line-height: var(--r-line-height-heading-h3);
+}
+
+.tradingDescription {
+  max-width: 648px;
+  margin-top: var(--r-space-3);
+}
+
+.tradingFeatureList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-1);
+  width: 100%;
+  margin: var(--r-space-8) 0;
+}
+
+.tradingFeaturePanel {
+  display: flex;
+  grid-area: features;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tradingFeature {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  padding: var(--r-space-3) 0;
+}
+
+.tradingFeature > span:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--r-space-1);
+}
+
+.tradingFeature strong {
+  color: var(--r-color-neutral-black);
+  font-family: var(--r-font-heading);
+  font-size: var(--r-font-size-heading-h7);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+  line-height: var(--r-line-height-heading-h7);
+}
+
+.tradingFeature span span {
+  color: var(--r-color-neutral-600);
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
+.tradingIconBox {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--r-color-accent-green-500);
+  background: rgba(164, 192, 186, 0.5);
+  border-radius: 8px;
+}
+
+.tradingMockCard {
+  grid-area: mock;
+  width: min(100%, 550px);
+  justify-self: end;
+}
+
+.advancedHeader {
+  max-width: 756px;
+  margin: 0 auto;
+}
+
+.advancedMockCard {
+  width: min(100%, 1240px);
+  margin: var(--r-space-8) auto 0;
+}
+
+.ctaSection {
+  --r-marketing-cta-phone-action-width: 100%;
+  --r-marketing-cta-phone-padding-y: var(--r-space-14);
+  --r-marketing-cta-tablet-padding-y: var(--r-space-14);
+
+  border-bottom: 0;
+}
+
+@media (max-width: 1304px) {
+  .sectionShell {
+    padding-right: var(--r-space-16);
+    padding-left: var(--r-space-16);
+  }
+
+  .suiteContent,
+  .tradingLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--r-space-10);
+  }
+
+  .suiteMockColumn {
+    position: static;
+  }
+}
+
+@media (max-width: 1180px) {
+  .marketMetricGrid {
+    margin-top: var(--r-space-5);
+  }
+
+  .page {
+    padding-top: 62px;
+  }
+
+  .heroCopyGrid,
+  .suiteContent,
+  .tradingLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .tradingLayout {
+    grid-template-areas:
+      "copy"
+      "mock"
+      "features";
+  }
+
+  .heroDescription,
+  .sectionDescription,
+  .tradingDescription {
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .heroMockFrame {
+    --solutions-hero-image-height: 454px;
+  }
+
+  .suiteMockColumn,
+  .tradingMockCard {
+    max-width: 720px;
+    justify-self: start;
+  }
+
+  .marketGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketCardLarge,
+  .marketCardSmall {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 820px) {
+  .sectionShell {
+    padding: var(--r-space-16) var(--r-space-8);
+  }
+
+  .heroSection .sectionShell {
+    padding-top: 72px;
+    padding-bottom: 120px;
+  }
+
+  .heroTitle,
+  .sectionTitle,
+  .darkSectionTitle,
+  .tradingTitle {
+    font-size: var(--r-font-size-heading-h4);
+    line-height: var(--r-line-height-heading-h4);
+  }
+
+  .heroDescription {
+    font-size: var(--r-font-size-body-m);
+    line-height: var(--r-line-height-body-m);
+  }
+
+  .heroShowcase {
+    gap: var(--r-space-8);
+    margin-top: var(--r-space-18);
+  }
+
+  .heroTabSwitcher {
+    width: auto;
+  }
+
+  .suiteContent {
+    display: none;
+  }
+
+  .suiteHeader {
+    gap: var(--r-space-6);
+  }
+
+  .sectionDescription,
+  .tradingDescription,
+  .advancedHeader p:last-child {
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .suiteResponsiveContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--r-space-6);
+    margin-top: var(--r-space-8);
+  }
+
+  .marketGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--r-space-4);
+    margin-top: var(--r-space-8);
+  }
+
+  .operatorBody {
+    gap: var(--r-space-4);
+    margin-top: var(--r-space-8);
+  }
+
+  .operatorSuiteCard {
+    gap: var(--r-space-4);
+    padding: 28px var(--r-space-6);
+  }
+
+  .operatorSuiteCard h3 {
+    font-size: var(--r-font-size-heading-h6);
+    line-height: var(--r-line-height-heading-h6);
+  }
+
+  .operatorSuiteCard p {
+    max-width: none;
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .operatorCardGrid {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--r-space-4);
+  }
+
+  .operatorFeatureCard > div {
+    gap: var(--r-space-3);
+  }
+
+  .operatorFeatureCard h3 {
+    font-size: var(--r-font-size-heading-h7);
+    line-height: var(--r-line-height-heading-h7);
+  }
+
+  .appHeader {
+    gap: var(--r-space-4);
+  }
+
+  .darkDescription {
+    max-width: none;
+    margin-top: 0;
+    font-size: var(--r-font-size-body-m);
+    line-height: var(--r-line-height-body-m);
+  }
+
+  .marketCardLarge {
+    grid-column: span 2;
+    min-height: 190px;
+    border-radius: var(--r-radius-md);
+  }
+
+  .marketCardSmall {
+    grid-column: span 1;
+    min-height: 148px;
+  }
+
+  .marketCard {
+    padding: var(--r-space-6);
+  }
+
+  .marketCardLarge h3 {
+    font-size: var(--r-font-size-heading-h6);
+    line-height: var(--r-line-height-heading-h6);
+  }
+
+  .marketCardSmall h3 {
+    font-size: var(--r-font-size-heading-h7);
+    line-height: var(--r-line-height-heading-h7);
+  }
+
+  .marketCard p {
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+
+  .tradingLayout {
+    grid-template-areas:
+      "copy"
+      "mock"
+      "features";
+    gap: var(--r-space-8);
+  }
+
+  .tradingCopy {
+    gap: var(--r-space-3);
+    padding-top: 0;
+  }
+
+  .tradingTitle {
+    margin-top: 0;
+  }
+
+  .tradingDescription {
+    margin-top: var(--r-space-1);
+    max-width: none;
+  }
+
+  .tradingMockCard {
+    width: min(100%, 532px);
+    justify-self: center;
+  }
+
+  .tradingFeaturePanel {
+    width: 100%;
+    align-items: center;
+  }
+
+  .tradingFeatureList {
+    margin: 0;
+  }
+
+  .tradingFeature {
+    align-items: flex-start;
+  }
+
+  .advancedMockCard {
+    width: 100%;
+    margin-top: var(--r-space-8);
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionShell {
+    padding: var(--r-space-14) var(--r-space-4);
+  }
+
+  .heroSection .sectionShell {
+    padding-top: 64px;
+    padding-bottom: var(--r-space-25);
+  }
+
+  .heroTitle,
+  .sectionTitle,
+  .darkSectionTitle,
+  .tradingTitle {
+    font-size: var(--r-font-size-heading-h5);
+    line-height: var(--r-line-height-heading-h5);
+  }
+
+  .heroCopyGrid {
+    gap: var(--r-space-3);
+  }
+
+  .heroShowcase {
+    gap: var(--r-space-6);
+    margin-top: var(--r-space-16);
+  }
+
+  .heroTabSwitcher {
+    width: 100%;
+  }
+
+  .heroTabSwitcher > * {
+    flex: 1 1 0;
+  }
+
+  .heroMockFrame {
+    width: 100%;
+    --solutions-hero-image-height: 266px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .stackShell {
+    gap: var(--r-space-6);
+  }
+
+  .suiteHeader {
+    gap: var(--r-space-4);
+  }
+
+  .suiteResponsiveSlide {
+    flex-basis: 100%;
+  }
+
+  .operatorCardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .operatorSuiteCard,
+  .operatorFeatureCard {
+    padding: var(--r-space-6);
+  }
+
+  .marketCard {
+    padding: var(--r-space-6);
+  }
+
+  .marketGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketCardLarge {
+    grid-column: span 2;
+  }
+
+  .marketCardSmall {
+    padding: var(--r-space-5);
+  }
+
+  .tradingLayout {
+    gap: var(--r-space-8);
+  }
+
+  .tradingFeaturePanel > a,
+  .tradingFeaturePanel > button {
+    width: 100%;
+  }
+
+  .advancedSection .sectionShell {
+    padding-top: var(--r-space-18);
+    padding-bottom: var(--r-space-18);
+  }
+
+  .ctaSection a,
+  .ctaSection button {
+    min-height: 45px;
+    padding-top: var(--r-space-3);
+    padding-bottom: var(--r-space-3);
+    font-size: var(--r-font-size-body-sm);
+    line-height: var(--r-line-height-body-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockSwapCard {
+    animation: none;
+    transform: none;
+  }
+}

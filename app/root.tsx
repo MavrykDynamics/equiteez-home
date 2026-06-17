@@ -7,25 +7,25 @@ import {
   ScrollRestoration,
   useRouteError,
 } from "@remix-run/react";
-import { json, LinksFunction } from "@remix-run/node";
+import { LinksFunction } from "@remix-run/node";
 // providers
 
 // global styles
 import stylesheet from "~/styles/index.css?url";
 
 // providers
-import { AppProvider } from "./providers/AppProvider/AppProvider";
-import { MarketsProvider } from "./providers/MarketsProvider/markets.provider";
-import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
-import { AppGlobalLoader } from "./providers/AppGlobalLoader";
-import { CurrencyProvider } from "./providers/CurrencyProvider/currency.provider";
-import {
-  fetchTokensData,
-  fetchTokensMetadata,
-} from "./providers/TokensProvider/utils/fetchTokensdata";
-import { useDataFromLoader } from "./hooks/useDataFromLoader";
+// import { AppProvider } from "./providers/AppProvider/AppProvider";
+// import { MarketsProvider } from "./providers/MarketsProvider/markets.provider";
+// import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
+// import { AppGlobalLoader } from "./providers/AppGlobalLoader";
+// import { CurrencyProvider } from "./providers/CurrencyProvider/currency.provider";
+// import {
+//   fetchTokensData,
+//   fetchTokensMetadata,
+// } from "./providers/TokensProvider/utils/fetchTokensdata";
+// import { useDataFromLoader } from "./hooks/useDataFromLoader";
 import ToasterProvider from "./providers/ToasterProvider/toaster.provider";
-import { ApolloProvider } from "./providers/ApolloProvider/apollo.provider";
+// import { ApolloProvider } from "./providers/ApolloProvider/apollo.provider";
 import { ToasterMessages } from "./providers/ToasterProvider/components/ToasterMessages";
 import { ErrorPageTemp } from "./templates/ErrorPageTemp/ErrorPageTemp";
 import {
@@ -34,37 +34,37 @@ import {
   errorHeaderDefaultText,
   errorHeaderDefaultTextWhenError,
 } from "./providers/ToasterProvider/toaster.provider.const";
-import { DexProvider } from "./providers/Dexprovider/dex.provider";
-import { DipdupProvider } from "./providers/DipdupProvider/DipDup.provider";
+// import { DexProvider } from "./providers/Dexprovider/dex.provider";
+// import { DipdupProvider } from "./providers/DipdupProvider/DipDup.provider";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
   { rel: "stylesheet", href: stylesheet },
 ];
 
-export const loader = async () => {
-  const tokens = await fetchTokensData();
+// export const loader = async () => {
+//   const tokens = await fetchTokensData();
 
-  const [tokensMetadata] = await Promise.all([
-    fetchTokensMetadata(tokens),
-    // fetchUsdToTokenRates(),
-  ]);
+//   const [tokensMetadata] = await Promise.all([
+//     fetchTokensMetadata(tokens),
+//     // fetchUsdToTokenRates(),
+//   ]);
 
-  return json({
-    tokens,
-    tokensMetadata,
-    usdToToken: {},
-    fiatToTezos: {},
-  });
-};
+//   return json({
+//     tokens,
+//     tokensMetadata,
+//     usdToToken: {},
+//     fiatToTezos: {},
+//   });
+// };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const {
-    tokens = [],
-    tokensMetadata = {},
-    fiatToTezos = {},
-    usdToToken = {},
-  } = useDataFromLoader<typeof loader>() ?? {};
+  // const {
+  //   tokens = [],
+  //   tokensMetadata = {},
+  //   fiatToTezos = {},
+  //   usdToToken = {},
+  // } = useDataFromLoader<typeof loader>() ?? {};
 
   return (
     <html lang="en">
@@ -80,9 +80,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <ToasterProvider
             maintance={process.env.REACT_APP_MAINTANCE_MODE === "on"}
           >
-            <AppProvider>
-              <ApolloProvider>
-                <DipdupProvider>
+            {/* <AppProvider> */}
+            {/* <ApolloProvider> */}
+            {/* <DipdupProvider>
                   <CurrencyProvider
                     fiatToTezos={fiatToTezos}
                     usdToToken={usdToToken}
@@ -92,15 +92,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       initialTokensMetadata={tokensMetadata}
                     >
                       <MarketsProvider>
-                        <DexProvider>
-                          <AppGlobalLoader>{children}</AppGlobalLoader>
-                        </DexProvider>
+                        <DexProvider> */}
+            {/* <AppGlobalLoader>{children}</AppGlobalLoader> */}
+            {children}
+            {/* </DexProvider>
                       </MarketsProvider>
                     </TokensProvider>
-                  </CurrencyProvider>
-                </DipdupProvider>
-              </ApolloProvider>
-            </AppProvider>
+                  </CurrencyProvider> */}
+            {/* </DipdupProvider> */}
+            {/* </ApolloProvider> */}
+            {/* </AppProvider> */}
             <ToasterMessages />
           </ToasterProvider>
           <ScrollRestoration />
