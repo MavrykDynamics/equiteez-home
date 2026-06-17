@@ -36,7 +36,7 @@ import suiteStepThreeImage from "app/assets/redesign/solutions/mocks/step-3.svg"
 import suiteStepFourImage from "app/assets/redesign/solutions/mocks/step-4.svg";
 import suiteStepFiveImage from "app/assets/redesign/solutions/mocks/step-5.svg";
 import heroIssuerTabImage from "app/assets/redesign/solutions/mocks/tab-1.svg";
-import heroInvestorTabImage from "app/assets/redesign/solutions/mocks/tab-2.svg";
+import heroInvestorTabImage from "app/assets/redesign/solutions/mocks/tab-2.jpg";
 import tradingVenueImage from "app/assets/redesign/solutions/mocks/venue.svg";
 
 import styles from "./RSolutionsPage.module.css";
