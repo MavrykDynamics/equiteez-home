@@ -1,6 +1,11 @@
 import clsx from "clsx";
 import type { ComponentType, SVGProps } from "react";
 
+import {
+  EQUITEEZ_CONTACT_PATH,
+  EXTERNAL_LINK_REL,
+  NEW_TAB_TARGET,
+} from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
 import { RCard } from "~/lib/atoms/RCard";
 import { Reveal } from "~/lib/atoms/Reveal";
@@ -46,7 +51,12 @@ type StatementCard = {
 const aboutNavItems: RHeaderNavItem[] = [
   { href: "/solutions", label: "Solutions" },
   { href: "/about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  {
+    href: EQUITEEZ_CONTACT_PATH,
+    label: "Contact",
+    rel: EXTERNAL_LINK_REL,
+    target: NEW_TAB_TARGET,
+  },
 ];
 
 const ABOUT_FEATURE_ICON_COLOR = "var(--r-color-accent-green-500)";

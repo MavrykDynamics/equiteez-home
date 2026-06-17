@@ -3,6 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
+import {
+  EQUITEEZ_APP_URL,
+  EQUITEEZ_GET_IN_TOUCH_URL,
+  EXTERNAL_LINK_REL,
+  NEW_TAB_TARGET,
+  PARTNER_URLS,
+} from "~/consts/links";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { Reveal } from "~/lib/atoms/Reveal";
@@ -47,6 +54,7 @@ import styles from "./RLandingPage.module.css";
 
 type PartnerLogo = {
   alt: string;
+  href: string;
   src: string;
   variant:
     | "atlas"
@@ -213,36 +221,43 @@ function useHeroImageVariant(): HeroImageVariant | null {
 const partnerLogos: PartnerLogo[] = [
   {
     alt: "MultiBank Group",
+    href: PARTNER_URLS.multiBank,
     src: partnerMultibankLogo,
     variant: "multibank",
   },
   {
     alt: "Collective Ventures",
+    href: PARTNER_URLS.collectiveVentures,
     src: partnerCollectiveLogo,
     variant: "collective",
   },
   {
     alt: "Atlas Fund Management",
+    href: PARTNER_URLS.atlasFund,
     src: partnerAtlasLogo,
     variant: "atlas",
   },
   {
     alt: "Big Brain Holdings",
+    href: PARTNER_URLS.bigBrainHoldings,
     src: partnerBigBrainLogo,
     variant: "bigBrain",
   },
   {
     alt: "Blockchain Alpha",
+    href: PARTNER_URLS.blockchainAlpha,
     src: partnerBlockchainAlphaLogo,
     variant: "blockchainAlpha",
   },
   {
     alt: "Cluster Capital",
+    href: PARTNER_URLS.clusterCapital,
     src: partnerClusterLogo,
     variant: "cluster",
   },
   {
     alt: "Draper Goren Holm",
+    href: PARTNER_URLS.draperGorenHolm,
     src: partnerDraperGorenLogo,
     variant: "draperGoren",
   },
@@ -417,16 +432,29 @@ const reviews: Review[] = [
 ];
 
 function RPartnerLogo({ logo }: { logo: PartnerLogo }) {
-  return <img alt={logo.alt} className={styles[logo.variant]} src={logo.src} />;
+  return (
+    <img
+      alt={logo.alt}
+      className={styles[logo.variant]}
+      draggable={false}
+      src={logo.src}
+    />
+  );
 }
 
 function RPartnerLogoItems({ itemClassName }: { itemClassName: string }) {
   return (
     <>
       {partnerLogos.map((logo) => (
-        <span className={itemClassName} key={logo.alt}>
+        <a
+          className={itemClassName}
+          href={logo.href}
+          key={logo.alt}
+          rel={EXTERNAL_LINK_REL}
+          target={NEW_TAB_TARGET}
+        >
           <RPartnerLogo logo={logo} />
-        </span>
+        </a>
       ))}
     </>
   );
@@ -502,7 +530,14 @@ function RLandingHero() {
           >
             Start Tokenizing
           </RButton>
-          <RButton as="link" to="/marketplace" tone="white" variant="secondary">
+          <RButton
+            as="a"
+            href={EQUITEEZ_APP_URL}
+            rel={EXTERNAL_LINK_REL}
+            target={NEW_TAB_TARGET}
+            tone="white"
+            variant="secondary"
+          >
             Explore App
           </RButton>
         </div>
@@ -756,13 +791,22 @@ function RGetInTouchSection() {
         <Reveal className={styles.contactActions} delay={0.05}>
           <RButton
             as="a"
-            href="mailto:hello@equiteez.com"
+            href={EQUITEEZ_GET_IN_TOUCH_URL}
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
+            rel={EXTERNAL_LINK_REL}
+            target={NEW_TAB_TARGET}
             tone="black"
           >
             Get In Touch
           </RButton>
-          <RButton as="link" to="/marketplace" tone="black" variant="secondary">
+          <RButton
+            as="a"
+            href={EQUITEEZ_APP_URL}
+            rel={EXTERNAL_LINK_REL}
+            target={NEW_TAB_TARGET}
+            tone="black"
+            variant="secondary"
+          >
             Launch App
           </RButton>
         </Reveal>

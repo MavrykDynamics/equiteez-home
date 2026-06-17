@@ -4,6 +4,13 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
+import {
+  EQUITEEZ_APP_URL,
+  EQUITEEZ_CONTACT_PATH,
+  EQUITEEZ_GET_IN_TOUCH_URL,
+  EXTERNAL_LINK_REL,
+  NEW_TAB_TARGET,
+} from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
 import { getMotionAwareScrollBehavior } from "~/lib/animations/animations";
 import { RButton } from "~/lib/atoms/RButton";
@@ -77,7 +84,12 @@ type TradingFeature = {
 const solutionsNavItems: RHeaderNavItem[] = [
   { href: "#solutions", label: "Solutions" },
   { href: "/about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  {
+    href: EQUITEEZ_CONTACT_PATH,
+    label: "Contact",
+    rel: EXTERNAL_LINK_REL,
+    target: NEW_TAB_TARGET,
+  },
 ];
 
 const heroTabs: HeroTab[] = [
@@ -845,13 +857,17 @@ function RSolutionsCtaSection() {
       heading={["Built For The Future Of", "Capital Markets"]}
       id="contact"
       primaryAction={{
-        href: "mailto:hello@equiteez.com",
+        href: EQUITEEZ_GET_IN_TOUCH_URL,
         label: "Get In Touch",
+        rel: EXTERNAL_LINK_REL,
+        target: NEW_TAB_TARGET,
       }}
       secondaryAction={{
+        href: EQUITEEZ_APP_URL,
         iconRight: null,
         label: "Launch App",
-        to: "/marketplace",
+        rel: EXTERNAL_LINK_REL,
+        target: NEW_TAB_TARGET,
         variant: "secondary",
       }}
     />

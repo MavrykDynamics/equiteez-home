@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { ReactNode } from "react";
+import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 import {
   RButton,
@@ -21,6 +21,8 @@ type RMarketingCtaBaseAction = {
 
 type RMarketingCtaAnchorAction = RMarketingCtaBaseAction & {
   href: string;
+  rel?: string;
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
   to?: never;
 };
 
@@ -75,6 +77,8 @@ function RMarketingCtaButton({ action }: { action: RMarketingCtaAction }) {
       as="a"
       href={action.href}
       iconRight={iconRight}
+      rel={action.rel}
+      target={action.target}
       tone={action.tone ?? "black"}
       variant={action.variant ?? "primary"}
     >

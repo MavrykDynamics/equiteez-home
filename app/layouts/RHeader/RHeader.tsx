@@ -1,7 +1,15 @@
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
+import type { AnchorHTMLAttributes } from "react";
 import { useEffect, useRef, useState } from "react";
 
+import {
+  EQUITEEZ_APP_URL,
+  EQUITEEZ_CONTACT_PATH,
+  EQUITEEZ_DOCS_URL,
+  EXTERNAL_LINK_REL,
+  NEW_TAB_TARGET,
+} from "~/consts/links";
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { RLogo } from "~/lib/atoms/RLogo";
@@ -11,6 +19,8 @@ import styles from "./RHeader.module.css";
 export type RHeaderNavItem = {
   href: string;
   label: string;
+  rel?: string;
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
 };
 
 export type RHeaderProps = {
@@ -24,7 +34,12 @@ export type RHeaderProps = {
 const defaultNavItems: RHeaderNavItem[] = [
   { href: "/solutions", label: "Solutions" },
   { href: "/about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  {
+    href: EQUITEEZ_CONTACT_PATH,
+    label: "Contact",
+    rel: EXTERNAL_LINK_REL,
+    target: NEW_TAB_TARGET,
+  },
 ];
 
 const defaultLandingScrollBoundarySelector =
@@ -47,9 +62,128 @@ function getLandingScrolledState(
   return boundary.getBoundingClientRect().bottom <= (header?.offsetHeight ?? 0);
 }
 
+function isExternalHref(href: string) {
+  return /^https?:\/\//u.test(href);
+}
+
+function RHeaderNavLink({
+  className,
+  href,
+  label,
+  onClick,
+  rel,
+  target,
+}: RHeaderNavItem & {
+  className: string;
+  onClick?: AnchorHTMLAttributes<HTMLAnchorElement>["onClick"];
+}) {
+  const isExternalLink = isExternalHref(href);
+  const resolvedTarget = target ?? (isExternalLink ? NEW_TAB_TARGET : undefined);
+  const resolvedRel =
+    rel ?? (resolvedTarget === NEW_TAB_TARGET ? EXTERNAL_LINK_REL : undefined);
+
+  if (isExternalLink || resolvedTarget === NEW_TAB_TARGET) {
+    return (
+      <a
+        className={className}
+        href={href}
+        onClick={onClick}
+        rel={resolvedRel}
+        target={resolvedTarget}
+      >
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      className={className}
+      onClick={onClick}
+      rel={resolvedRel}
+      target={resolvedTarget}
+      to={href}
+    >
+      {label}
+    </Link>
+  );
+}
+
+function RHeaderLaunchButton({
+  className,
+  launchAppTo,
+  size,
+  tone,
+  variant,
+}: {
+  className?: string;
+  launchAppTo: string;
+  size: "medium" | "small";
+  tone: "white" | "black";
+  variant: "primary" | "secondary";
+}) {
+  if (isExternalHref(launchAppTo)) {
+    return (
+      <RButton
+        as="a"
+        className={className}
+        href={launchAppTo}
+        rel={EXTERNAL_LINK_REL}
+        size={size}
+        target={NEW_TAB_TARGET}
+        tone={tone}
+        variant={variant}
+      >
+        Launch App
+      </RButton>
+    );
+  }
+
+  return (
+    <RButton
+      as="link"
+      className={className}
+      size={size}
+      to={launchAppTo}
+      tone={tone}
+      variant={variant}
+    >
+      Launch App
+    </RButton>
+  );
+}
+
+function RHeaderLaunchMobileLink({
+  launchAppTo,
+  onClick,
+}: {
+  launchAppTo: string;
+  onClick: () => void;
+}) {
+  if (isExternalHref(launchAppTo)) {
+    return (
+      <a
+        className={styles.mobileLink}
+        href={launchAppTo}
+        onClick={onClick}
+        rel={EXTERNAL_LINK_REL}
+        target={NEW_TAB_TARGET}
+      >
+        Launch App
+      </a>
+    );
+  }
+
+  return (
+    <Link className={styles.mobileLink} onClick={onClick} to={launchAppTo}>
+      Launch App
+    </Link>
+  );
+}
+
 export function RHeader({
-  docsHref = "https://docs.equiteez.com/",
-  launchAppTo = "/marketplace",
+  docsHref = EQUITEEZ_DOCS_URL,
+  launchAppTo = EQUITEEZ_APP_URL,
   navItems = defaultNavItems,
   scrollBoundarySelector = defaultLandingScrollBoundarySelector,
   variant = "landing",
@@ -139,9 +273,11 @@ export function RHeader({
 
         <nav aria-label="Primary navigation" className={styles.nav}>
           {navItems.map((item) => (
-            <Link className={styles.navLink} to={item.href} key={item.href}>
-              {item.label}
-            </Link>
+            <RHeaderNavLink
+              {...item}
+              className={styles.navLink}
+              key={item.href}
+            />
           ))}
         </nav>
 
@@ -149,34 +285,28 @@ export function RHeader({
           <a
             className={styles.docsLink}
             href={docsHref}
-            rel="noreferrer"
-            target="_blank"
+            rel={EXTERNAL_LINK_REL}
+            target={NEW_TAB_TARGET}
           >
             Docs
           </a>
-          <RButton
-            as="link"
+          <RHeaderLaunchButton
             className={styles.launchButton}
+            launchAppTo={launchAppTo}
             size="medium"
-            to={launchAppTo}
             tone={launchButtonTone}
             variant={launchButtonVariant}
-          >
-            Launch App
-          </RButton>
+          />
         </div>
 
         <div className={styles.mobileActions}>
-          <RButton
-            as="link"
+          <RHeaderLaunchButton
             className={styles.launchButton}
+            launchAppTo={launchAppTo}
             size="small"
-            to={launchAppTo}
             tone={launchButtonTone}
             variant={launchButtonVariant}
-          >
-            Launch App
-          </RButton>
+          />
           <button
             aria-controls="r-header-mobile-menu"
             aria-expanded={isMenuOpen}
@@ -196,31 +326,26 @@ export function RHeader({
         id="r-header-mobile-menu"
       >
         {navItems.map((item) => (
-          <Link
+          <RHeaderNavLink
+            {...item}
             className={styles.mobileLink}
             key={item.href}
             onClick={closeMenu}
-            to={item.href}
-          >
-            {item.label}
-          </Link>
+          />
         ))}
         <a
           className={styles.mobileLink}
           href={docsHref}
           onClick={closeMenu}
-          rel="noreferrer"
-          target="_blank"
+          rel={EXTERNAL_LINK_REL}
+          target={NEW_TAB_TARGET}
         >
           Docs
         </a>
-        <Link
-          className={styles.mobileLink}
+        <RHeaderLaunchMobileLink
+          launchAppTo={launchAppTo}
           onClick={closeMenu}
-          to={launchAppTo}
-        >
-          Launch App
-        </Link>
+        />
       </div>
     </header>
   );
