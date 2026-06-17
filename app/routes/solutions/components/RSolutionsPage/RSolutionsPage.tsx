@@ -11,6 +11,7 @@ import { RCard } from "~/lib/atoms/RCard";
 import { RChip } from "~/lib/atoms/RChip";
 import { RIcon } from "~/lib/atoms/RIcon";
 import { Reveal } from "~/lib/atoms/Reveal";
+import { RMetricCard } from "~/lib/molecules/RMetricCard";
 import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
@@ -64,9 +65,14 @@ type MarketCard = {
   category: string;
   description: string;
   id: string;
-  metrics?: string[];
+  metrics?: MarketMetric[];
   size: "large" | "small";
   title: string;
+};
+
+type MarketMetric = {
+  label: string;
+  value: string;
 };
 
 type TradingFeature = {
@@ -180,16 +186,24 @@ const marketCards: MarketCard[] = [
     description:
       "Order book, AMM, and Smart Escrow venues with instant on-chain settlement. No counterparty risk, no settlement windows, no intermediaries.",
     id: "trade",
-    metrics: ["Active Markets", "Total Liquidity", "24h Volume"],
+    metrics: [
+      { label: "Active Markets", value: "XXX" },
+      { label: "Total Liquidity", value: "XXX" },
+      { label: "24h Volume", value: "XXX" },
+    ],
     size: "large",
     title: "Trade 24/7",
   },
   {
-    category: "Exchange",
+    category: "instant rwa",
     description:
       "Use your tokenized assets as collateral to borrow against. Integrated with Maven Finance and settled on-chain. The automated liquidity layer for private markets.",
     id: "liquidity",
-    metrics: ["Total Borrowed", "Average APY", "Collateral Locked"],
+    metrics: [
+      { label: "Total Borrowed", value: "XXX" },
+      { label: "Average APY", value: "XXX" },
+      { label: "Collateral Locked", value: "XXX" },
+    ],
     size: "large",
     title: "Liquidity Without Selling",
   },
@@ -209,10 +223,11 @@ const marketCards: MarketCard[] = [
   },
   {
     category: "Yield",
-    description: "Precision payouts on schedule, fully on-chain.",
+    description:
+      "Automated payouts on schedule. Returns flow on-chain, directly to investor wallets",
     id: "yield",
     size: "small",
-    title: "Auto Dividends",
+    title: "Programmable Dividends",
   },
   {
     category: "Portfolio",
@@ -783,11 +798,13 @@ function RAppMarketsSection() {
                 <p>{card.description}</p>
               </div>
               {card.metrics ? (
-                <div className={styles.chipRow}>
+                <div className={styles.marketMetricGrid}>
                   {card.metrics.map((metric) => (
-                    <RChip key={metric} tone="glass">
-                      {metric}
-                    </RChip>
+                    <RMetricCard
+                      key={metric.label}
+                      label={metric.label}
+                      value={metric.value}
+                    />
                   ))}
                 </div>
               ) : null}

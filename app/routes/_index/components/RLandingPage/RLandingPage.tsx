@@ -498,7 +498,7 @@ function RLandingHero() {
             as="link"
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
             tone="white"
-            to="/mondav"
+            to="/enquire"
           >
             Start Tokenizing
           </RButton>
@@ -517,7 +517,7 @@ function RPartnersSection() {
       <div className={styles.sectionInner}>
         <Reveal className={styles.partnersIntro}>
           <p className={styles.eyebrow}>
-            Backed By Leading Institutional Partners
+            BUILT ON MAVRYK NETWORK, WITH STRATEGIC SUPPORT FROM
           </p>
           <div className={styles.partnerLogoGrid}>
             <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
@@ -608,7 +608,7 @@ function REnterpriseSection() {
         </div>
         <Reveal className={styles.enterpriseHeader}>
           <RSectionHeader
-            description="We offer everything needed to launch, manage, and invest in onchain securities — all with the trust and transparency of a regulated platform."
+            description="Everything you need to issue, manage, and invest in digital assets, backed by the transparency and trust of the blockchain."
             eyebrow="Infrastructure"
             heading={["Built For", "Enterprise"]}
           />
@@ -629,24 +629,29 @@ function RAssetsSection() {
             heading="Every Asset Class, One Infrastructure"
           />
         </Reveal>
-        <div className={styles.assetList}>
-          {assetClasses.map((asset, index) => (
-            <Reveal
-              className={styles.assetRow}
-              delay={index * 0.03}
-              key={asset.title}
-              preset="fade"
-            >
-              <div>
-                <h3>{asset.title}</h3>
-                <p>{asset.description}</p>
-              </div>
-              <strong className={styles.assetTotal}>
-                <span>{asset.total}</span>
-                {asset.totalNote ? <small>{asset.totalNote}</small> : null}
-              </strong>
-            </Reveal>
-          ))}
+        <div className={styles.assetListGroup}>
+          <h3 className={styles.assetListTitle}>
+            Global Asset Classes by Market Size
+          </h3>
+          <div className={styles.assetList}>
+            {assetClasses.map((asset, index) => (
+              <Reveal
+                className={styles.assetRow}
+                delay={index * 0.03}
+                key={asset.title}
+                preset="fade"
+              >
+                <div>
+                  <h3>{asset.title}</h3>
+                  <p>{asset.description}</p>
+                </div>
+                <strong className={styles.assetTotal}>
+                  <span>{asset.total}</span>
+                  {asset.totalNote ? <small>{asset.totalNote}</small> : null}
+                </strong>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

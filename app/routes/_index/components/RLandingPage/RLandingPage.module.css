@@ -521,6 +521,24 @@
   flex-direction: column;
 }
 
+.assetListGroup {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--r-space-4);
+}
+
+.assetListTitle {
+  margin: 0;
+  color: var(--r-color-neutral-black);
+  font-family: var(--r-font-heading);
+  font-size: var(--r-font-size-heading-h7);
+  font-weight: var(--r-font-weight-medium);
+  letter-spacing: var(--r-letter-spacing-heading);
+  line-height: var(--r-line-height-heading-h7);
+  text-align: center;
+}
+
 .assetsSection .splitSectionInner {
   grid-template-columns: 516px 600px;
   gap: var(--r-space-10);

@@ -243,6 +243,14 @@ Each reusable `R*` component folder should normally contain:
 - Reusability notes: Use for marketing and informational redesign sections that follow the Equiteez 2.0 heading rhythm.
 - Related tokens: `--r-font-heading`, `--r-font-body`, `--r-font-size-heading-*`, `--r-line-height-heading-*`, `--r-font-size-body-*`, `--r-color-neutral-*`
 
+## RMetricCard
+
+- Purpose: Small redesign metric card with label and value text for compact stats.
+- Location: `app/lib/molecules/RMetricCard/RMetricCard.tsx`
+- Styles: `app/lib/molecules/RMetricCard/RMetricCard.module.css`
+- Reusability notes: Use for compact two-line metric summaries before recreating route-specific stat cards.
+- Related tokens: `--r-font-body`, `--r-font-size-body-*`, `--r-line-height-body-*`, `--r-color-neutral-*`, `--r-space-*`
+
 ## RHeader
 
 - Purpose: Shared fixed redesign header with landing and solutions variants, scrolled state, desktop navigation, and mobile-ready menu structure.

@@ -439,11 +439,11 @@
   line-height: var(--r-line-height-body-sm);
 }
 
-.chipRow {
-  display: flex;
-  flex-wrap: wrap;
+.marketMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 148px), 1fr));
   gap: var(--r-space-3);
-  align-items: center;
+  margin-top: var(--r-space-6);
 }
 
 .operatorCardGrid {
@@ -696,6 +696,10 @@
 }
 
 @media (max-width: 1180px) {
+  .marketMetricGrid {
+    margin-top: var(--r-space-5);
+  }
+
   .page {
     padding-top: 62px;
   }
