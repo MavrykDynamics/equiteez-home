@@ -13,6 +13,7 @@ import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import styles from "./RMarketingCtaSection.module.css";
 
 type RMarketingCtaBaseAction = {
+  disabled?: boolean;
   iconRight?: ReactNode;
   label: string;
   tone?: RButtonTone;
@@ -62,6 +63,7 @@ function RMarketingCtaButton({ action }: { action: RMarketingCtaAction }) {
     return (
       <RButton
         as="link"
+        disabled={action.disabled}
         iconRight={iconRight}
         to={action.to}
         tone={action.tone ?? "black"}
@@ -75,6 +77,7 @@ function RMarketingCtaButton({ action }: { action: RMarketingCtaAction }) {
   return (
     <RButton
       as="a"
+      disabled={action.disabled}
       href={action.href}
       iconRight={iconRight}
       rel={action.rel}

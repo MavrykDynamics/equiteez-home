@@ -87,6 +87,12 @@
   color: var(--r-color-neutral-700);
 }
 
+.disabledLink,
+.disabledLink:hover {
+  color: var(--r-color-neutral-500);
+  cursor: not-allowed;
+}
+
 .bottom {
   display: flex;
   align-items: center;

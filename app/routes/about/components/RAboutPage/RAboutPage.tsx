@@ -4,6 +4,7 @@ import type { ComponentType, SVGProps } from "react";
 import {
   EQUITEEZ_CONTACT_PATH,
   EXTERNAL_LINK_REL,
+  IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
@@ -378,6 +379,7 @@ export function RAboutPage() {
               label: "Get In Touch",
             }}
             secondaryAction={{
+              disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
               iconRight: null,
               label: "Launch App",
               to: "/marketplace",

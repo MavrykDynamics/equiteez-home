@@ -95,6 +95,7 @@ export const Button: FC<ButtonProps> = ({
           ),
         className
       )}
+      disabled={disabled || isLoading}
       onClick={isLoading ? undefined : onClick}
       onSubmit={isLoading ? undefined : onSubmit}
       {...rest}
