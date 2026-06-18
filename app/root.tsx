@@ -5,9 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
+  useNavigationType,
   useRouteError,
 } from "@remix-run/react";
 import { LinksFunction } from "@remix-run/node";
+import { useEffect, useLayoutEffect, useRef } from "react";
 // providers
 
 // global styles
@@ -42,6 +45,9 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
+const useIsomorphicLayoutEffect =
+  typeof document === "undefined" ? useEffect : useLayoutEffect;
+
 // export const loader = async () => {
 //   const tokens = await fetchTokensData();
 
@@ -57,6 +63,68 @@ export const links: LinksFunction = () => [
 //     fiatToTezos: {},
 //   });
 // };
+
+function RouteScrollReset() {
+  const location = useLocation();
+  const navigationType = useNavigationType();
+  const routeKey = `${location.pathname}${location.search}`;
+  const previousRouteKeyRef = useRef(routeKey);
+
+  const resetDocumentScroll = () => {
+    const previousHtmlScrollBehavior =
+      document.documentElement.style.scrollBehavior;
+    const previousBodyScrollBehavior = document.body.style.scrollBehavior;
+
+    document.documentElement.style.scrollBehavior = "auto";
+    document.body.style.scrollBehavior = "auto";
+
+    try {
+      window.scrollTo(0, 0);
+
+      const scrollTargets = [
+        document.scrollingElement,
+        document.documentElement,
+        document.body,
+        document.getElementById("root"),
+      ];
+
+      scrollTargets.forEach((scrollTarget) => {
+        if (!scrollTarget) {
+          return;
+        }
+
+        scrollTarget.scrollTop = 0;
+        scrollTarget.scrollLeft = 0;
+      });
+    } finally {
+      document.documentElement.style.scrollBehavior =
+        previousHtmlScrollBehavior;
+      document.body.style.scrollBehavior = previousBodyScrollBehavior;
+    }
+  };
+
+  useIsomorphicLayoutEffect(() => {
+    const previousRouteKey = previousRouteKeyRef.current;
+    previousRouteKeyRef.current = routeKey;
+
+    if (
+      previousRouteKey === routeKey ||
+      location.hash ||
+      navigationType === "POP"
+    ) {
+      return;
+    }
+
+    resetDocumentScroll();
+    const animationFrameId = window.requestAnimationFrame(resetDocumentScroll);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [location.hash, navigationType, routeKey]);
+
+  return null;
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   // const {
@@ -104,9 +172,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* </AppProvider> */}
             <ToasterMessages />
           </ToasterProvider>
-          <ScrollRestoration />
-          <Scripts />
         </div>
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );
@@ -115,6 +183,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
+      <RouteScrollReset />
       <Outlet />
     </>
   );

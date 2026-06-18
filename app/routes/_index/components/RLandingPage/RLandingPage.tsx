@@ -7,6 +7,7 @@ import {
   EQUITEEZ_APP_URL,
   EQUITEEZ_GET_IN_TOUCH_URL,
   EXTERNAL_LINK_REL,
+  IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
   PARTNER_URLS,
 } from "~/consts/links";
@@ -537,6 +538,7 @@ function RLandingHero() {
             target={NEW_TAB_TARGET}
             tone="white"
             variant="secondary"
+            disabled
           >
             Explore App
           </RButton>
@@ -801,6 +803,7 @@ function RGetInTouchSection() {
           </RButton>
           <RButton
             as="a"
+            disabled={IS_EQUITEEZ_APP_LAUNCH_DISABLED}
             href={EQUITEEZ_APP_URL}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}

@@ -118,7 +118,8 @@
   border-color: var(--r-header-launch-button-border);
 }
 
-.header[data-variant="landing"] .launchButton:hover:not(:disabled) {
+.header[data-variant="landing"]
+  .launchButton:hover:not(:disabled):not([aria-disabled="true"]) {
   background-color: var(--r-header-launch-button-background);
   border-color: var(--r-header-launch-button-border);
 }
@@ -132,10 +133,24 @@
   color: var(--r-color-neutral-white);
 }
 
+.header[data-variant="landing"] .launchButton:disabled,
+.header[data-variant="landing"] .launchButton[aria-disabled="true"] {
+  color: var(--r-text-disabled-black);
+  background-color: transparent;
+  border-color: var(--r-border-secondary-button-disabled);
+}
+
 .navLink:hover,
 .docsLink:hover,
 .mobileLink:hover {
   opacity: 0.72;
+}
+
+.disabledMobileLink,
+.disabledMobileLink:hover {
+  color: var(--r-color-neutral-500);
+  opacity: 1;
+  cursor: not-allowed;
 }
 
 .menuButton {

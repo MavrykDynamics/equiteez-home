@@ -8,6 +8,7 @@ import {
   EQUITEEZ_CONTACT_PATH,
   EQUITEEZ_DOCS_URL,
   EXTERNAL_LINK_REL,
+  IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { RButton } from "~/lib/atoms/RButton";
@@ -25,6 +26,7 @@ export type RHeaderNavItem = {
 
 export type RHeaderProps = {
   docsHref?: string;
+  isLaunchAppDisabled?: boolean;
   launchAppTo?: string;
   navItems?: RHeaderNavItem[];
   scrollBoundarySelector?: string;
@@ -78,7 +80,8 @@ function RHeaderNavLink({
   onClick?: AnchorHTMLAttributes<HTMLAnchorElement>["onClick"];
 }) {
   const isExternalLink = isExternalHref(href);
-  const resolvedTarget = target ?? (isExternalLink ? NEW_TAB_TARGET : undefined);
+  const resolvedTarget =
+    target ?? (isExternalLink ? NEW_TAB_TARGET : undefined);
   const resolvedRel =
     rel ?? (resolvedTarget === NEW_TAB_TARGET ? EXTERNAL_LINK_REL : undefined);
 
@@ -111,17 +114,33 @@ function RHeaderNavLink({
 
 function RHeaderLaunchButton({
   className,
+  disabled,
   launchAppTo,
   size,
   tone,
   variant,
 }: {
   className?: string;
+  disabled: boolean;
   launchAppTo: string;
   size: "medium" | "small";
   tone: "white" | "black";
   variant: "primary" | "secondary";
 }) {
+  if (disabled) {
+    return (
+      <RButton
+        className={className}
+        disabled
+        size={size}
+        tone={tone}
+        variant={variant}
+      >
+        Launch App
+      </RButton>
+    );
+  }
+
   if (isExternalHref(launchAppTo)) {
     return (
       <RButton
@@ -154,12 +173,25 @@ function RHeaderLaunchButton({
 }
 
 function RHeaderLaunchMobileLink({
+  disabled,
   launchAppTo,
   onClick,
 }: {
+  disabled: boolean;
   launchAppTo: string;
   onClick: () => void;
 }) {
+  if (disabled) {
+    return (
+      <span
+        aria-disabled="true"
+        className={clsx(styles.mobileLink, styles.disabledMobileLink)}
+      >
+        Launch App
+      </span>
+    );
+  }
+
   if (isExternalHref(launchAppTo)) {
     return (
       <a
@@ -183,6 +215,7 @@ function RHeaderLaunchMobileLink({
 
 export function RHeader({
   docsHref = EQUITEEZ_DOCS_URL,
+  isLaunchAppDisabled = IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   launchAppTo = EQUITEEZ_APP_URL,
   navItems = defaultNavItems,
   scrollBoundarySelector = defaultLandingScrollBoundarySelector,
@@ -292,6 +325,7 @@ export function RHeader({
           </a>
           <RHeaderLaunchButton
             className={styles.launchButton}
+            disabled={isLaunchAppDisabled}
             launchAppTo={launchAppTo}
             size="medium"
             tone={launchButtonTone}
@@ -302,6 +336,7 @@ export function RHeader({
         <div className={styles.mobileActions}>
           <RHeaderLaunchButton
             className={styles.launchButton}
+            disabled={isLaunchAppDisabled}
             launchAppTo={launchAppTo}
             size="small"
             tone={launchButtonTone}
@@ -343,6 +378,7 @@ export function RHeader({
           Docs
         </a>
         <RHeaderLaunchMobileLink
+          disabled={isLaunchAppDisabled}
           launchAppTo={launchAppTo}
           onClick={closeMenu}
         />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "@remix-run/react";
 import { Logo } from "../../Logo";
 import { Button } from "~/lib/atoms/Button";
 
@@ -10,7 +9,6 @@ import clsx from "clsx";
 import styles from "./header.module.css";
 import { MobileList } from "./components/MobileList";
 import { links } from "./header.consts";
-import { linker } from "~/a11y/linker";
 import { CustomLink } from "~/a11y/CustomLink";
 
 export const Header = () => {
@@ -36,9 +34,9 @@ export const Header = () => {
 
       <div className={clsx(styles.popupWrapper, open && styles.active)}>
         <MobileList links={links} />
-        <Link to={linker("/")} target="_blank" rel="noreferrer">
-          <Button className="mb-6 mx-auto min-w-[247px]">Launch App</Button>
-        </Link>
+        <Button className="mb-6 mx-auto min-w-[247px]" disabled>
+          Launch App
+        </Button>
       </div>
     </section>
   );
@@ -62,9 +60,9 @@ const HeaderLinksBlock = () => {
         </CustomLink>
       ))}
 
-      <Link to={linker("/")} target="_black" referrerPolicy="no-referrer">
-        <Button className="py-[10px]">Launch App</Button>
-      </Link>
+      <Button className="py-[10px]" disabled>
+        Launch App
+      </Button>
     </header>
   );
 };

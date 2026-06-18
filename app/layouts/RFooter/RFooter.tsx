@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import clsx from "clsx";
 import type { AnchorHTMLAttributes } from "react";
 
 import {
@@ -7,6 +8,7 @@ import {
   EQUITEEZ_DOCS_URL,
   EQUITEEZ_MARKETPLACE_URL,
   EXTERNAL_LINK_REL,
+  IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { RLogo } from "~/lib/atoms/RLogo";
@@ -16,6 +18,7 @@ import mavrykLogoSrc from "app/icons/maven-logo.svg";
 import styles from "./RFooter.module.css";
 
 export type RFooterLink = {
+  disabled?: boolean;
   href: string;
   label: string;
   rel?: string;
@@ -35,7 +38,6 @@ const defaultFooterGroups: RFooterGroup[] = [
   {
     title: "Platform",
     links: [
-      { href: "#contact", label: "For Companies" },
       {
         href: EQUITEEZ_MARKETPLACE_URL,
         label: "Marketplace",
@@ -43,6 +45,7 @@ const defaultFooterGroups: RFooterGroup[] = [
         target: NEW_TAB_TARGET,
       },
       {
+        disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
         href: EQUITEEZ_APP_URL,
         label: "Launch App",
         rel: EXTERNAL_LINK_REL,
@@ -106,9 +109,21 @@ function isExternalHref(href: string) {
   return /^https?:\/\//u.test(href);
 }
 
-function RFooterLinkItem({ href, label, rel, target }: RFooterLink) {
+function RFooterLinkItem({ disabled, href, label, rel, target }: RFooterLink) {
+  if (disabled) {
+    return (
+      <span
+        aria-disabled="true"
+        className={clsx(styles.link, styles.disabledLink)}
+      >
+        {label}
+      </span>
+    );
+  }
+
   const isExternalLink = isExternalHref(href);
-  const resolvedTarget = target ?? (isExternalLink ? NEW_TAB_TARGET : undefined);
+  const resolvedTarget =
+    target ?? (isExternalLink ? NEW_TAB_TARGET : undefined);
   const resolvedRel =
     rel ?? (resolvedTarget === NEW_TAB_TARGET ? EXTERNAL_LINK_REL : undefined);
 
@@ -159,6 +174,7 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
                 <div className={styles.groupLinks}>
                   {group.links.map((link) => (
                     <RFooterLinkItem
+                      disabled={link.disabled}
                       href={link.href}
                       key={`${group.title}-${link.label}`}
                       label={link.label}

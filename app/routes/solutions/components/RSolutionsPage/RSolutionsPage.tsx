@@ -9,6 +9,7 @@ import {
   EQUITEEZ_CONTACT_PATH,
   EQUITEEZ_GET_IN_TOUCH_URL,
   EXTERNAL_LINK_REL,
+  IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
@@ -807,6 +808,7 @@ function RTradingVenueSection() {
               target="_black"
               referrerPolicy="no-referrer"
               tone="black"
+              disabled
             >
               Explore App
             </RButton>
@@ -865,6 +867,7 @@ function RSolutionsCtaSection() {
         target: NEW_TAB_TARGET,
       }}
       secondaryAction={{
+        disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
         href: EQUITEEZ_APP_URL,
         iconRight: null,
         label: "Launch App",
