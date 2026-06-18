@@ -38,12 +38,7 @@ const defaultFooterGroups: RFooterGroup[] = [
   {
     title: "Platform",
     links: [
-      {
-        href: EQUITEEZ_MARKETPLACE_URL,
-        label: "Marketplace",
-        rel: EXTERNAL_LINK_REL,
-        target: NEW_TAB_TARGET,
-      },
+      { href: "/solutions", label: "Solutions" },
       {
         disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
         href: EQUITEEZ_APP_URL,
