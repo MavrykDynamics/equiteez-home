@@ -7,7 +7,6 @@ import { useReducedMotion } from "framer-motion";
 import {
   EQUITEEZ_APP_URL,
   EQUITEEZ_CONTACT_PATH,
-  EQUITEEZ_GET_IN_TOUCH_URL,
   EXTERNAL_LINK_REL,
   IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
@@ -25,7 +24,10 @@ import { RFeatureCard } from "~/lib/organisms/RFeatureCard";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
-import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
+import {
+  RMarketingCtaSection,
+  type RMarketingCtaAction,
+} from "~/templates/RMarketingCtaSection";
 
 import codeArrowsIcon from "app/icons/code-arrows.svg";
 import peopleIcon from "app/icons/people.svg";
@@ -93,6 +95,23 @@ const solutionsNavItems: RHeaderNavItem[] = [
     target: NEW_TAB_TARGET,
   },
 ];
+
+const solutionsCtaPrimaryAction = {
+  href: EQUITEEZ_CONTACT_PATH,
+  label: "Get In Touch",
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+} satisfies RMarketingCtaAction;
+
+const solutionsCtaSecondaryAction = {
+  disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
+  href: EQUITEEZ_APP_URL,
+  iconRight: null,
+  label: "Launch App",
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+  variant: "secondary",
+} satisfies RMarketingCtaAction;
 
 const heroTabs: HeroTab[] = [
   {
@@ -860,21 +879,8 @@ function RSolutionsCtaSection() {
       description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
       heading={["Built For The Future Of", "Capital Markets"]}
       id="contact"
-      primaryAction={{
-        href: EQUITEEZ_GET_IN_TOUCH_URL,
-        label: "Get In Touch",
-        rel: EXTERNAL_LINK_REL,
-        target: NEW_TAB_TARGET,
-      }}
-      secondaryAction={{
-        disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
-        href: EQUITEEZ_APP_URL,
-        iconRight: null,
-        label: "Launch App",
-        rel: EXTERNAL_LINK_REL,
-        target: NEW_TAB_TARGET,
-        variant: "secondary",
-      }}
+      primaryAction={solutionsCtaPrimaryAction}
+      secondaryAction={solutionsCtaSecondaryAction}
     />
   );
 }

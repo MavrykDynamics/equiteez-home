@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import {
   EQUITEEZ_APP_URL,
-  EQUITEEZ_GET_IN_TOUCH_URL,
+  EQUITEEZ_CONTACT_PATH,
   EXTERNAL_LINK_REL,
   IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
@@ -795,7 +795,7 @@ function RGetInTouchSection() {
         <Reveal className={styles.contactActions} delay={0.05}>
           <RButton
             as="a"
-            href={EQUITEEZ_GET_IN_TOUCH_URL}
+            href={EQUITEEZ_CONTACT_PATH}
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
