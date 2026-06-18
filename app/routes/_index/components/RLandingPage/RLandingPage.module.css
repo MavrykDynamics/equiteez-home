@@ -772,12 +772,16 @@
   .hero {
     min-height: 100svh;
     justify-content: flex-start;
-    padding: 342px var(--r-space-8) var(--r-space-16);
+    padding: calc(280px + var(--r-space-16)) var(--r-space-8) var(--r-space-16);
   }
 
   .heroTitle {
     font-size: var(--r-font-size-heading-h3);
     line-height: var(--r-line-height-heading-h3);
+  }
+
+  .heroContent {
+    align-self: self-start;
   }
 
   .heroDescription {
