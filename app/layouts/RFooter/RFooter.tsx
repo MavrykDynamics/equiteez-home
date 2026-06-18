@@ -192,7 +192,7 @@ export function RFooter({ groups = defaultFooterGroups }: RFooterProps) {
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
           >
-            <span>Built on</span>
+            <span>Built on&nbsp;</span>
             <img
               alt="MAVRYK"
               className={styles.mavrykLogo}

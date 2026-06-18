@@ -603,12 +603,14 @@ function RPlatformSection() {
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
               </div>
-              <RIcon
-                aria-hidden
-                className={styles.solutionIcon}
-                name="arrow-long-up-right"
-                size="medium"
-              />
+              <span className={styles.solutionIconWrapper}>
+                <RIcon
+                  aria-hidden
+                  className={styles.solutionIcon}
+                  name="arrow-long-up-right"
+                  size="medium"
+                />
+              </span>
             </Reveal>
           ))}
         </div>
@@ -635,10 +637,10 @@ function REnterpriseSection() {
               <div className={styles.enterpriseCardContent}>
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
-                <a className={styles.learnMoreLink} href="#contact">
+                {/* <a className={styles.learnMoreLink} href="#contact">
                   Learn More
                   <RIcon aria-hidden name="arrow-long-right" size="small" />
-                </a>
+                </a> */}
               </div>
             </Reveal>
           ))}
