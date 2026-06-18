@@ -407,8 +407,11 @@
   line-height: var(--r-line-height-body-sm);
 }
 
-.solutionIcon {
+.solutionIconWrapper {
   color: var(--r-color-neutral-400);
+}
+
+.solutionIcon {
   transition: color var(--r-transition-duration-base) ease;
 }
 
@@ -419,7 +422,7 @@
 .enterpriseInner,
 .splitSectionInner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 600px);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 516px);
   gap: clamp(var(--r-space-10), 7vw, 124px);
   align-items: start;
 }
@@ -931,10 +934,6 @@
   .enterpriseCard p {
     font-size: var(--r-font-size-body-s);
     line-height: var(--r-line-height-body-s);
-  }
-
-  .enterpriseCard:nth-child(even) .enterpriseCardContent {
-    padding-bottom: 18px;
   }
 
   .learnMoreLink {
