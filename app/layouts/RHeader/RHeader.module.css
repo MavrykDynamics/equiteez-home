@@ -1,6 +1,9 @@
 @import "../../styles/breakpoints.css";
 
 .header {
+  --r-header-divider-border: 1px solid
+    var(--surface-divider-white-bg, #E6E6E6);
+
   position: fixed;
   top: 0;
   right: 0;
@@ -25,13 +28,20 @@
 .light {
   color: var(--r-color-neutral-black);
   background-color: rgba(255, 255, 255, 0.98);
-  border-bottom: var(--r-border-width-sm) solid transparent;
+  border-bottom: var(--r-header-divider-border);
   box-shadow: none;
   backdrop-filter: blur(18px);
 }
 
 .header[data-variant="landing"][data-scrolled="true"],
-.header[data-variant="landing"].scrolled,
+.header[data-variant="landing"].scrolled {
+  color: var(--r-color-neutral-black);
+  background-color: var(--r-color-neutral-white);
+  border-bottom: var(--r-header-divider-border);
+  box-shadow: none;
+  backdrop-filter: blur(18px);
+}
+
 .menuOpen {
   color: var(--r-color-neutral-black);
   background-color: var(--r-surface-neutral-glass-subtle);
@@ -44,7 +54,7 @@
 .header[data-variant="solutions"].scrolled {
   color: var(--r-color-neutral-black);
   background-color: var(--r-surface-neutral-glass-subtle);
-  border-bottom: var(--r-border-width-sm) solid transparent;
+  border-bottom: var(--r-header-divider-border);
   box-shadow: none;
   backdrop-filter: blur(18px);
 }
