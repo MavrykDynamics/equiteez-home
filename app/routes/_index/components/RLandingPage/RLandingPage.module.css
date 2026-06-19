@@ -722,6 +722,7 @@
   height: 48px;
   object-fit: cover;
   border-radius: 50%;
+  object-position: top;
 }
 
 .reviewAuthor h3 {

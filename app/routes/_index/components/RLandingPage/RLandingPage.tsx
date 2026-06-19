@@ -47,9 +47,9 @@ import enterpriseIssuanceImage from "app/assets/redesign/landing/enterprise-issu
 import enterpriseTradingImage from "app/assets/redesign/landing/enterprise-trading.webp";
 import enterpriseLendingImage from "app/assets/redesign/landing/enterprise-lending.webp";
 import enterpriseSettlementImage from "app/assets/redesign/landing/enterprise-settlement.webp";
-import avatarLarryFink from "app/assets/redesign/landing/avatar-larry-fink.png";
-import avatarJennyJohnson from "app/assets/redesign/landing/avatar-jenny-johnson.png";
-import avatarMichaelSaylor from "app/assets/redesign/landing/avatar-michael-saylor.png";
+import avatarLarryFink from "app/assets/redesign/landing/avatar-larry.webp";
+import avatarJennyJohnson from "app/assets/redesign/landing/avatar-jenny.webp";
+import avatarMichaelSaylor from "app/assets/redesign/landing/avatar-michael.webp";
 
 import styles from "./RLandingPage.module.css";
 
