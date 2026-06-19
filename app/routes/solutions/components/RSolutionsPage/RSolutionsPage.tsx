@@ -2,7 +2,6 @@ import clsx from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 
 import {
   EQUITEEZ_APP_URL,
@@ -12,7 +11,6 @@ import {
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
-import { getMotionAwareScrollBehavior } from "~/lib/animations/animations";
 import { RButton } from "~/lib/atoms/RButton";
 import { RCard } from "~/lib/atoms/RCard";
 import { RChip } from "~/lib/atoms/RChip";
@@ -268,7 +266,6 @@ const tradingFeatures: TradingFeature[] = [
   },
 ];
 
-const suiteObserverThresholds = [0, 0.25, 0.5, 0.75, 1];
 const suiteSelectionBand = {
   bottom: 0.68,
   top: 0.32,
@@ -485,9 +482,8 @@ function RTechnologyStackSection() {
 function RSuiteSection() {
   const [activeStepId, setActiveStepId] = useState(suiteSteps[0].id);
   const activeStepIdRef = useRef(activeStepId);
-  const observerFrameRef = useRef<number | null>(null);
+  const syncFrameRef = useRef<number | null>(null);
   const stepRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const shouldReduceMotion = useReducedMotion();
   const activeStep = useMemo(
     () => suiteSteps.find((step) => step.id === activeStepId) ?? suiteSteps[0],
     [activeStepId]
@@ -505,12 +501,8 @@ function RSuiteSection() {
   }, [activeStepId]);
 
   useEffect(() => {
-    if (!("IntersectionObserver" in window)) {
-      return undefined;
-    }
-
     const syncActiveStep = () => {
-      observerFrameRef.current = null;
+      syncFrameRef.current = null;
       const candidates = suiteSteps
         .map((step) => {
           const node = stepRefs.current[step.id];
@@ -545,50 +537,39 @@ function RSuiteSection() {
     };
 
     const scheduleActiveStepSync = () => {
-      if (observerFrameRef.current !== null) {
+      if (syncFrameRef.current !== null) {
         return;
       }
 
-      observerFrameRef.current = window.requestAnimationFrame(syncActiveStep);
+      syncFrameRef.current = window.requestAnimationFrame(syncActiveStep);
     };
 
-    const observer = new IntersectionObserver(
-      () => {
-        scheduleActiveStepSync();
-      },
-      {
-        rootMargin: "-24% 0px -24% 0px",
-        threshold: suiteObserverThresholds,
-      }
-    );
+    const scrollTargets: EventTarget[] = [window, document.body];
 
-    Object.values(stepRefs.current).forEach((node) => {
-      if (node) {
-        observer.observe(node);
-      }
+    scrollTargets.forEach((scrollTarget) => {
+      scrollTarget.addEventListener("scroll", scheduleActiveStepSync, {
+        passive: true,
+      });
     });
     window.addEventListener("resize", scheduleActiveStepSync);
     scheduleActiveStepSync();
 
     return () => {
-      observer.disconnect();
+      scrollTargets.forEach((scrollTarget) => {
+        scrollTarget.removeEventListener("scroll", scheduleActiveStepSync);
+      });
       window.removeEventListener("resize", scheduleActiveStepSync);
 
-      if (observerFrameRef.current !== null) {
-        window.cancelAnimationFrame(observerFrameRef.current);
+      if (syncFrameRef.current !== null) {
+        window.cancelAnimationFrame(syncFrameRef.current);
+        syncFrameRef.current = null;
       }
     };
   }, [setActiveStep]);
 
   const handleStepClick = useCallback(
-    (stepId: string) => {
-      setActiveStep(stepId);
-      stepRefs.current[stepId]?.scrollIntoView({
-        behavior: getMotionAwareScrollBehavior(shouldReduceMotion),
-        block: "center",
-      });
-    },
-    [setActiveStep, shouldReduceMotion]
+    (stepId: string) => setActiveStep(stepId),
+    [setActiveStep]
   );
 
   return (
