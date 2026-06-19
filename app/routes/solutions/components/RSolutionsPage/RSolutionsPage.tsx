@@ -2,18 +2,15 @@ import clsx from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 
 import {
   EQUITEEZ_APP_URL,
   EQUITEEZ_CONTACT_PATH,
-  EQUITEEZ_GET_IN_TOUCH_URL,
   EXTERNAL_LINK_REL,
   IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
 } from "~/consts/links";
 import { Container } from "~/lib/atoms/Container";
-import { getMotionAwareScrollBehavior } from "~/lib/animations/animations";
 import { RButton } from "~/lib/atoms/RButton";
 import { RCard } from "~/lib/atoms/RCard";
 import { RChip } from "~/lib/atoms/RChip";
@@ -25,7 +22,10 @@ import { RFeatureCard } from "~/lib/organisms/RFeatureCard";
 import { RTabSwitcher } from "~/lib/organisms/RTabSwitcher";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
-import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
+import {
+  RMarketingCtaSection,
+  type RMarketingCtaAction,
+} from "~/templates/RMarketingCtaSection";
 
 import codeArrowsIcon from "app/icons/code-arrows.svg";
 import peopleIcon from "app/icons/people.svg";
@@ -93,6 +93,23 @@ const solutionsNavItems: RHeaderNavItem[] = [
     target: NEW_TAB_TARGET,
   },
 ];
+
+const solutionsCtaPrimaryAction = {
+  href: EQUITEEZ_CONTACT_PATH,
+  label: "Get In Touch",
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+} satisfies RMarketingCtaAction;
+
+const solutionsCtaSecondaryAction = {
+  disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
+  href: EQUITEEZ_APP_URL,
+  iconRight: null,
+  label: "Launch App",
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+  variant: "secondary",
+} satisfies RMarketingCtaAction;
 
 const heroTabs: HeroTab[] = [
   {
@@ -249,7 +266,6 @@ const tradingFeatures: TradingFeature[] = [
   },
 ];
 
-const suiteObserverThresholds = [0, 0.25, 0.5, 0.75, 1];
 const suiteSelectionBand = {
   bottom: 0.68,
   top: 0.32,
@@ -466,9 +482,8 @@ function RTechnologyStackSection() {
 function RSuiteSection() {
   const [activeStepId, setActiveStepId] = useState(suiteSteps[0].id);
   const activeStepIdRef = useRef(activeStepId);
-  const observerFrameRef = useRef<number | null>(null);
+  const syncFrameRef = useRef<number | null>(null);
   const stepRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const shouldReduceMotion = useReducedMotion();
   const activeStep = useMemo(
     () => suiteSteps.find((step) => step.id === activeStepId) ?? suiteSteps[0],
     [activeStepId]
@@ -486,12 +501,8 @@ function RSuiteSection() {
   }, [activeStepId]);
 
   useEffect(() => {
-    if (!("IntersectionObserver" in window)) {
-      return undefined;
-    }
-
     const syncActiveStep = () => {
-      observerFrameRef.current = null;
+      syncFrameRef.current = null;
       const candidates = suiteSteps
         .map((step) => {
           const node = stepRefs.current[step.id];
@@ -526,50 +537,39 @@ function RSuiteSection() {
     };
 
     const scheduleActiveStepSync = () => {
-      if (observerFrameRef.current !== null) {
+      if (syncFrameRef.current !== null) {
         return;
       }
 
-      observerFrameRef.current = window.requestAnimationFrame(syncActiveStep);
+      syncFrameRef.current = window.requestAnimationFrame(syncActiveStep);
     };
 
-    const observer = new IntersectionObserver(
-      () => {
-        scheduleActiveStepSync();
-      },
-      {
-        rootMargin: "-24% 0px -24% 0px",
-        threshold: suiteObserverThresholds,
-      }
-    );
+    const scrollTargets: EventTarget[] = [window, document.body];
 
-    Object.values(stepRefs.current).forEach((node) => {
-      if (node) {
-        observer.observe(node);
-      }
+    scrollTargets.forEach((scrollTarget) => {
+      scrollTarget.addEventListener("scroll", scheduleActiveStepSync, {
+        passive: true,
+      });
     });
     window.addEventListener("resize", scheduleActiveStepSync);
     scheduleActiveStepSync();
 
     return () => {
-      observer.disconnect();
+      scrollTargets.forEach((scrollTarget) => {
+        scrollTarget.removeEventListener("scroll", scheduleActiveStepSync);
+      });
       window.removeEventListener("resize", scheduleActiveStepSync);
 
-      if (observerFrameRef.current !== null) {
-        window.cancelAnimationFrame(observerFrameRef.current);
+      if (syncFrameRef.current !== null) {
+        window.cancelAnimationFrame(syncFrameRef.current);
+        syncFrameRef.current = null;
       }
     };
   }, [setActiveStep]);
 
   const handleStepClick = useCallback(
-    (stepId: string) => {
-      setActiveStep(stepId);
-      stepRefs.current[stepId]?.scrollIntoView({
-        behavior: getMotionAwareScrollBehavior(shouldReduceMotion),
-        block: "center",
-      });
-    },
-    [setActiveStep, shouldReduceMotion]
+    (stepId: string) => setActiveStep(stepId),
+    [setActiveStep]
   );
 
   return (
@@ -860,21 +860,8 @@ function RSolutionsCtaSection() {
       description="Whether you're tokenizing assets or investing in them, Equiteez gives you the full institutional stack on day one."
       heading={["Built For The Future Of", "Capital Markets"]}
       id="contact"
-      primaryAction={{
-        href: EQUITEEZ_GET_IN_TOUCH_URL,
-        label: "Get In Touch",
-        rel: EXTERNAL_LINK_REL,
-        target: NEW_TAB_TARGET,
-      }}
-      secondaryAction={{
-        disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
-        href: EQUITEEZ_APP_URL,
-        iconRight: null,
-        label: "Launch App",
-        rel: EXTERNAL_LINK_REL,
-        target: NEW_TAB_TARGET,
-        variant: "secondary",
-      }}
+      primaryAction={solutionsCtaPrimaryAction}
+      secondaryAction={solutionsCtaSecondaryAction}
     />
   );
 }

@@ -127,6 +127,7 @@
   position: relative;
   box-sizing: border-box;
   background: var(--r-color-neutral-white);
+  border-radius: var(--r-radius-md);
 }
 
 .mockSwapCard {
@@ -223,7 +224,6 @@
   border-radius: 12px;
   text-align: left;
   cursor: pointer;
-  scroll-margin-top: 130px;
   transition:
     background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),
     color var(--r-motion-duration-base) var(--r-motion-ease-premium),
@@ -626,6 +626,17 @@
   }
 }
 
+@media (min-width: 1181px) {
+  .tradingLayout {
+    grid-template-rows: max-content 1fr;
+    gap: var(--r-space-8);
+  }
+
+  .tradingFeatureList {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 1180px) {
   .marketMetricGrid {
     margin-top: var(--r-space-5);
@@ -656,7 +667,12 @@
   }
 
   .heroMockFrame {
-    --solutions-hero-image-height: 454px;
+    --solutions-hero-image-height: 456px;
+    width: min(100%, 590px);
+  }
+
+  .heroMockImage {
+    object-fit: contain;
   }
 
   .suiteMockColumn,
@@ -858,7 +874,22 @@
   }
 }
 
+@media (max-width: 650px) {
+  .heroMockFrame {
+    width: 100%;
+    --solutions-hero-image-height: 249px;
+  }
+
+  .heroMockImage {
+    object-fit: cover;
+  }
+}
+
 @media (max-width: 480px) {
+  .browserMockFrame {
+    border-radius: 12px;
+  }
+
   .sectionShell {
     padding: var(--r-space-14) var(--r-space-4);
   }

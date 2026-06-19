@@ -14,7 +14,10 @@ import { RSectionHeader } from "~/lib/molecules/RSectionHeader";
 import { RFeatureCard } from "~/lib/organisms/RFeatureCard";
 import { RFooter } from "~/layouts/RFooter";
 import { RHeader, type RHeaderNavItem } from "~/layouts/RHeader";
-import { RMarketingCtaSection } from "~/templates/RMarketingCtaSection";
+import {
+  RMarketingCtaSection,
+  type RMarketingCtaAction,
+} from "~/templates/RMarketingCtaSection";
 
 import EarthIcon from "app/icons/earth.svg?react";
 import LockIcon from "app/icons/lock.svg?react";
@@ -59,6 +62,21 @@ const aboutNavItems: RHeaderNavItem[] = [
     target: NEW_TAB_TARGET,
   },
 ];
+
+const aboutCtaPrimaryAction = {
+  href: EQUITEEZ_CONTACT_PATH,
+  label: "Get In Touch",
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+} satisfies RMarketingCtaAction;
+
+const aboutCtaSecondaryAction = {
+  disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
+  iconRight: null,
+  label: "Launch App",
+  to: "/marketplace",
+  variant: "secondary",
+} satisfies RMarketingCtaAction;
 
 const ABOUT_FEATURE_ICON_COLOR = "var(--r-color-accent-green-500)";
 
@@ -374,17 +392,8 @@ export function RAboutPage() {
             description="Investors, issuers, and partners building the next era of capital markets."
             heading="Build With Us."
             id="contact"
-            primaryAction={{
-              href: "mailto:hello@equiteez.com",
-              label: "Get In Touch",
-            }}
-            secondaryAction={{
-              disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
-              iconRight: null,
-              label: "Launch App",
-              to: "/marketplace",
-              variant: "secondary",
-            }}
+            primaryAction={aboutCtaPrimaryAction}
+            secondaryAction={aboutCtaSecondaryAction}
           />
         </Container>
       </main>

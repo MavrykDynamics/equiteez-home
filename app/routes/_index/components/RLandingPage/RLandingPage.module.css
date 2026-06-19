@@ -314,7 +314,7 @@
   line-height: var(--r-line-height-heading-h2);
 }
 
-.metric span {
+.metricLabel {
   width: 100%;
   min-width: 0;
   max-width: none;
@@ -511,6 +511,10 @@
 
 .assetsHeader p:last-child {
   max-width: 441px;
+}
+
+.assetsHeader h2 > span:last-child {
+  white-space: nowrap;
 }
 
 .analogSection .problemList {
@@ -718,6 +722,7 @@
   height: 48px;
   object-fit: cover;
   border-radius: 50%;
+  object-position: top;
 }
 
 .reviewAuthor h3 {
@@ -772,12 +777,16 @@
   .hero {
     min-height: 100svh;
     justify-content: flex-start;
-    padding: 342px var(--r-space-8) var(--r-space-16);
+    padding: calc(280px + var(--r-space-16)) var(--r-space-8) var(--r-space-16);
   }
 
   .heroTitle {
     font-size: var(--r-font-size-heading-h3);
     line-height: var(--r-line-height-heading-h3);
+  }
+
+  .heroContent {
+    align-self: self-start;
   }
 
   .heroDescription {
@@ -867,7 +876,7 @@
     line-height: var(--r-line-height-heading-h4);
   }
 
-  .metric span {
+  .metricLabel {
     max-width: none;
     font-size: var(--r-font-size-body-sm);
     line-height: var(--r-line-height-body-sm);
@@ -1172,7 +1181,7 @@
     text-align: center;
   }
 
-  .metric span {
+  .metricLabel {
     font-size: var(--r-font-size-body-s);
     line-height: var(--r-line-height-body-s);
   }
@@ -1245,6 +1254,20 @@
 
   .reviewsGrid {
     gap: var(--r-space-6);
+  }
+}
+
+@media (max-width: 500px) {
+  .partnersSupport {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 450px) {
+  .metricLabelSuffix {
+    display: block;
+    white-space: nowrap;
   }
 }
 

@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import { useVisibleSlideshow } from "~/hooks/useVisibleSlideshow";
 import {
   EQUITEEZ_APP_URL,
-  EQUITEEZ_GET_IN_TOUCH_URL,
+  EQUITEEZ_CONTACT_PATH,
   EXTERNAL_LINK_REL,
   IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   NEW_TAB_TARGET,
@@ -47,9 +47,9 @@ import enterpriseIssuanceImage from "app/assets/redesign/landing/enterprise-issu
 import enterpriseTradingImage from "app/assets/redesign/landing/enterprise-trading.webp";
 import enterpriseLendingImage from "app/assets/redesign/landing/enterprise-lending.webp";
 import enterpriseSettlementImage from "app/assets/redesign/landing/enterprise-settlement.webp";
-import avatarLarryFink from "app/assets/redesign/landing/avatar-larry-fink.png";
-import avatarJennyJohnson from "app/assets/redesign/landing/avatar-jenny-johnson.png";
-import avatarMichaelSaylor from "app/assets/redesign/landing/avatar-michael-saylor.png";
+import avatarLarryFink from "app/assets/redesign/landing/avatar-larry.webp";
+import avatarJennyJohnson from "app/assets/redesign/landing/avatar-jenny.webp";
+import avatarMichaelSaylor from "app/assets/redesign/landing/avatar-michael.webp";
 
 import styles from "./RLandingPage.module.css";
 
@@ -69,6 +69,7 @@ type PartnerLogo = {
 
 type Metric = {
   label: string;
+  labelSuffix?: string;
   value: string;
 };
 
@@ -265,7 +266,11 @@ const partnerLogos: PartnerLogo[] = [
 ];
 
 const metrics: Metric[] = [
-  { label: "Real World Assets TAM By 2030, EY", value: "$28.7T+" },
+  {
+    label: "Real World Assets TAM",
+    labelSuffix: "By 2030, EY",
+    value: "$28.7T+",
+  },
   { label: "Equiteez Pipeline", value: "$14.9B" },
   { label: "Asset Classes Supported To Date", value: "6+" },
   { label: "Market Trading", value: "24/7" },
@@ -554,7 +559,8 @@ function RPartnersSection() {
       <div className={styles.sectionInner}>
         <Reveal className={styles.partnersIntro}>
           <p className={styles.eyebrow}>
-            BUILT ON MAVRYK NETWORK, WITH STRATEGIC SUPPORT FROM
+            BUILT ON MAVRYK NETWORK, WITH STRATEGIC{" "}
+            <span className={styles.partnersSupport}>SUPPORT FROM</span>
           </p>
           <div className={styles.partnerLogoGrid}>
             <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
@@ -570,7 +576,17 @@ function RPartnersSection() {
               preset="fade"
             >
               <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
+              <span className={styles.metricLabel}>
+                {metric.label}
+                {metric.labelSuffix ? (
+                  <>
+                    {" "}
+                    <span className={styles.metricLabelSuffix}>
+                      {metric.labelSuffix}
+                    </span>
+                  </>
+                ) : null}
+              </span>
             </Reveal>
           ))}
         </div>
@@ -665,7 +681,7 @@ function RAssetsSection() {
           <RSectionHeader
             description="Our platform supports tokenization across diverse verticals, enabling access to historically illiquid markets."
             eyebrow="Multi-Asset"
-            heading="Every Asset Class, One Infrastructure"
+            heading={["Every Asset Class,", "One Infrastructure"]}
           />
         </Reveal>
         <div className={styles.assetListGroup}>
@@ -795,7 +811,7 @@ function RGetInTouchSection() {
         <Reveal className={styles.contactActions} delay={0.05}>
           <RButton
             as="a"
-            href={EQUITEEZ_GET_IN_TOUCH_URL}
+            href={EQUITEEZ_CONTACT_PATH}
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
