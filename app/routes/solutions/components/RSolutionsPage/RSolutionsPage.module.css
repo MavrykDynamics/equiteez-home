@@ -667,7 +667,12 @@
   }
 
   .heroMockFrame {
-    --solutions-hero-image-height: 454px;
+    --solutions-hero-image-height: 456px;
+    width: min(100%, 590px);
+  }
+
+  .heroMockImage {
+    object-fit: contain;
   }
 
   .suiteMockColumn,
@@ -866,6 +871,17 @@
   .advancedMockCard {
     width: 100%;
     margin-top: var(--r-space-8);
+  }
+}
+
+@media (max-width: 650px) {
+  .heroMockFrame {
+    width: 100%;
+    --solutions-hero-image-height: 249px;
+  }
+
+  .heroMockImage {
+    object-fit: cover;
   }
 }
 
