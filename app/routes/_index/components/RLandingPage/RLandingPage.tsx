@@ -69,6 +69,7 @@ type PartnerLogo = {
 
 type Metric = {
   label: string;
+  labelSuffix?: string;
   value: string;
 };
 
@@ -265,7 +266,11 @@ const partnerLogos: PartnerLogo[] = [
 ];
 
 const metrics: Metric[] = [
-  { label: "Real World Assets TAM By 2030, EY", value: "$28.7T+" },
+  {
+    label: "Real World Assets TAM",
+    labelSuffix: "By 2030, EY",
+    value: "$28.7T+",
+  },
   { label: "Equiteez Pipeline", value: "$14.9B" },
   { label: "Asset Classes Supported To Date", value: "6+" },
   { label: "Market Trading", value: "24/7" },
@@ -554,7 +559,8 @@ function RPartnersSection() {
       <div className={styles.sectionInner}>
         <Reveal className={styles.partnersIntro}>
           <p className={styles.eyebrow}>
-            BUILT ON MAVRYK NETWORK, WITH STRATEGIC SUPPORT FROM
+            BUILT ON MAVRYK NETWORK, WITH STRATEGIC{" "}
+            <span className={styles.partnersSupport}>SUPPORT FROM</span>
           </p>
           <div className={styles.partnerLogoGrid}>
             <RPartnerLogoItems itemClassName={styles.partnerLogoGridItem} />
@@ -570,7 +576,17 @@ function RPartnersSection() {
               preset="fade"
             >
               <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
+              <span className={styles.metricLabel}>
+                {metric.label}
+                {metric.labelSuffix ? (
+                  <>
+                    {" "}
+                    <span className={styles.metricLabelSuffix}>
+                      {metric.labelSuffix}
+                    </span>
+                  </>
+                ) : null}
+              </span>
             </Reveal>
           ))}
         </div>
@@ -665,7 +681,7 @@ function RAssetsSection() {
           <RSectionHeader
             description="Our platform supports tokenization across diverse verticals, enabling access to historically illiquid markets."
             eyebrow="Multi-Asset"
-            heading="Every Asset Class, One Infrastructure"
+            heading={["Every Asset Class,", "One Infrastructure"]}
           />
         </Reveal>
         <div className={styles.assetListGroup}>
