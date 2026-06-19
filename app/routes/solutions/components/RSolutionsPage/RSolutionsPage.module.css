@@ -127,6 +127,7 @@
   position: relative;
   box-sizing: border-box;
   background: var(--r-color-neutral-white);
+  border-radius: var(--r-radius-md);
 }
 
 .mockSwapCard {
@@ -869,6 +870,10 @@
 }
 
 @media (max-width: 480px) {
+  .browserMockFrame {
+    border-radius: 12px;
+  }
+
   .sectionShell {
     padding: var(--r-space-14) var(--r-space-4);
   }
