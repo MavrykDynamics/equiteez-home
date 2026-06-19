@@ -625,6 +625,17 @@
   }
 }
 
+@media (min-width: 1181px) {
+  .tradingLayout {
+    grid-template-rows: max-content 1fr;
+    gap: var(--r-space-8);
+  }
+
+  .tradingFeatureList {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 1180px) {
   .marketMetricGrid {
     margin-top: var(--r-space-5);
