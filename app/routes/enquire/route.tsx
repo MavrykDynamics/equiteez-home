@@ -1,6 +1,16 @@
-import type { MetaFunction } from "@remix-run/node";
+import {
+  json,
+  type ActionFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/cloudflare";
 
-import { RMondavPage } from "./components/RMondavPage";
+import { createEnquiryItem, isMondayConfigured } from "~/lib/apis/monday";
+
+import { RAssetEnquiryPage } from "./components/RAssetEnquiryPage";
+import {
+  enquirySchema,
+  type EnquiryFieldErrors,
+} from "./components/RAssetEnquiryPage/enquiry.schema";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,11 +18,61 @@ export const meta: MetaFunction = () => {
     {
       name: "description",
       content:
-        "Submit the Equiteez Mondav form for real-world asset tokenization inquiries.",
+        "Tell us about your asset. Submit an enquiry for real-world asset tokenization with Equiteez.",
     },
   ];
 };
 
-export default function Mondav() {
-  return <RMondavPage />;
+export type EnquiryActionData =
+  | { ok: true; itemId: string | null }
+  | { ok: false; error?: string; fieldErrors?: EnquiryFieldErrors };
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const raw = Object.fromEntries(formData) as Record<string, string>;
+
+  // Server-side validation — never trust the client.
+  const parsed = enquirySchema.safeParse(raw);
+  if (!parsed.success) {
+    const fieldErrors: EnquiryFieldErrors = {};
+    for (const issue of parsed.error.issues) {
+      const key = issue.path[0] as keyof EnquiryFieldErrors;
+      if (key && !fieldErrors[key]) fieldErrors[key] = issue.message;
+    }
+    return json<EnquiryActionData>({ ok: false, fieldErrors }, { status: 400 });
+  }
+
+  // SCAFFOLD: until the Monday board is wired (env vars + COLUMN_IDS in
+  // monday.server.ts), let the flow complete in dev so the UI is testable.
+  // Remove this branch once Monday is configured.
+  if (!isMondayConfigured()) {
+    if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
+      console.info(
+        "[enquiry] Monday not configured — simulating success:",
+        parsed.data
+      );
+      return json<EnquiryActionData>({ ok: true, itemId: null });
+    }
+    return json<EnquiryActionData>(
+      { ok: false, error: "not_configured" },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const itemId = await createEnquiryItem(parsed.data);
+    return json<EnquiryActionData>({ ok: true, itemId });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("[enquiry] Monday submission failed:", error);
+    return json<EnquiryActionData>(
+      { ok: false, error: "submission_failed" },
+      { status: 502 }
+    );
+  }
+};
+
+export default function Enquire() {
+  return <RAssetEnquiryPage />;
 }
