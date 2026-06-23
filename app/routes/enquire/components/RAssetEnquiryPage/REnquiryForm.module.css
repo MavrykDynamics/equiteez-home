@@ -60,6 +60,16 @@
   border: 0;
 }
 
+/* A <legend> isn't a normal flex item, so the fieldset's `gap` doesn't apply to
+   it — set the spacing to the toggle options explicitly so it matches the
+   label→input rhythm of the other fields. */
+.toggleFieldset > .label {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--r-space-3);
+}
+
 .toggleGroup {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -143,11 +153,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   color: var(--r-color-neutral-white);
   background: var(--r-color-accent-green-500);
   border-radius: 50%;
+}
+
+.successIcon svg {
+  width: 34px;
+  height: 34px;
+  stroke-width: 2;
 }
 
 .successTitle {
@@ -165,6 +181,45 @@
   font-family: var(--r-font-body);
   font-size: var(--r-font-size-body-m);
   line-height: 1.5;
+}
+
+/* ---- privacy consent ---- */
+.consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-space-2);
+}
+
+.consentLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--r-space-3);
+  color: var(--r-color-neutral-700);
+  font-family: var(--r-font-body);
+  font-size: var(--r-font-size-body-sm);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.consentCheckbox {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--r-color-neutral-black);
+  cursor: pointer;
+}
+
+.consentLink {
+  color: var(--r-color-neutral-900);
+  font-weight: var(--r-font-weight-medium);
+  text-decoration: underline;
+}
+
+.consentError {
+  color: var(--r-color-red-600);
+  font-family: var(--r-font-body);
+  font-size: var(--r-font-size-body-s);
 }
 
 /* ---- form-level error ---- */

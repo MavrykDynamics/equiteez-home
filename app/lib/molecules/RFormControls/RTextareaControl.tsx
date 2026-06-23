@@ -14,12 +14,13 @@ export type RTextareaControlProps = {
   error?: string;
   helper?: ReactNode;
   label: string;
+  valid?: boolean;
 } & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "className">;
 
 export const RTextareaControl = forwardRef<
   HTMLTextAreaElement,
   RTextareaControlProps
->(({ className, error, helper, id, label, ...rest }, ref) => {
+>(({ className, error, helper, id, label, valid, ...rest }, ref) => {
   const generatedId = useId();
   const fieldId = id ?? generatedId;
 
@@ -34,7 +35,11 @@ export const RTextareaControl = forwardRef<
       <textarea
         ref={ref}
         id={fieldId}
-        className={clsx(styles.textarea, error && styles.invalid)}
+        className={clsx(
+          styles.textarea,
+          error && styles.invalid,
+          !error && valid && styles.valid
+        )}
         aria-invalid={error ? true : undefined}
         {...rest}
       />

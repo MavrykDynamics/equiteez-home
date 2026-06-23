@@ -15,10 +15,11 @@ export type RTextControlProps = {
   error?: string;
   helper?: ReactNode;
   label: string;
+  valid?: boolean;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "className">;
 
 export const RTextControl = forwardRef<HTMLInputElement, RTextControlProps>(
-  ({ className, counter, error, helper, id, label, ...rest }, ref) => {
+  ({ className, counter, error, helper, id, label, valid, ...rest }, ref) => {
     const generatedId = useId();
     const fieldId = id ?? generatedId;
 
@@ -34,7 +35,11 @@ export const RTextControl = forwardRef<HTMLInputElement, RTextControlProps>(
         <input
           ref={ref}
           id={fieldId}
-          className={clsx(styles.input, error && styles.invalid)}
+          className={clsx(
+            styles.input,
+            error && styles.invalid,
+            !error && valid && styles.valid
+          )}
           aria-invalid={error ? true : undefined}
           {...rest}
         />

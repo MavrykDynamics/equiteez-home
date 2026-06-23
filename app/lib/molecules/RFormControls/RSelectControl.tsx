@@ -23,11 +23,23 @@ export type RSelectControlProps = {
   label: string;
   options: RSelectOption[];
   placeholder: string;
+  valid?: boolean;
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, "className">;
 
 export const RSelectControl = forwardRef<HTMLSelectElement, RSelectControlProps>(
   (
-    { className, error, helper, id, label, options, placeholder, value, ...rest },
+    {
+      className,
+      error,
+      helper,
+      id,
+      label,
+      options,
+      placeholder,
+      valid,
+      value,
+      ...rest
+    },
     ref
   ) => {
     const generatedId = useId();
@@ -47,7 +59,11 @@ export const RSelectControl = forwardRef<HTMLSelectElement, RSelectControlProps>
             id={fieldId}
             value={value}
             data-empty={value === "" || value == null ? "true" : undefined}
-            className={clsx(styles.select, error && styles.invalid)}
+            className={clsx(
+              styles.select,
+              error && styles.invalid,
+              !error && valid && styles.valid
+            )}
             aria-invalid={error ? true : undefined}
             {...rest}
           >

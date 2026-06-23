@@ -1,29 +1,30 @@
 import { useId, type ChangeEvent, type ReactNode } from "react";
 import clsx from "clsx";
 
-import { RIcon } from "~/lib/atoms/RIcon";
-
-import type { RSelectOption } from "./RSelectControl";
+import { RCountryCodeSelect } from "./RCountryCodeSelect";
+import type { PhoneCountry } from "./countryDialCodes";
 import styles from "./RFormControls.module.css";
 
 export type RPhoneControlProps = {
   className?: string;
-  codeOptions: RSelectOption[];
+  countries?: PhoneCountry[];
   codeValue: string;
   error?: string;
   helper?: ReactNode;
   label: string;
   numberName?: string;
   numberValue: string;
-  onCodeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onCodeChange: (dial: string, iso2: string) => void;
   onNumberChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onNumberBlur?: () => void;
   placeholder?: string;
+  valid?: boolean;
 };
 
-/** Country dialling-code select + phone number input sharing a single label. */
+/** Searchable country dialling-code combobox + phone number input. */
 export function RPhoneControl({
   className,
-  codeOptions,
+  countries,
   codeValue,
   error,
   helper,
@@ -32,7 +33,9 @@ export function RPhoneControl({
   numberValue,
   onCodeChange,
   onNumberChange,
+  onNumberBlur,
   placeholder = "000 000 000",
+  valid,
 }: RPhoneControlProps) {
   const labelId = useId();
   const message = error ?? helper;
@@ -43,35 +46,26 @@ export function RPhoneControl({
         {label}
       </span>
       <div className={styles.phoneRow} role="group" aria-labelledby={labelId}>
-        <div className={styles.control}>
-          <select
-            aria-label="Country dialling code"
-            className={clsx(styles.select, styles.phoneCode)}
-            value={codeValue}
-            onChange={onCodeChange}
-          >
-            {codeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <RIcon
-            aria-hidden
-            className={styles.chevron}
-            name="arrow-short-down"
-            size="small"
-          />
-        </div>
+        <RCountryCodeSelect
+          countries={countries}
+          value={codeValue}
+          onChange={(dial, country) => onCodeChange(dial, country.iso2)}
+          invalid={Boolean(error)}
+        />
         <input
           aria-label="Phone number"
-          className={clsx(styles.input, error && styles.invalid)}
+          className={clsx(
+            styles.input,
+            error && styles.invalid,
+            !error && valid && styles.valid
+          )}
           name={numberName}
           inputMode="tel"
           autoComplete="tel-national"
           placeholder={placeholder}
           value={numberValue}
           onChange={onNumberChange}
+          onBlur={onNumberBlur}
           aria-invalid={error ? true : undefined}
         />
       </div>

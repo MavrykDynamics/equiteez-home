@@ -47,11 +47,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   // Remove this branch once Monday is configured.
   if (!isMondayConfigured()) {
     if (process.env.NODE_ENV === "development") {
+      // Don't log the submission payload — it contains PII (name, email, phone).
       // eslint-disable-next-line no-console
-      console.info(
-        "[enquiry] Monday not configured — simulating success:",
-        parsed.data
-      );
+      console.info("[enquiry] Monday not configured — simulating success (dev).");
       return json<EnquiryActionData>({ ok: true, itemId: null });
     }
     return json<EnquiryActionData>(

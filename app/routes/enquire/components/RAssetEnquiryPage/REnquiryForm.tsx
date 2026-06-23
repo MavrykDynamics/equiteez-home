@@ -4,6 +4,11 @@ import clsx from "clsx";
 
 import { RButton } from "~/lib/atoms/RButton";
 import { RIcon } from "~/lib/atoms/RIcon";
+import {
+  EQUITEEZ_DOCS_URL,
+  EXTERNAL_LINK_REL,
+  NEW_TAB_TARGET,
+} from "~/consts/links";
 
 import {
   RPhoneControl,
@@ -15,7 +20,6 @@ import {
   ASSET_CLASSES,
   COUNTRIES,
   FULL_NAME_MAX_LENGTH,
-  PHONE_COUNTRY_CODES,
   PROJECT_TIMELINES,
   REGISTRATION_TYPES,
   TOKENIZATION_VALUE_RANGES,
@@ -33,8 +37,12 @@ export function REnquiryForm() {
   const fetcher = useFetcher<typeof action>();
   const [values, setValues] = useState<EnquiryFormValues>(initialEnquiryValues);
   const [errors, setErrors] = useState<EnquiryFieldErrors>({});
+  const [touched, setTouched] = useState<
+    Partial<Record<keyof EnquiryFormValues, boolean>>
+  >({});
 
   const isSubmitting = fetcher.state !== "idle";
+  const isCompany = values.registrationType === "company";
   const succeeded = fetcher.data?.ok === true;
   const serverFailed =
     fetcher.data?.ok === false && Boolean(fetcher.data.error);
@@ -46,6 +54,37 @@ export function REnquiryForm() {
     }
   }, [fetcher.data]);
 
+  // Run the schema once and collapse issues into a per-field message map.
+  const validate = (vals: EnquiryFormValues): EnquiryFieldErrors => {
+    const result = enquirySchema.safeParse(vals);
+    if (result.success) return {};
+    const fieldErrors: EnquiryFieldErrors = {};
+    for (const issue of result.error.issues) {
+      const key = issue.path[0] as keyof EnquiryFormValues;
+      if (key && !fieldErrors[key]) fieldErrors[key] = issue.message;
+    }
+    return fieldErrors;
+  };
+
+  // Show errors only for fields the user has already interacted with.
+  const showErrorsFor = (
+    vals: EnquiryFormValues,
+    touchedMap: Partial<Record<keyof EnquiryFormValues, boolean>>
+  ) => {
+    const all = validate(vals);
+    const visible: EnquiryFieldErrors = {};
+    (Object.keys(touchedMap) as Array<keyof EnquiryFormValues>).forEach((key) => {
+      if (touchedMap[key] && all[key]) visible[key] = all[key];
+    });
+    setErrors(visible);
+  };
+
+  const updateField = (field: keyof EnquiryFormValues, value: string) => {
+    const next = { ...values, [field]: value };
+    setValues(next);
+    showErrorsFor(next, touched);
+  };
+
   const setField =
     (field: keyof EnquiryFormValues) =>
     (
@@ -53,18 +92,57 @@ export function REnquiryForm() {
         HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
       >
     ) => {
-      const { value } = event.target;
-      setValues((prev) => ({ ...prev, [field]: value }));
-      setErrors((prev) => {
-        if (!prev[field]) return prev;
-        const next = { ...prev };
-        delete next[field];
-        return next;
-      });
+      updateField(field, event.target.value);
     };
+
+  // Phone dialling-code change: store both the dial code and the ISO-2 of the
+  // chosen country (the dial code alone is ambiguous for shared codes like +1).
+  const setPhoneCode = (dial: string, iso2: string) => {
+    setValues((prev) => ({
+      ...prev,
+      phoneCountryCode: dial,
+      phoneCountryIso2: iso2,
+    }));
+  };
+
+  const handleBlur = (field: keyof EnquiryFormValues) => () => {
+    const nextTouched = { ...touched, [field]: true };
+    setTouched(nextTouched);
+    showErrorsFor(values, nextTouched);
+  };
+
+  const setConsent = (checked: boolean) => {
+    const next = { ...values, privacyConsent: checked };
+    setValues(next);
+    const nextTouched = { ...touched, privacyConsent: true };
+    setTouched(nextTouched);
+    showErrorsFor(next, nextTouched);
+  };
+
+  // A field shows the green "valid" border once it has been touched, holds a
+  // (non-empty string) value, and passes validation. Boolean fields like the
+  // consent checkbox don't use this — they have no green state.
+  const isValid = (field: keyof EnquiryFormValues) => {
+    const value = values[field];
+    return (
+      typeof value === "string" &&
+      Boolean(touched[field]) &&
+      !errors[field] &&
+      value.trim().length > 0
+    );
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Touch every field so both error and valid states surface on submit.
+    const allTouched = Object.fromEntries(
+      (Object.keys(values) as Array<keyof EnquiryFormValues>).map((key) => [
+        key,
+        true,
+      ])
+    ) as Partial<Record<keyof EnquiryFormValues, boolean>>;
+    setTouched(allTouched);
 
     const result = enquirySchema.safeParse(values);
     if (!result.success) {
@@ -78,7 +156,12 @@ export function REnquiryForm() {
     }
 
     setErrors({});
-    fetcher.submit(result.data as Record<string, string>, { method: "post" });
+    // Serialise every value to a string for the multipart submission.
+    const payload: Record<string, string> = {};
+    for (const [key, value] of Object.entries(result.data)) {
+      payload[key] = typeof value === "boolean" ? String(value) : String(value ?? "");
+    }
+    fetcher.submit(payload, { method: "post" });
   };
 
   if (succeeded) {
@@ -143,6 +226,8 @@ export function REnquiryForm() {
             maxLength={FULL_NAME_MAX_LENGTH}
             counter={`${values.fullName.length}/${FULL_NAME_MAX_LENGTH}`}
             error={errors.fullName}
+            valid={isValid("fullName")}
+            onBlur={handleBlur("fullName")}
             autoComplete="name"
           />
           <RTextControl
@@ -153,6 +238,8 @@ export function REnquiryForm() {
             onChange={setField("jobTitle")}
             helper="Please specify your professional title."
             error={errors.jobTitle}
+            valid={isValid("jobTitle")}
+            onBlur={handleBlur("jobTitle")}
             autoComplete="organization-title"
           />
           <RTextControl
@@ -165,57 +252,104 @@ export function REnquiryForm() {
             onChange={setField("workEmail")}
             helper="Please provide a valid work email. Avoid using generic domains like Gmail or Yahoo."
             error={errors.workEmail}
+            valid={isValid("workEmail")}
+            onBlur={handleBlur("workEmail")}
             autoComplete="email"
           />
 
           <RPhoneControl
             className={styles.span2}
             label="Phone Number"
-            codeOptions={PHONE_COUNTRY_CODES}
             codeValue={values.phoneCountryCode}
-            onCodeChange={setField("phoneCountryCode")}
+            onCodeChange={setPhoneCode}
             numberName="phoneNumber"
             numberValue={values.phoneNumber}
             onNumberChange={setField("phoneNumber")}
+            onNumberBlur={handleBlur("phoneNumber")}
             error={errors.phoneNumber}
+            valid={isValid("phoneNumber")}
+          />
+
+          <RTextControl
+            className={styles.span2}
+            label="LinkedIn Profile"
+            name="personalLinkedin"
+            type="url"
+            placeholder="https://linkedin.com/in/your-profile"
+            value={values.personalLinkedin}
+            onChange={setField("personalLinkedin")}
+            helper="Link to your personal LinkedIn profile."
+            error={errors.personalLinkedin}
+            valid={isValid("personalLinkedin")}
+            onBlur={handleBlur("personalLinkedin")}
+            autoComplete="url"
           />
         </div>
       </section>
 
-      {/* Company */}
+      {/* Company — only relevant when registering on behalf of an organisation */}
+      {isCompany ? (
+        <section className={styles.section}>
+          <p className={styles.sectionLabel}>Company</p>
+          <div className={styles.grid}>
+            <RTextControl
+              label="Company Name"
+              name="companyName"
+              placeholder="Enter Company Name"
+              value={values.companyName}
+              onChange={setField("companyName")}
+              error={errors.companyName}
+              valid={isValid("companyName")}
+              onBlur={handleBlur("companyName")}
+              autoComplete="organization"
+            />
+            <RTextControl
+              label="Company Website"
+              name="companyWebsite"
+              type="url"
+              placeholder="https://company.com"
+              value={values.companyWebsite}
+              onChange={setField("companyWebsite")}
+              helper="Recommended for verification purposes."
+              error={errors.companyWebsite}
+              valid={isValid("companyWebsite")}
+              onBlur={handleBlur("companyWebsite")}
+              autoComplete="url"
+            />
+            <RTextControl
+              className={styles.span2}
+              label="Company LinkedIn"
+              name="companyLinkedin"
+              type="url"
+              placeholder="https://linkedin.com/company/your-company"
+              value={values.companyLinkedin}
+              onChange={setField("companyLinkedin")}
+              helper="Link to the company's LinkedIn page."
+              error={errors.companyLinkedin}
+              valid={isValid("companyLinkedin")}
+              onBlur={handleBlur("companyLinkedin")}
+              autoComplete="url"
+            />
+            <RSelectControl
+              className={styles.span2}
+              label="Country of Incorporation"
+              name="countryOfIncorporation"
+              placeholder="Select a country..."
+              options={COUNTRIES}
+              value={values.countryOfIncorporation}
+              onChange={setField("countryOfIncorporation")}
+              error={errors.countryOfIncorporation}
+              valid={isValid("countryOfIncorporation")}
+              onBlur={handleBlur("countryOfIncorporation")}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      {/* Asset details */}
       <section className={styles.section}>
-        <p className={styles.sectionLabel}>Company</p>
+        <p className={styles.sectionLabel}>Asset details</p>
         <div className={styles.grid}>
-          <RTextControl
-            label="Company Name"
-            name="companyName"
-            placeholder="Enter Company Name"
-            value={values.companyName}
-            onChange={setField("companyName")}
-            error={errors.companyName}
-            autoComplete="organization"
-          />
-          <RTextControl
-            label="Company Website"
-            name="companyWebsite"
-            type="url"
-            placeholder="https://company.com"
-            value={values.companyWebsite}
-            onChange={setField("companyWebsite")}
-            helper="Recommended for verification purposes."
-            error={errors.companyWebsite}
-            autoComplete="url"
-          />
-          <RSelectControl
-            className={styles.span2}
-            label="Country of Incorporation"
-            name="countryOfIncorporation"
-            placeholder="Select a country..."
-            options={COUNTRIES}
-            value={values.countryOfIncorporation}
-            onChange={setField("countryOfIncorporation")}
-            error={errors.countryOfIncorporation}
-          />
           <RSelectControl
             className={styles.span2}
             label="Asset Class / Type"
@@ -225,6 +359,8 @@ export function REnquiryForm() {
             value={values.assetClass}
             onChange={setField("assetClass")}
             error={errors.assetClass}
+            valid={isValid("assetClass")}
+            onBlur={handleBlur("assetClass")}
           />
           <RSelectControl
             label="Estimated Tokenization Value (USD)"
@@ -234,6 +370,8 @@ export function REnquiryForm() {
             value={values.estimatedValue}
             onChange={setField("estimatedValue")}
             error={errors.estimatedValue}
+            valid={isValid("estimatedValue")}
+            onBlur={handleBlur("estimatedValue")}
           />
           <RSelectControl
             label="Project Timeline"
@@ -243,6 +381,8 @@ export function REnquiryForm() {
             value={values.projectTimeline}
             onChange={setField("projectTimeline")}
             error={errors.projectTimeline}
+            valid={isValid("projectTimeline")}
+            onBlur={handleBlur("projectTimeline")}
           />
           <RTextareaControl
             className={styles.span2}
@@ -252,9 +392,41 @@ export function REnquiryForm() {
             value={values.briefDescription}
             onChange={setField("briefDescription")}
             error={errors.briefDescription}
+            valid={isValid("briefDescription")}
+            onBlur={handleBlur("briefDescription")}
           />
         </div>
       </section>
+
+      {/* Privacy Policy consent */}
+      <div className={styles.consent}>
+        <label className={styles.consentLabel}>
+          <input
+            type="checkbox"
+            className={styles.consentCheckbox}
+            checked={values.privacyConsent}
+            onChange={(event) => setConsent(event.target.checked)}
+            aria-invalid={errors.privacyConsent ? true : undefined}
+          />
+          <span>
+            I have read and agree to the{" "}
+            <a
+              className={styles.consentLink}
+              href={EQUITEEZ_DOCS_URL}
+              target={NEW_TAB_TARGET}
+              rel={EXTERNAL_LINK_REL}
+            >
+              Privacy Policy
+            </a>
+            .
+          </span>
+        </label>
+        {errors.privacyConsent ? (
+          <span className={styles.consentError} role="alert">
+            {errors.privacyConsent}
+          </span>
+        ) : null}
+      </div>
 
       {serverFailed ? (
         <p className={styles.formError} role="alert">

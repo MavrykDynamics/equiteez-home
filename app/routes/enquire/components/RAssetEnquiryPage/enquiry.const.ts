@@ -1,9 +1,8 @@
 // Option lists for the asset-tokenization enquiry form.
 //
-// NOTE: the select option *values* below must eventually be reconciled with the
-// label set of the corresponding Monday.com board columns (status / dropdown
-// columns accept only their predefined labels). Treat these as the working set
-// until the board column definitions are confirmed. See route `action` TODO.
+// Status-column option values double as the Monday.com labels; the server sends
+// them with `create_labels_if_missing: true`, so they don't need to pre-exist on
+// the board (see `app/lib/apis/monday/monday.server.ts`).
 
 export type SelectOption = {
   label: string;
@@ -18,21 +17,8 @@ export const REGISTRATION_TYPES = [
 export type RegistrationType = (typeof REGISTRATION_TYPES)[number]["value"];
 
 export const FULL_NAME_MAX_LENGTH = 100;
-
-// A compact, commonly-needed dialling-code set. Extend to the full ITU list when
-// the Monday phone column format is confirmed.
-export const PHONE_COUNTRY_CODES: SelectOption[] = [
-  { label: "🇺🇸 +1", value: "+1" },
-  { label: "🇬🇧 +44", value: "+44" },
-  { label: "🇪🇺 +33", value: "+33" },
-  { label: "🇩🇪 +49", value: "+49" },
-  { label: "🇨🇭 +41", value: "+41" },
-  { label: "🇦🇪 +971", value: "+971" },
-  { label: "🇸🇬 +65", value: "+65" },
-  { label: "🇭🇰 +852", value: "+852" },
-  { label: "🇯🇵 +81", value: "+81" },
-  { label: "🇦🇺 +61", value: "+61" },
-];
+export const COMPANY_NAME_MAX_LENGTH = 120;
+export const BRIEF_DESCRIPTION_MIN_LENGTH = 20;
 
 export const COUNTRIES: SelectOption[] = [
   "United States",
@@ -65,18 +51,20 @@ export const ASSET_CLASSES: SelectOption[] = [
   "Other",
 ].map((name) => ({ label: name, value: name }));
 
+// Values mirror the labels so they map straight onto the Monday Status column
+// labels (auto-created via `create_labels_if_missing` if absent on the board).
 export const TOKENIZATION_VALUE_RANGES: SelectOption[] = [
-  { label: "Under $1M", value: "<1m" },
-  { label: "$1M – $10M", value: "1m-10m" },
-  { label: "$10M – $50M", value: "10m-50m" },
-  { label: "$50M – $250M", value: "50m-250m" },
-  { label: "$250M+", value: "250m+" },
-];
+  "Under $1M",
+  "$1M – $10M",
+  "$10M – $50M",
+  "$50M – $250M",
+  "$250M+",
+].map((name) => ({ label: name, value: name }));
 
 export const PROJECT_TIMELINES: SelectOption[] = [
-  { label: "Immediately", value: "immediately" },
-  { label: "Within 3 months", value: "3m" },
-  { label: "3 – 6 months", value: "3-6m" },
-  { label: "6 – 12 months", value: "6-12m" },
-  { label: "Exploratory / No set timeline", value: "exploratory" },
-];
+  "Immediately",
+  "Within 3 months",
+  "3 – 6 months",
+  "6 – 12 months",
+  "Exploratory / No set timeline",
+].map((name) => ({ label: name, value: name }));

@@ -30,54 +30,75 @@ export type EnquiryItemInput = {
   fullName: string;
   jobTitle: string;
   workEmail: string;
+  personalLinkedin: string;
   phoneCountryCode: string;
+  phoneCountryIso2: string;
   phoneNumber: string;
   companyName: string;
   companyWebsite?: string;
+  companyLinkedin?: string;
   countryOfIncorporation: string;
   assetClass: string;
   estimatedValue: string;
   projectTimeline: string;
   briefDescription: string;
+  privacyConsent: boolean;
+};
+
+/** Real column ids from the target Monday board. */
+const COLUMN_IDS = {
+  registrationType: "single_selects7lquwc", // Status
+  jobTitle: "short_textj2o2sofz", // Text
+  workEmail: "emailf85q1y48", // Email
+  personalLinkedin: "link_mm4k4sp7", // Link
+  phone: "phonex7ttzdsi", // Phone
+  companyName: "short_text7zptpiqe", // Text
+  companyWebsite: "linkbja9xu5q", // Link
+  companyLinkedin: "link_mm4kqdc1", // Link
+  countryOfIncorporation: "countryoegx1g3k", // Country
+  assetClass: "single_selecty4jrm5h", // Status
+  estimatedValue: "single_selectdy9507d", // Status
+  projectTimeline: "single_selectanlup71", // Status
+  briefDescription: "long_textkf6is3av", // Long Text
+  privacyConsent: "booleaneprox1t6", // Checkbox
+} as const;
+
+// ISO-3166-1 alpha-2 codes for the Country column, keyed by the option labels in
+// `enquiry.const.ts` (COUNTRIES). "Other" intentionally has no code.
+const COUNTRY_ISO2: Record<string, string> = {
+  "United States": "US",
+  "United Kingdom": "GB",
+  "United Arab Emirates": "AE",
+  Switzerland: "CH",
+  Singapore: "SG",
+  Germany: "DE",
+  France: "FR",
+  Netherlands: "NL",
+  Luxembourg: "LU",
+  Ireland: "IE",
+  "Cayman Islands": "KY",
+  "British Virgin Islands": "VG",
+  "Hong Kong": "HK",
+  Japan: "JP",
+  Australia: "AU",
+  Canada: "CA",
 };
 
 /**
- * TODO(monday): replace each placeholder with the real column id from the
- * target board. Discover them by calling `fetchBoardColumns(env)` once
- * MONDAY_API_TOKEN + MONDAY_BOARD_ID are set (see helper at the bottom), then
- * paste the ids here.
- */
-const COLUMN_IDS = {
-  registrationType: "TODO_status_column_id",
-  jobTitle: "TODO_text_column_id",
-  workEmail: "TODO_email_column_id",
-  phone: "TODO_phone_column_id",
-  companyName: "TODO_text_column_id",
-  companyWebsite: "TODO_link_column_id",
-  countryOfIncorporation: "TODO_dropdown_column_id",
-  assetClass: "TODO_dropdown_column_id",
-  estimatedValue: "TODO_dropdown_column_id",
-  projectTimeline: "TODO_dropdown_column_id",
-  briefDescription: "TODO_long_text_column_id",
-} as const;
-
-/**
- * Maps form values to Monday `column_values`.
- *
- * TODO(monday): the value SHAPE must match each column's `type` (from
- * `fetchBoardColumns`). Common shapes:
+ * Maps form values to Monday `column_values`. Value SHAPE matches each column's
+ * type:
  *   text / long_text -> "plain string"
  *   email            -> { email, text }
  *   phone            -> { phone, countryShortName }   // ISO-2, e.g. "US"
  *   link             -> { url, text }
- *   status           -> { label } | { index }
- *   dropdown         -> { labels: ["..."] }
- * The dropdown/status LABELS must already exist on the column, so reconcile the
- * select options in `enquiry.const.ts` with the board's column labels.
+ *   status           -> { label }                     // single-select
+ *   country          -> { countryCode, countryName }  // ISO-2 + display name
+ * Status labels are created on the fly via `create_labels_if_missing` in the
+ * mutation, so the option labels in `enquiry.const.ts` need not pre-exist.
  */
 function buildColumnValues(input: EnquiryItemInput): Record<string, unknown> {
-  // Built as entries (not an object literal) so the placeholder column ids can
-  // safely repeat until the real, unique ids are filled into COLUMN_IDS.
+  const iso2 = COUNTRY_ISO2[input.countryOfIncorporation];
+
   const entries: Array<[string, unknown]> = [
     [
       COLUMN_IDS.registrationType,
@@ -91,13 +112,17 @@ function buildColumnValues(input: EnquiryItemInput): Record<string, unknown> {
     [COLUMN_IDS.jobTitle, input.jobTitle],
     [COLUMN_IDS.workEmail, { email: input.workEmail, text: input.workEmail }],
     [
+      COLUMN_IDS.personalLinkedin,
+      { url: input.personalLinkedin, text: input.personalLinkedin },
+    ],
+    [
       COLUMN_IDS.phone,
       {
         phone: `${input.phoneCountryCode}${input.phoneNumber}`.replace(
           /\s/g,
           ""
         ),
-        countryShortName: "US",
+        countryShortName: input.phoneCountryIso2,
       },
     ],
     [COLUMN_IDS.companyName, input.companyName],
@@ -107,14 +132,25 @@ function buildColumnValues(input: EnquiryItemInput): Record<string, unknown> {
         ? { url: input.companyWebsite, text: input.companyWebsite }
         : "",
     ],
-    [COLUMN_IDS.countryOfIncorporation, { labels: [input.countryOfIncorporation] }],
-    [COLUMN_IDS.assetClass, { labels: [input.assetClass] }],
-    [COLUMN_IDS.estimatedValue, { labels: [input.estimatedValue] }],
-    [COLUMN_IDS.projectTimeline, { labels: [input.projectTimeline] }],
+    [
+      COLUMN_IDS.companyLinkedin,
+      input.companyLinkedin
+        ? { url: input.companyLinkedin, text: input.companyLinkedin }
+        : "",
+    ],
+    [
+      COLUMN_IDS.countryOfIncorporation,
+      iso2 ? { countryCode: iso2, countryName: input.countryOfIncorporation } : "",
+    ],
+    [COLUMN_IDS.assetClass, { label: input.assetClass }],
+    [COLUMN_IDS.estimatedValue, { label: input.estimatedValue }],
+    [COLUMN_IDS.projectTimeline, { label: input.projectTimeline }],
     [COLUMN_IDS.briefDescription, input.briefDescription],
+    [COLUMN_IDS.privacyConsent, { checked: input.privacyConsent ? "true" : "false" }],
   ];
 
-  return Object.fromEntries(entries);
+  // Drop empty optional columns so we don't send blank values to the board.
+  return Object.fromEntries(entries.filter(([, value]) => value !== ""));
 }
 
 export function isMondayConfigured(): boolean {
@@ -161,6 +197,7 @@ const CREATE_ITEM = /* GraphQL */ `
       board_id: $boardId
       item_name: $itemName
       column_values: $columnValues
+      create_labels_if_missing: true
     ) {
       id
     }
