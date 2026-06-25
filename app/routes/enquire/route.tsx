@@ -11,6 +11,7 @@ import {
   enquirySchema,
   type EnquiryFieldErrors,
 } from "./components/RAssetEnquiryPage/enquiry.schema";
+import { getSubmittedAt } from "./enquiry.utils";
 
 export const meta: MetaFunction = () => {
   return [
@@ -42,6 +43,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json<EnquiryActionData>({ ok: false, fieldErrors }, { status: 400 });
   }
 
+  const submittedAt = getSubmittedAt();
+  const enquiryPayload = { ...parsed.data, submittedAt };
+
   // SCAFFOLD: until the Monday board is wired (env vars + COLUMN_IDS in
   // monday.server.ts), let the flow complete in dev so the UI is testable.
   // Remove this branch once Monday is configured.
@@ -49,7 +53,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (process.env.NODE_ENV === "development") {
       // Don't log the submission payload — it contains PII (name, email, phone).
       // eslint-disable-next-line no-console
-      console.info("[enquiry] Monday not configured — simulating success (dev).");
+      console.info(
+        "[enquiry] Monday not configured — simulating success (dev)."
+      );
       return json<EnquiryActionData>({ ok: true, itemId: null });
     }
     return json<EnquiryActionData>(
@@ -59,7 +65,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    const itemId = await createEnquiryItem(parsed.data);
+    const itemId = await createEnquiryItem(enquiryPayload);
     return json<EnquiryActionData>({ ok: true, itemId });
   } catch (error) {
     // eslint-disable-next-line no-console
