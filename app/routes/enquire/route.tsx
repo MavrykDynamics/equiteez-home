@@ -11,6 +11,7 @@ import {
   enquirySchema,
   type EnquiryFieldErrors,
 } from "./components/RAssetEnquiryPage/enquiry.schema";
+import { getSubmittedAt } from "./enquiry.utils";
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,18 +28,6 @@ export type EnquiryActionData =
   | { ok: true; itemId: string | null }
   | { ok: false; error?: string; fieldErrors?: EnquiryFieldErrors };
 
-function formatSubmissionDate(timestamp: number): string {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    month: "short",
-    timeZone: "UTC",
-    timeZoneName: "short",
-    year: "numeric",
-  }).format(new Date(timestamp));
-}
-
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const raw = Object.fromEntries(formData) as Record<string, string>;
@@ -54,8 +43,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json<EnquiryActionData>({ ok: false, fieldErrors }, { status: 400 });
   }
 
-  const submissionTimestamp = Date.now();
-  const submittedAt = formatSubmissionDate(submissionTimestamp);
+  const submittedAt = getSubmittedAt();
   const enquiryPayload = { ...parsed.data, submittedAt };
 
   // SCAFFOLD: until the Monday board is wired (env vars + COLUMN_IDS in

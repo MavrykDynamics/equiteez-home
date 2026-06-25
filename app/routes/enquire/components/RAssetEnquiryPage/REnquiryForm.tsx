@@ -30,6 +30,7 @@ import {
   type EnquiryFieldErrors,
   type EnquiryFormValues,
 } from "./enquiry.schema";
+import { getSubmittedAt } from "../../enquiry.utils";
 import type { action } from "../../route";
 import styles from "./REnquiryForm.module.css";
 
@@ -161,6 +162,7 @@ export function REnquiryForm() {
     for (const [key, value] of Object.entries(result.data)) {
       payload[key] = typeof value === "boolean" ? String(value) : String(value ?? "");
     }
+    payload.submittedAt = getSubmittedAt();
     fetcher.submit(payload, { method: "post" });
   };
 

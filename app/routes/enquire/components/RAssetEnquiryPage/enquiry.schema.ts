@@ -105,6 +105,7 @@ export const enquirySchema = z
         BRIEF_DESCRIPTION_MIN_LENGTH,
         `Please add a bit more detail (at least ${BRIEF_DESCRIPTION_MIN_LENGTH} characters).`
       ),
+    submittedAt: z.string().trim().optional(),
 
     // Checkbox: arrives as a boolean from the client and as "true"/"on" from the
     // server's parsed form data, so coerce before requiring it to be true.
