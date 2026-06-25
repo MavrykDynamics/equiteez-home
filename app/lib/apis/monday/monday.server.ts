@@ -24,7 +24,7 @@ function getMondayConfig() {
   };
 }
 
-/** The shape the action hands to the client (mirrors the validated form). */
+/** The shape the action hands to Monday (validated form + server metadata). */
 export type EnquiryItemInput = {
   registrationType: string;
   fullName: string;
@@ -43,6 +43,7 @@ export type EnquiryItemInput = {
   projectTimeline: string;
   briefDescription: string;
   privacyConsent: boolean;
+  submittedAt: string;
 };
 
 /** Real column ids from the target Monday board. */
@@ -145,7 +146,10 @@ function buildColumnValues(input: EnquiryItemInput): Record<string, unknown> {
     [COLUMN_IDS.assetClass, { label: input.assetClass }],
     [COLUMN_IDS.estimatedValue, { label: input.estimatedValue }],
     [COLUMN_IDS.projectTimeline, { label: input.projectTimeline }],
-    [COLUMN_IDS.briefDescription, input.briefDescription],
+    [
+      COLUMN_IDS.briefDescription,
+      `Submission date: ${input.submittedAt}\n\n${input.briefDescription}`,
+    ],
     [COLUMN_IDS.privacyConsent, { checked: input.privacyConsent ? "true" : "false" }],
   ];
 
