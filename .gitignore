@@ -6,10 +6,10 @@ AGENTS.md
 /.cache
 /build
 .env
+.env.local
+.env.production
 
 .wrangler
-
-.dev.vars
 
 
 stats.html
@@ -17,3 +17,15 @@ stats.html
 # Ignore artifacts:
 build
 coverage
+/CLAUDE.md
+/.claude/
+
+# Screenshots (never commit)
+Screenshot*.png
+Screenshot*.jpg
+Screen Shot*.png
+*.screenshot.png
+/screenshots/
+
+# IDE
+/.idea/
