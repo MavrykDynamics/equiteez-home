@@ -34,9 +34,7 @@ export const Header = () => {
 
       <div className={clsx(styles.popupWrapper, open && styles.active)}>
         <MobileList links={links} />
-        <Button className="mb-6 mx-auto min-w-[247px]" disabled>
-          Launch App
-        </Button>
+        <Button className="mb-6 mx-auto min-w-[247px]">Launch App</Button>
       </div>
     </section>
   );
@@ -54,15 +52,12 @@ const HeaderLinksBlock = () => {
             "text-body-xs text-content font-semibold",
             !to && "opacity-50 pointer-events-none"
           )}
-          aria-disabled="true"
         >
           {text}
         </CustomLink>
       ))}
 
-      <Button className="py-[10px]" disabled>
-        Launch App
-      </Button>
+      <Button className="py-[10px]">Launch App</Button>
     </header>
   );
 };

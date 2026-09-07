@@ -1,7 +1,5 @@
 import { ERROR_TYPE_FATAL, ERROR_TYPE_ROUTER } from "~/errors/error.const";
 import { InternalErrorType } from "~/errors/error.type";
-import { FooterSecondary } from "~/layouts/PageLayout/Footer/FooterSecondary";
-import { Header } from "~/layouts/PageLayout/Header/Header";
 import { Button } from "~/lib/atoms/Button";
 import {
   errorDescDefaultText,
@@ -9,6 +7,8 @@ import {
 } from "~/providers/ToasterProvider/toaster.provider.const";
 
 import Error404Img from "app/assets/error/404.png";
+import { RHeader } from "~/layouts/RHeader";
+import { RFooter } from "~/layouts/RFooter";
 
 type ErrorPageProps = {
   headerText?: string;
@@ -24,8 +24,8 @@ export const ErrorPageTemp = ({
   return (
     <>
       <div className="h-screen overflow-hidden  bg-mvrk font-aeonik text-mvrk-main gap-3 flex items-center justify-between flex-col w-screen bg-sand-50">
-        <Header />
-        <div className="flex flex-col items-center">
+        <RHeader variant="solutions" />
+        <div className="flex flex-col items-center h-full justify-center">
           <img
             className="w-[689px] h-auto object-cover mb-[72px]"
             src={Error404Img}
@@ -44,7 +44,7 @@ export const ErrorPageTemp = ({
           )}
         </div>
 
-        <FooterSecondary />
+        <RFooter />
       </div>
     </>
   );
