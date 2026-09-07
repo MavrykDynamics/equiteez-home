@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { ComponentType, SVGProps } from "react";
 
 import {
+  EQUITEEZ_APP_URL,
   EQUITEEZ_CONTACT_PATH,
   EXTERNAL_LINK_REL,
   IS_EQUITEEZ_APP_LAUNCH_DISABLED,
@@ -74,7 +75,10 @@ const aboutCtaSecondaryAction = {
   disabled: IS_EQUITEEZ_APP_LAUNCH_DISABLED,
   iconRight: null,
   label: "Launch App",
-  to: "/marketplace",
+  href: EQUITEEZ_APP_URL,
+  rel: EXTERNAL_LINK_REL,
+  target: NEW_TAB_TARGET,
+
   variant: "secondary",
 } satisfies RMarketingCtaAction;
 

@@ -543,7 +543,6 @@ function RLandingHero() {
             target={NEW_TAB_TARGET}
             tone="white"
             variant="secondary"
-            disabled
           >
             Explore App
           </RButton>

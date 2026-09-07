@@ -26,7 +26,8 @@
 }
 
 .logo {
-  align-items: flex-start;
+  align-items: flex-end;
+  max-width: fit-content;
 }
 
 .description,

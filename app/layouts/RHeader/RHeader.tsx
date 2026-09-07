@@ -129,13 +129,7 @@ function RHeaderLaunchButton({
 }) {
   if (disabled) {
     return (
-      <RButton
-        className={className}
-        disabled
-        size={size}
-        tone={tone}
-        variant={variant}
-      >
+      <RButton className={className} size={size} tone={tone} variant={variant}>
         Launch App
       </RButton>
     );
@@ -183,10 +177,7 @@ function RHeaderLaunchMobileLink({
 }) {
   if (disabled) {
     return (
-      <span
-        aria-disabled="true"
-        className={clsx(styles.mobileLink, styles.disabledMobileLink)}
-      >
+      <span className={clsx(styles.mobileLink, styles.disabledMobileLink)}>
         Launch App
       </span>
     );

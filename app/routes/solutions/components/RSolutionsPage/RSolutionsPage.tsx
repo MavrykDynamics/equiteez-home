@@ -808,7 +808,6 @@ function RTradingVenueSection() {
               target="_black"
               referrerPolicy="no-referrer"
               tone="black"
-              disabled
             >
               Explore App
             </RButton>
