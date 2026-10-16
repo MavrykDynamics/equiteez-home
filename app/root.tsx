@@ -12,7 +12,6 @@ import {
 import {
   json,
   type LinksFunction,
-  type LoaderFunctionArgs,
 } from "@remix-run/cloudflare";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import stylesheet from "~/styles/index.css?url";
@@ -97,20 +96,30 @@ function RouteScrollReset() {
   return null;
 }
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = async () => {
   return json({
-    GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID ?? null,
+    googleTagManagerId: process.env.GOOGLE_TAG_MANAGER_ID ?? null,
   });
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { GOOGLE_TAG_MANAGER_ID } = useDataFromLoader<typeof loader>() ?? {};
+  const { googleTagManagerId } = useDataFromLoader<typeof loader>() ?? {};
 
+  // The stock GTM snippet inserts a <script> before the first <script> in the
+  // document. Running it before hydration shifts the DOM React is hydrating, so
+  // it is injected verbatim only after hydration.
   useEffect(() => {
-    if (process.env.REACT_APP_ENV === "prod" && GOOGLE_TAG_MANAGER_ID) {
-      addGtmScript(GOOGLE_TAG_MANAGER_ID);
-    }
-  }, [GOOGLE_TAG_MANAGER_ID]);
+    if (!googleTagManagerId || document.getElementById("gtm-script")) return;
+
+    const script = document.createElement("script");
+    script.id = "gtm-script";
+    script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',${JSON.stringify(googleTagManagerId)});`;
+    document.head.appendChild(script);
+  }, [googleTagManagerId]);
 
   return (
     <html lang="en">
@@ -122,20 +131,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
 
       <body>
-        {process.env.REACT_APP_ENV === "prod" && GOOGLE_TAG_MANAGER_ID && (
-          <>
-            {/* Google Tag Manager (noscript) */}
-            <noscript>
-              {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${GOOGLE_TAG_MANAGER_ID}`}
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              />
-            </noscript>
-            {/* End Google Tag Manager */}
-          </>
+        {googleTagManagerId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+              title="Google Tag Manager"
+            />
+          </noscript>
         )}
         <div id="root">
           <ToasterProvider
@@ -203,58 +208,4 @@ export function ErrorBoundary() {
       type="fatal"
     />
   );
-}
-
-/**
- * GTAG configuration to avoid hydration errors *********************
- */
-let gtmScriptAdded = false;
-
-declare global {
-  interface Window {
-    [key: string]: object[];
-    gtag: (
-      option: string,
-      gaTrackingId: string,
-      options: Record<string, unknown>
-    ) => void;
-  }
-}
-
-function addGtmScript(GTM_ID: string | undefined) {
-  if (!GTM_ID || gtmScriptAdded) {
-    return;
-  }
-
-  (function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-
-    function gtag() {
-      // eslint-disable-next-line prefer-rest-params
-      w[l].push(arguments);
-    }
-
-    w.gtag = gtag;
-    // @ts-expect-error // it uses arguments in general (see above gtag fn)
-    gtag("js", new Date());
-
-    if (!gtmScriptAdded) {
-      // Ensure the script is not loaded multiple times
-      const f = d.getElementsByTagName(s)[0];
-      const j = d.createElement(s);
-      const dl = l !== "dataLayer" ? "&l=" + l : "";
-      // @ts-expect-error //it is script tag
-      j.async = true;
-      // @ts-expect-error //it is script tag
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode?.insertBefore(j, f);
-    }
-  })(window, document, "script", "dataLayer", GTM_ID);
-
-  // @ts-expect-error // it uses arguments in general (see above gtag fn)
-  gtag("config", GTM_ID, {
-    page_path: window.location.pathname,
-  });
-
-  gtmScriptAdded = true;
 }
