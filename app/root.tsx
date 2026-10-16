@@ -9,26 +9,14 @@ import {
   useNavigationType,
   useRouteError,
 } from "@remix-run/react";
-import { LinksFunction, json } from "@remix-run/node";
+import {
+  json,
+  type LinksFunction,
+  type LoaderFunctionArgs,
+} from "@remix-run/cloudflare";
 import { useEffect, useLayoutEffect, useRef } from "react";
-// providers
-
-// global styles
 import stylesheet from "~/styles/index.css?url";
-
-// providers
-// import { AppProvider } from "./providers/AppProvider/AppProvider";
-// import { MarketsProvider } from "./providers/MarketsProvider/markets.provider";
-// import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
-// import { AppGlobalLoader } from "./providers/AppGlobalLoader";
-// import { CurrencyProvider } from "./providers/CurrencyProvider/currency.provider";
-// import {
-//   fetchTokensData,
-//   fetchTokensMetadata,
-// } from "./providers/TokensProvider/utils/fetchTokensdata";
-// import { useDataFromLoader } from "./hooks/useDataFromLoader";
 import ToasterProvider from "./providers/ToasterProvider/toaster.provider";
-// import { ApolloProvider } from "./providers/ApolloProvider/apollo.provider";
 import { ToasterMessages } from "./providers/ToasterProvider/components/ToasterMessages";
 import { ErrorPageTemp } from "./templates/ErrorPageTemp/ErrorPageTemp";
 import {
@@ -38,8 +26,6 @@ import {
   errorHeaderDefaultTextWhenError,
 } from "./providers/ToasterProvider/toaster.provider.const";
 import { useDataFromLoader } from "~/hooks/useDataFromLoader";
-// import { DexProvider } from "./providers/Dexprovider/dex.provider";
-// import { DipdupProvider } from "./providers/DipdupProvider/DipDup.provider";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
@@ -48,22 +34,6 @@ export const links: LinksFunction = () => [
 
 const useIsomorphicLayoutEffect =
   typeof document === "undefined" ? useEffect : useLayoutEffect;
-
-// export const loader = async () => {
-//   const tokens = await fetchTokensData();
-
-//   const [tokensMetadata] = await Promise.all([
-//     fetchTokensMetadata(tokens),
-//     // fetchUsdToTokenRates(),
-//   ]);
-
-//   return json({
-//     tokens,
-//     tokensMetadata,
-//     usdToToken: {},
-//     fiatToTezos: {},
-//   });
-// };
 
 function RouteScrollReset() {
   const location = useLocation();
@@ -127,7 +97,7 @@ function RouteScrollReset() {
   return null;
 }
 
-export const loader = async () => {
+export const loader = async ({ context }: LoaderFunctionArgs) => {
   return json({
     GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID ?? null,
   });
@@ -135,39 +105,37 @@ export const loader = async () => {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { GOOGLE_TAG_MANAGER_ID } = useDataFromLoader<typeof loader>() ?? {};
-  const googleTagManagerId = GOOGLE_TAG_MANAGER_ID || "";
+
+  useEffect(() => {
+    if (process.env.REACT_APP_ENV === "prod" && GOOGLE_TAG_MANAGER_ID) {
+      addGtmScript(GOOGLE_TAG_MANAGER_ID);
+    }
+  }, [GOOGLE_TAG_MANAGER_ID]);
 
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {googleTagManagerId && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${googleTagManagerId}');`,
-            }}
-          />
-        )}
         <Meta />
         <Links />
       </head>
 
       <body>
-        {googleTagManagerId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-              title="Google Tag Manager"
-            />
-          </noscript>
+        {process.env.REACT_APP_ENV === "prod" && GOOGLE_TAG_MANAGER_ID && (
+          <>
+            {/* Google Tag Manager (noscript) */}
+            <noscript>
+              {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${GOOGLE_TAG_MANAGER_ID}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+            {/* End Google Tag Manager */}
+          </>
         )}
         <div id="root">
           <ToasterProvider
@@ -235,4 +203,58 @@ export function ErrorBoundary() {
       type="fatal"
     />
   );
+}
+
+/**
+ * GTAG configuration to avoid hydration errors *********************
+ */
+let gtmScriptAdded = false;
+
+declare global {
+  interface Window {
+    [key: string]: object[];
+    gtag: (
+      option: string,
+      gaTrackingId: string,
+      options: Record<string, unknown>
+    ) => void;
+  }
+}
+
+function addGtmScript(GTM_ID: string | undefined) {
+  if (!GTM_ID || gtmScriptAdded) {
+    return;
+  }
+
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      w[l].push(arguments);
+    }
+
+    w.gtag = gtag;
+    // @ts-expect-error // it uses arguments in general (see above gtag fn)
+    gtag("js", new Date());
+
+    if (!gtmScriptAdded) {
+      // Ensure the script is not loaded multiple times
+      const f = d.getElementsByTagName(s)[0];
+      const j = d.createElement(s);
+      const dl = l !== "dataLayer" ? "&l=" + l : "";
+      // @ts-expect-error //it is script tag
+      j.async = true;
+      // @ts-expect-error //it is script tag
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode?.insertBefore(j, f);
+    }
+  })(window, document, "script", "dataLayer", GTM_ID);
+
+  // @ts-expect-error // it uses arguments in general (see above gtag fn)
+  gtag("config", GTM_ID, {
+    page_path: window.location.pathname,
+  });
+
+  gtmScriptAdded = true;
 }
