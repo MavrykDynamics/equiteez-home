@@ -19,6 +19,7 @@ declare namespace NodeJS {
 
     readonly REACT_APP_ENV: "dev" | "prod" | "test";
     readonly TOKENS_METADATA_API: string;
+    readonly GOOGLE_TAG_MANAGER_ID: string;
   }
 }
 
