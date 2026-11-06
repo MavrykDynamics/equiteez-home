@@ -531,6 +531,7 @@ function RLandingHero() {
           <RButton
             as="link"
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
+            size="medium"
             tone="white"
             to="/enquire"
           >
@@ -541,6 +542,7 @@ function RLandingHero() {
             href={EQUITEEZ_APP_URL}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
+            size="medium"
             tone="white"
             variant="secondary"
           >
@@ -618,14 +620,6 @@ function RPlatformSection() {
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
               </div>
-              <span className={styles.solutionIconWrapper}>
-                <RIcon
-                  aria-hidden
-                  className={styles.solutionIcon}
-                  name="arrow-long-up-right"
-                  size="medium"
-                />
-              </span>
             </Reveal>
           ))}
         </div>
@@ -814,6 +808,7 @@ function RGetInTouchSection() {
             iconRight={<RIcon aria-hidden name="arrow-long-right" />}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
+            size="medium"
             tone="black"
           >
             Get In Touch
@@ -824,6 +819,7 @@ function RGetInTouchSection() {
             href={EQUITEEZ_APP_URL}
             rel={EXTERNAL_LINK_REL}
             target={NEW_TAB_TARGET}
+            size="medium"
             tone="black"
             variant="secondary"
           >

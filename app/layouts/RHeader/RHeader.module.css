@@ -112,6 +112,12 @@
   transition: opacity var(--r-motion-duration-fast) var(--r-motion-ease-premium);
 }
 
+.navLink,
+.docsLink {
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
+}
+
 .launchButton {
   transition:
     background-color var(--r-motion-duration-base) var(--r-motion-ease-premium),

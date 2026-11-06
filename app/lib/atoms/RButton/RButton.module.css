@@ -34,22 +34,22 @@
 }
 
 .large {
-  min-height: 52px;
-  padding: 14px 32px;
+  height: 52px;
+  padding: 0 32px;
   font-size: var(--r-font-size-body-m);
   line-height: var(--r-line-height-body-m);
 }
 
 .medium {
-  min-height: 45px;
-  padding: 12px 24px;
+  height: 45px;
+  padding: 0 24px;
   font-size: var(--r-font-size-body-sm);
   line-height: var(--r-line-height-body-sm);
 }
 
 .small {
-  min-height: 38px;
-  padding: 10px 16px;
+  height: 38px;
+  padding: 0 16px;
   font-size: var(--r-font-size-body-s);
   line-height: var(--r-line-height-body-s);
 }
