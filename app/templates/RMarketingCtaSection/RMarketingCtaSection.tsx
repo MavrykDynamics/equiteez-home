@@ -65,6 +65,7 @@ function RMarketingCtaButton({ action }: { action: RMarketingCtaAction }) {
         as="link"
         disabled={action.disabled}
         iconRight={iconRight}
+        size="medium"
         to={action.to}
         tone={action.tone ?? "black"}
         variant={action.variant ?? "primary"}
@@ -81,6 +82,7 @@ function RMarketingCtaButton({ action }: { action: RMarketingCtaAction }) {
       href={action.href}
       iconRight={iconRight}
       rel={action.rel}
+      size="medium"
       target={action.target}
       tone={action.tone ?? "black"}
       variant={action.variant ?? "primary"}

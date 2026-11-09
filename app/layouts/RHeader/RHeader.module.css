@@ -66,8 +66,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 73px;
-  padding: var(--r-space-4) clamp(var(--r-space-5), 6.94vw, var(--r-space-25));
+  height: 57px;
+  padding: 0 clamp(var(--r-space-5), 6.94vw, var(--r-space-25));
 }
 
 .nav,
@@ -110,6 +110,12 @@
   line-height: var(--r-line-height-body-m);
   text-decoration: none;
   transition: opacity var(--r-motion-duration-fast) var(--r-motion-ease-premium);
+}
+
+.navLink,
+.docsLink {
+  font-size: var(--r-font-size-body-sm);
+  line-height: var(--r-line-height-body-sm);
 }
 
 .launchButton {
@@ -188,6 +194,7 @@
 
 @media (max-width: 1180px) {
   .inner {
+    height: auto;
     min-height: 62px;
     padding: var(--r-space-3) var(--r-space-8);
   }

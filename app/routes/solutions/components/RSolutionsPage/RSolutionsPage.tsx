@@ -803,7 +803,7 @@ function RTradingVenueSection() {
             <RButton
               as="link"
               iconRight={<RIcon aria-hidden name="arrow-long-right" />}
-              size="large"
+              size="medium"
               to={linker("/")}
               target="_black"
               referrerPolicy="no-referrer"

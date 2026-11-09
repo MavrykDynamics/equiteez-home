@@ -318,7 +318,7 @@ export function RHeader({
             className={styles.launchButton}
             disabled={isLaunchAppDisabled}
             launchAppTo={launchAppTo}
-            size="medium"
+            size="small"
             tone={launchButtonTone}
             variant={launchButtonVariant}
           />

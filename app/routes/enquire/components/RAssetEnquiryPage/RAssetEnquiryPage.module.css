@@ -2,7 +2,7 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  padding-top: 73px;
+  padding-top: 57px;
   overflow-x: hidden;
   color: var(--r-color-neutral-black);
   background: var(--r-color-neutral-50);
