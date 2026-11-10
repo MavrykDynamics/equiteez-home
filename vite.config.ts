@@ -30,6 +30,7 @@ export default defineConfig(({ mode, command, isSsrBuild }) => {
     "EXPLORE_APP_URL",
     "BASE_URL",
     "REACT_APP_MAINTANCE_MODE",
+    "GOOGLE_TAG_MANAGER_ID",
   ];
   const publicEnv = Object.fromEntries(
     PUBLIC_ENV_KEYS.filter((key) => key in fullEnv).map((key) => [

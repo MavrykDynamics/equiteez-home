@@ -271,7 +271,7 @@ const metrics: Metric[] = [
     labelSuffix: "By 2030, EY",
     value: "$28.7T+",
   },
-  { label: "Equiteez Pipeline", value: "$14.9B" },
+  { label: "Equiteez Pipeline", value: "$10B" },
   { label: "Asset Classes Supported To Date", value: "6+" },
   { label: "Market Trading", value: "24/7" },
 ];

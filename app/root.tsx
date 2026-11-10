@@ -9,26 +9,13 @@ import {
   useNavigationType,
   useRouteError,
 } from "@remix-run/react";
-import { LinksFunction } from "@remix-run/node";
+import {
+  json,
+  type LinksFunction,
+} from "@remix-run/cloudflare";
 import { useEffect, useLayoutEffect, useRef } from "react";
-// providers
-
-// global styles
 import stylesheet from "~/styles/index.css?url";
-
-// providers
-// import { AppProvider } from "./providers/AppProvider/AppProvider";
-// import { MarketsProvider } from "./providers/MarketsProvider/markets.provider";
-// import { TokensProvider } from "./providers/TokensProvider/tokens.provider";
-// import { AppGlobalLoader } from "./providers/AppGlobalLoader";
-// import { CurrencyProvider } from "./providers/CurrencyProvider/currency.provider";
-// import {
-//   fetchTokensData,
-//   fetchTokensMetadata,
-// } from "./providers/TokensProvider/utils/fetchTokensdata";
-// import { useDataFromLoader } from "./hooks/useDataFromLoader";
 import ToasterProvider from "./providers/ToasterProvider/toaster.provider";
-// import { ApolloProvider } from "./providers/ApolloProvider/apollo.provider";
 import { ToasterMessages } from "./providers/ToasterProvider/components/ToasterMessages";
 import { ErrorPageTemp } from "./templates/ErrorPageTemp/ErrorPageTemp";
 import {
@@ -37,8 +24,7 @@ import {
   errorHeaderDefaultText,
   errorHeaderDefaultTextWhenError,
 } from "./providers/ToasterProvider/toaster.provider.const";
-// import { DexProvider } from "./providers/Dexprovider/dex.provider";
-// import { DipdupProvider } from "./providers/DipdupProvider/DipDup.provider";
+import { useDataFromLoader } from "~/hooks/useDataFromLoader";
 
 export const links: LinksFunction = () => [
   { rel: "preload", as: "style", href: stylesheet },
@@ -47,22 +33,6 @@ export const links: LinksFunction = () => [
 
 const useIsomorphicLayoutEffect =
   typeof document === "undefined" ? useEffect : useLayoutEffect;
-
-// export const loader = async () => {
-//   const tokens = await fetchTokensData();
-
-//   const [tokensMetadata] = await Promise.all([
-//     fetchTokensMetadata(tokens),
-//     // fetchUsdToTokenRates(),
-//   ]);
-
-//   return json({
-//     tokens,
-//     tokensMetadata,
-//     usdToToken: {},
-//     fiatToTezos: {},
-//   });
-// };
 
 function RouteScrollReset() {
   const location = useLocation();
@@ -126,13 +96,30 @@ function RouteScrollReset() {
   return null;
 }
 
+export const loader = async () => {
+  return json({
+    googleTagManagerId: process.env.GOOGLE_TAG_MANAGER_ID ?? null,
+  });
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
-  // const {
-  //   tokens = [],
-  //   tokensMetadata = {},
-  //   fiatToTezos = {},
-  //   usdToToken = {},
-  // } = useDataFromLoader<typeof loader>() ?? {};
+  const { googleTagManagerId } = useDataFromLoader<typeof loader>() ?? {};
+
+  // The stock GTM snippet inserts a <script> before the first <script> in the
+  // document. Running it before hydration shifts the DOM React is hydrating, so
+  // it is injected verbatim only after hydration.
+  useEffect(() => {
+    if (!googleTagManagerId || document.getElementById("gtm-script")) return;
+
+    const script = document.createElement("script");
+    script.id = "gtm-script";
+    script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',${JSON.stringify(googleTagManagerId)});`;
+    document.head.appendChild(script);
+  }, [googleTagManagerId]);
 
   return (
     <html lang="en">
@@ -144,6 +131,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
 
       <body>
+        {googleTagManagerId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+              title="Google Tag Manager"
+            />
+          </noscript>
+        )}
         <div id="root">
           <ToasterProvider
             maintance={process.env.REACT_APP_MAINTANCE_MODE === "on"}
